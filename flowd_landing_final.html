@@ -1,0 +1,2595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flowd Landing (React)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    html, body, #root { height: 100%; }
+    html, body { overflow-x: hidden; }
+    body { margin: 0; background: #F0F0ED; animation: pageFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+    @keyframes pageFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes breathe {
+      0%, 100% { opacity: 0.5;  transform: scale(1); }
+      50%       { opacity: 0.88; transform: scale(1.06); }
+    }
+
+    /* ── Scroll reveals ── */
+    .motion-reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition:
+        opacity  800ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: var(--reveal-delay, 0ms);
+      will-change: opacity, transform;
+    }
+    /* Directional variants — declared before .in-view so .in-view always wins */
+    .motion-reveal[data-from-left]  { transform: translateX(-34px); }
+    .motion-reveal[data-from-right] { transform: translateX(34px); }
+    .motion-reveal[data-scale-in]   { transform: translateY(16px) scale(0.97); }
+    .motion-reveal.in-view { opacity: 1; transform: none; }
+    /* Card-level stagger inside section media */
+    .motion-reveal .landing-process-grid > .landing-process-card,
+    .motion-reveal .landing-now-stack > .landing-now-card,
+    .motion-reveal .landing-diff-grid > .landing-diff-card,
+    .motion-reveal .landing-thread-chat,
+    .motion-reveal .landing-thread-list > .landing-thread-card,
+    .motion-reveal .landing-project-mobile-cards > .landing-project-mobile-card,
+    .motion-reveal .landing-collab-col:first-child .landing-raw-item,
+    .motion-reveal .landing-collab-col:last-child .landing-res-item {
+      opacity: 0;
+      transform: translateY(28px);
+      transition:
+        opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+    .motion-reveal.in-view .landing-process-grid > .landing-process-card,
+    .motion-reveal.in-view .landing-now-stack > .landing-now-card,
+    .motion-reveal.in-view .landing-diff-grid > .landing-diff-card,
+    .motion-reveal.in-view .landing-thread-chat,
+    .motion-reveal.in-view .landing-thread-list > .landing-thread-card,
+    .motion-reveal.in-view .landing-project-mobile-cards > .landing-project-mobile-card,
+    .motion-reveal.in-view .landing-collab-col:first-child .landing-raw-item,
+    .motion-reveal.in-view .landing-collab-col:last-child .landing-res-item {
+      opacity: 1;
+      transform: none;
+    }
+    /* Process: top->bottom, left->right */
+    .motion-reveal .landing-process-grid > .landing-process-card:nth-child(1) { transition-delay: 80ms; }
+    .motion-reveal .landing-process-grid > .landing-process-card:nth-child(2) { transition-delay: 220ms; }
+    .motion-reveal .landing-process-grid > .landing-process-card:nth-child(3) { transition-delay: 360ms; }
+    .motion-reveal .landing-process-grid > .landing-process-card:nth-child(4) { transition-delay: 500ms; }
+    .motion-reveal .landing-process-grid > .landing-process-card:nth-child(5) { transition-delay: 640ms; }
+    /* Now: left->right */
+    .motion-reveal .landing-now-stack > .landing-now-card:nth-child(1) { transition-delay: 90ms; }
+    .motion-reveal .landing-now-stack > .landing-now-card:nth-child(2) { transition-delay: 250ms; }
+    .motion-reveal .landing-now-stack > .landing-now-card:nth-child(3) { transition-delay: 410ms; }
+    .motion-reveal .landing-now-stack > .landing-now-card:nth-child(4) { transition-delay: 570ms; }
+    .motion-reveal .landing-now-stack > .landing-now-card:nth-child(5) { transition-delay: 730ms; }
+    /* Different: top->bottom, left->right */
+    .motion-reveal .landing-diff-grid > .landing-diff-card:nth-child(1) { transition-delay: 90ms; }
+    .motion-reveal .landing-diff-grid > .landing-diff-card:nth-child(2) { transition-delay: 260ms; }
+    .motion-reveal .landing-diff-grid > .landing-diff-card:nth-child(3) { transition-delay: 430ms; }
+    .motion-reveal .landing-diff-grid > .landing-diff-card:nth-child(4) { transition-delay: 600ms; }
+    /* Thread flow: chat first, then right cards top->bottom */
+    .motion-reveal .landing-thread-chat { transition-delay: 90ms; }
+    .motion-reveal .landing-thread-list > .landing-thread-card:nth-child(1) { transition-delay: 320ms; }
+    .motion-reveal .landing-thread-list > .landing-thread-card:nth-child(2) { transition-delay: 500ms; }
+    /* Project mobile cards: top -> bottom */
+    .motion-reveal .landing-project-mobile-cards > .landing-project-mobile-card {
+      transform: translateY(48px);
+      transition-duration: 920ms;
+    }
+    .motion-reveal .landing-project-mobile-cards > .landing-project-mobile-card:nth-child(1) { transition-delay: 120ms; }
+    .motion-reveal .landing-project-mobile-cards > .landing-project-mobile-card:nth-child(2) { transition-delay: 320ms; }
+    .motion-reveal .landing-project-mobile-cards > .landing-project-mobile-card:nth-child(3) { transition-delay: 520ms; }
+    .motion-reveal .landing-project-mobile-cards > .landing-project-mobile-card:nth-child(4) { transition-delay: 720ms; }
+    .motion-reveal .landing-project-mobile-cards > .landing-project-mobile-card:nth-child(5) { transition-delay: 920ms; }
+    /* Human × AI: top -> bottom by row */
+    .motion-reveal .landing-collab-col:first-child .landing-raw-item:nth-of-type(1) { transition-delay: 90ms; }
+    .motion-reveal .landing-collab-col:last-child .landing-res-item:nth-of-type(1) { transition-delay: 150ms; }
+    .motion-reveal .landing-collab-col:first-child .landing-raw-item:nth-of-type(2) { transition-delay: 230ms; }
+    .motion-reveal .landing-collab-col:last-child .landing-res-item:nth-of-type(2) { transition-delay: 290ms; }
+    .motion-reveal .landing-collab-col:first-child .landing-raw-item:nth-of-type(3) { transition-delay: 370ms; }
+    .motion-reveal .landing-collab-col:last-child .landing-res-item:nth-of-type(3) { transition-delay: 430ms; }
+    .motion-reveal .landing-collab-col:first-child .landing-raw-item:nth-of-type(4) { transition-delay: 510ms; }
+    .motion-reveal .landing-collab-col:last-child .landing-res-item:nth-of-type(4) { transition-delay: 570ms; }
+
+    /* ── Fixed nav ── */
+    .nav-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      transition: background 0.5s ease, border-color 0.5s ease;
+      border-bottom: 1px solid transparent;
+    }
+    .nav-bar.nav-scrolled {
+      background: rgba(240, 240, 237, 0.86);
+      border-color: rgba(0, 0, 0, 0.06);
+    }
+    .nav-link {
+      position: relative;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0; right: 0;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .nav-link:hover { opacity: 1 !important; }
+    .nav-link:hover::after { transform: scaleX(1); }
+
+    /* ── Media card hover lift ── */
+    .media-card-wrapper {
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .media-card-wrapper:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 48px 96px rgba(0, 0, 0, 0.24);
+    }
+
+
+    /* ── CTA form ── */
+    .cta-input-wrap {
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .cta-input-wrap:focus-within {
+      border-color: rgba(255, 255, 255, 0.38) !important;
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.07);
+    }
+    .cta-submit-btn {
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+    }
+    .cta-submit-btn:hover  { transform: scale(1.05); opacity: 1 !important; }
+    .cta-submit-btn:active { transform: scale(0.96); }
+
+    /* ── Subtle link ── */
+    .subtle-link .subtle-link-text {
+      transition: letter-spacing 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+    }
+    .subtle-link:hover .subtle-link-text { letter-spacing: 0.32em; opacity: 1; }
+    .subtle-link-arrow {
+      display: inline-block;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+    }
+    .subtle-link:hover .subtle-link-arrow { transform: translateX(5px); opacity: 1; }
+
+    /* ── Process doc card (matched to app) ── */
+    .process-doc-card{
+      background:#ffffff;
+      border:1px solid #e4e4e4;
+      border-left:3px solid #111111;
+      border-radius:20px;
+      padding:14px 16px;
+      width:100%;
+      cursor:default;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      transition:background .2s ease,border-color .2s ease;
+    }
+    .process-doc-top{display:flex;justify-content:space-between;align-items:center}
+    .process-doc-type{
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:8px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:#aaaaaa;
+    }
+    .process-doc-icon{font-size:18px;line-height:1}
+    .process-doc-title{
+      font-family:Georgia, serif;
+      font-size:18px;
+      font-weight:500;
+      color:#111111;
+      line-height:1.35;
+      margin:0;
+    }
+    .process-doc-preview{
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size:14px;
+      color:#666666;
+      line-height:1.45;
+      margin:0;
+      display:-webkit-box;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+    }
+    .process-doc-bottom{display:flex;justify-content:space-between;align-items:center}
+    .process-doc-open{
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:9px;
+      letter-spacing:.05em;
+      color:#00000073;
+      border:none;
+      background:none;
+      padding:0;
+      cursor:default;
+    }
+    .process-doc-updated{
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:9px;
+      letter-spacing:.05em;
+      color:#aaaaaa;
+    }
+
+    /* ── Thoughts cards collage (landscape 2-row layout) ── */
+    .landing-process-grid-wrap {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    .landing-process-grid {
+      width: min(100%, 980px);
+      display: grid;
+      grid-template-columns: repeat(3, 200px);
+      gap: 32px;
+      justify-content: center;
+    }
+    .landing-process-card {
+      background: #ffffff;
+      border: 1px solid #ececec;
+      border-radius: 18px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      box-shadow: 0 16px 30px 5px rgba(21, 21, 32, 0.10);
+    }
+    .landing-process-card--square {
+      width: 200px;
+      height: 200px;
+    }
+    .landing-process-card--doc {
+      grid-column: span 2;
+      display: block;
+      padding: 0;
+      border: none;
+      background: transparent;
+      height: 200px;
+    }
+    .landing-process-card--doc .process-doc-card {
+      height: 100%;
+      box-shadow: 0 16px 30px 5px rgba(21, 21, 32, 0.10);
+      padding: 18px 18px 14px;
+      gap: 0;
+    }
+    .landing-process-card--doc .process-doc-top {
+      margin-bottom: 26px;
+    }
+    .landing-process-card--doc .process-doc-title {
+      margin-top: 0;
+    }
+    .landing-process-card--doc .process-doc-preview {
+      margin-top: 8px;
+    }
+    .landing-process-card--doc .process-doc-bottom {
+      margin-top: auto;
+    }
+    .landing-process-card--image {
+      padding: 0;
+      border: none;
+      overflow: hidden;
+      background: transparent;
+    }
+    .landing-process-card--decision {
+      background: #111111;
+      border-color: #111111;
+    }
+    .landing-process-card--decision .landing-process-meta-item {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .landing-process-card--decision .landing-process-meta {
+      justify-content: flex-start;
+    }
+    .landing-process-card--decision .landing-process-decision-check,
+    .landing-process-card--decision .landing-process-decision-text {
+      color: #f2f2f2;
+    }
+    .landing-process-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .landing-process-meta-item {
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: .05em;
+      color: #adadad;
+      text-transform: uppercase;
+    }
+    .landing-process-note-body {
+      margin-top: auto;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background-image: repeating-linear-gradient(transparent 0px, transparent 18px, rgba(0,0,0,0.06) 18px, rgba(0,0,0,0.06) 19px);
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 16px;
+      line-height: 1.35;
+      color: #111111;
+      font-weight: 500;
+    }
+    .landing-process-link-main {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .landing-process-link-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: #f2f2f2;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .landing-process-link-text {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .landing-process-link-title {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 14px;
+      font-weight: 600;
+      color: #111111;
+      line-height: 1.35;
+    }
+    .landing-process-link-url {
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      color: #a8a8a8;
+      letter-spacing: .03em;
+      text-transform: lowercase;
+    }
+    .landing-process-image {
+      margin-top: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+      aspect-ratio: auto;
+      object-fit: cover;
+    }
+    .landing-process-decision-body {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .landing-process-decision-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .landing-process-decision-check {
+      color: #111111;
+      font-size: 12px;
+      line-height: 1.4;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .landing-process-decision-text {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 16px;
+      line-height: 1.4;
+      color: #111111;
+      font-weight: 500;
+    }
+    .landing-process-decision-label {
+      margin-top: auto;
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      align-self: flex-start;
+    }
+
+    /* ── Project view mobile showcase (from Flowd app) ── */
+    .landing-project-mobile-wrap {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 6px 0 14px;
+    }
+    .landing-project-mobile-frame {
+      width: min(430px, 100%);
+      border-radius: 24px;
+      border: 1px solid #d9d9d9;
+      background: rgba(0, 0, 0, 0.05);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.18);
+      padding: 10px;
+    }
+    .landing-project-mobile-screen {
+      border-radius: 18px;
+      border: 1px solid #e9e9e9;
+      background: #ececec;
+      overflow: hidden;
+      height: min(76vh, 800px);
+    }
+    .landing-project-mobile-scroll {
+      height: 100%;
+      overflow-y: auto;
+      padding: 24px;
+      background: transparent;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .landing-project-mobile-scroll::-webkit-scrollbar { display: none; }
+    .landing-project-mobile-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 48px;
+    }
+    .landing-project-mobile-nav-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+    .landing-project-mobile-back {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: none;
+      background: #e7e7e4;
+      color: #111;
+      font-size: 12px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .landing-project-mobile-back-label {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: .05em;
+      color: #9f9f9f;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .landing-project-mobile-menu {
+      border: none;
+      background: transparent;
+      color: #8f8f8f;
+      font-size: 16px;
+      line-height: 1;
+      padding: 4px 6px;
+    }
+    .landing-project-mobile-header {
+      padding: 0 2px 10px;
+    }
+    .landing-project-mobile-meta {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: .05em;
+      color: #aaaaaa;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .landing-project-mobile-title {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: 34px;
+      line-height: 1.03;
+      letter-spacing: -0.02em;
+      color: #111;
+      font-weight: 500;
+    }
+    .landing-project-mobile-sub {
+      margin: 8px 0 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 16px;
+      line-height: 1.35;
+      color: #7f7f7f;
+      max-width: 36ch;
+    }
+    .landing-project-mobile-tabs {
+      margin: 20px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 20px 20px 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .landing-project-mobile-tabs::-webkit-scrollbar { display: none; }
+    .landing-project-mobile-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      background: transparent;
+      padding: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 16px;
+      font-weight: 600;
+      color: #111111;
+      white-space: nowrap;
+      opacity: 0.2;
+      flex-shrink: 0;
+      cursor: default;
+    }
+    .landing-project-mobile-tab-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 51px;
+      background: #111111;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .landing-project-mobile-tab-dot::before {
+      content: "+";
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1;
+      color: #ffffff;
+    }
+    .landing-project-mobile-tab.active { opacity: 1; }
+    .landing-project-mobile-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding-bottom: 4px;
+    }
+    .landing-project-mobile-card {
+      background: rgba(255, 255, 255, 0.2) !important;
+      border: 1px solid rgba(255, 255, 255, 0.62);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 16px 30px 5px rgba(21, 21, 32, 0.10);
+    }
+    .landing-project-mobile-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .landing-project-mobile-card-label,
+    .landing-project-mobile-card-meta {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: .06em;
+      color: #c0c0c0;
+      text-transform: uppercase;
+    }
+    .landing-project-mobile-card-title {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      line-height: 1.2;
+      color: #111;
+      font-weight: 500;
+    }
+    .landing-project-mobile-card-body {
+      margin: 16px 0 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 16px;
+      line-height: 1.45;
+      color: rgba(8, 8, 8, 0.5);
+    }
+    .landing-project-mobile-card-divider {
+      height: 1px;
+      background: #f0f0f0;
+      margin: 18px 0 0;
+    }
+    .landing-project-mobile-card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .landing-project-mobile-card-row {
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      padding: 14px 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid #f4f4f4;
+      cursor: default;
+    }
+    .landing-project-mobile-card-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .landing-project-mobile-card-main {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+      flex: 1;
+    }
+    .landing-project-mobile-card-row-text {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 14px;
+      line-height: 1.35;
+      font-weight: 500;
+      color: #222;
+    }
+    .landing-project-mobile-card-row-source {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: .05em;
+      color: #a9a9a9;
+      text-transform: lowercase;
+    }
+    .landing-project-mobile-card-arrow {
+      color: #aaaaaa;
+      font-size: 13px;
+      line-height: 1;
+      padding-top: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ── Now cards showcase (matched to app Now tab style) ── */
+    .landing-now-wrap {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 60px 0;
+      box-sizing: border-box;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      scroll-padding-left: max(24px, calc((100vw - 1200px) / 2 + 40px));
+    }
+    .landing-now-wrap::-webkit-scrollbar { display: none; }
+    .landing-now-stack {
+      width: max-content;
+      display: flex;
+      gap: 32px;
+      padding: 0 40px 4px max(24px, calc((100vw - 1200px) / 2 + 40px));
+    }
+    .landing-now-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 420px;
+      flex: 0 0 420px;
+      box-shadow: 0 16px 30px 5px rgba(21, 21, 32, 0.10);
+      scroll-snap-align: start;
+    }
+    @media (max-width: 640px) {
+      .landing-now-wrap {
+        padding: 60px 0;
+        scroll-padding-left: 24px;
+      }
+      .landing-now-stack {
+        gap: 24px;
+        padding: 0 24px 4px 24px;
+      }
+      .landing-now-card {
+        width: 320px;
+        flex-basis: 320px;
+      }
+    }
+    .landing-now-header { display: flex; justify-content: space-between; align-items: center; }
+    .landing-now-label,
+    .landing-now-count {
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 10px;
+      color: #c0c0c0;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .landing-now-title {
+      margin: 12px 0 0;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: #333333;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .landing-now-summary {
+      margin: 6px 0 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 16px;
+      color: #08080899;
+      line-height: 1.45;
+    }
+    .landing-now-divider { height: 1px; background: #f3f3f3; margin: 4px 0 0; }
+    .landing-now-list { display: flex; flex-direction: column; gap: 0; }
+    .landing-now-row {
+      width: 100%;
+      border: none;
+      background: none;
+      padding: 10px 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      text-align: left;
+    }
+    .landing-now-main { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
+    .landing-now-text {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 14px;
+      font-weight: 500;
+      color: #111111;
+      line-height: 1.45;
+    }
+    .landing-now-source {
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 10px;
+      color: #aaaaaa;
+      letter-spacing: 0.05em;
+    }
+    .landing-now-arrow {
+      color: #aaaaaa;
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-left: auto;
+      padding-top: 2px;
+    }
+    .landing-now-more {
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 10px;
+      color: #b3b3b3;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-top: 8px;
+    }
+    @media (max-width: 980px) {
+      .landing-process-grid {
+        grid-template-columns: repeat(2, 200px);
+      }
+      .landing-process-card--doc {
+        grid-column: span 2;
+      }
+    }
+
+    /* ── Thread cards showcase (matched to app thread cards) ── */
+    .landing-thread-list { display: flex; flex-direction: column; gap: 24px; padding-top: 8px; }
+    .landing-thread-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 14px;
+      padding: 14px 16px;
+      transition: background 0.12s;
+      box-shadow: 0 16px 30px 5px rgba(21, 21, 32, 0.10);
+    }
+    .landing-thread-card-header { display: flex; align-items: center; gap: 6px; }
+    .landing-thread-card-header .landing-thread-type-tag { margin-left: auto; }
+    .landing-thread-title {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+      letter-spacing: -0.02em;
+      margin-top: 24px;
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+    .landing-thread-type-tag {
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      padding: 2px 7px;
+      border-radius: 100px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .landing-thread-type-tag--exploring { border: 1px solid #999; color: #999; background: transparent; }
+    .landing-thread-type-tag--deciding { background: #111; color: #fff; border: 1px solid #111; }
+    .landing-thread-type-tag--reframing { background: #444; color: #fff; border: 1px solid #444; }
+    .landing-thread-key-exchange {
+      margin-bottom: 10px;
+      padding-left: 4px;
+      border-left: 2px solid #eee;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .landing-thread-ke-user {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 13px;
+      color: #888;
+      line-height: 1.45;
+      margin: 0;
+      font-style: italic;
+    }
+    .landing-thread-ke-ai {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 14px;
+      color: #222;
+      line-height: 1.5;
+      margin: 0;
+      font-weight: 500;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+    }
+    .landing-thread-ts,
+    .landing-thread-session {
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      color: #bbb;
+    }
+    .landing-thread-flow {
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(300px, 430px) 34px minmax(300px, 430px);
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+    .landing-thread-chat {
+      background: rgba(255, 255, 255, 0.4);
+      border: 1px solid #eee;
+      border-radius: 14px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      min-height: 100%;
+      overflow: hidden;
+    }
+    .landing-thread-chat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 14px 16px 6px;
+    }
+    .landing-thread-chat-label {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: 0.05em;
+      color: #a7a7a7;
+      text-transform: uppercase;
+    }
+    .landing-thread-chat-time {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: 0.05em;
+      color: #b8b8b8;
+      text-transform: uppercase;
+    }
+    .landing-thread-chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 14px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .landing-thread-chat-msg {
+      max-width: 85%;
+      display: flex;
+      flex-direction: column;
+    }
+    .landing-thread-chat-msg--user {
+      align-self: flex-end;
+      margin-top: 8px;
+    }
+    .landing-thread-chat-msg--ai {
+      align-self: flex-start;
+    }
+    .landing-thread-chat-bubble {
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+      white-space: normal;
+    }
+    .landing-thread-chat-msg--user .landing-thread-chat-bubble {
+      background: #e6e6e6;
+      color: #333333;
+      border-bottom-right-radius: 4px;
+    }
+    .landing-thread-chat-msg--ai .landing-thread-chat-bubble {
+      background: transparent;
+      color: #111111;
+      border: none;
+      border-radius: 0;
+      padding: 10px 0 12px 10px;
+      font-family: "Roboto Serif", Georgia, serif;
+      font-size: 17px;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+    .landing-thread-chat-input-row {
+      display: flex;
+      gap: 8px;
+      padding: 12px 14px 16px;
+      border-top: 1px solid #efefef;
+      background: rgba(255, 255, 255, 0.4);
+    }
+    .landing-thread-chat-ta {
+      flex: 1;
+      background: #fafafa;
+      border: 1px solid #ececec;
+      border-radius: 20px;
+      padding: 11px 14px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 16px;
+      color: #b8b8b8;
+      line-height: 1.4;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .landing-thread-chat-send {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #111;
+      color: #fff;
+      border: none;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      line-height: 1;
+    }
+    .landing-thread-flow-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9c9c9c;
+      font-size: 30px;
+      line-height: 1;
+      user-select: none;
+    }
+    @media (max-width: 1080px) {
+      .landing-thread-flow {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .landing-thread-flow-arrow {
+        transform: rotate(90deg);
+      }
+    }
+
+    /* ── Collaboration frames (from flowd-landing.html) ── */
+    .landing-collab-layout {
+      display: grid;
+      grid-template-columns: 1fr 40px 1fr;
+      gap: 20px;
+      width: min(100%, 980px);
+      max-width: 980px;
+      margin: 0 auto;
+      align-items: start;
+    }
+    .landing-collab-col {
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+    .landing-collab-label {
+      font-family: "Space Mono", "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: #252525;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .landing-raw-item {
+      padding: 14px 16px;
+      background: #ffffff;
+      border: 1px solid #eeeeee;
+      border-radius: 14px;
+      margin-bottom: 10px;
+      font-family: Georgia, serif;
+      font-size: 16px;
+      font-style: italic;
+      color: rgba(17,17,16,0.38);
+      line-height: 1.5;
+    }
+    .landing-res-item {
+      padding: 14px 16px;
+      background: #ffffff;
+      border: 1px solid #eeeeee;
+      border-radius: 14px;
+      margin-bottom: 10px;
+    }
+    .landing-res-tag {
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 7px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(17,17,16,0.38);
+      margin-bottom: 3px;
+    }
+    .landing-res-tag--amber { color: #B85C10; }
+    .landing-res-text {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 16px;
+      font-weight: 500;
+      color: #111110;
+      line-height: 1.4;
+    }
+    .landing-collab-mid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-top: 0;
+      align-self: center;
+      gap: 0;
+    }
+    .landing-collab-line {
+      flex: 1;
+      width: 1px;
+      min-height: 80px;
+      background: linear-gradient(to bottom, rgba(17,17,16,0.14), #B85C10, rgba(17,17,16,0.14));
+    }
+    .landing-collab-mid-label {
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #B85C10;
+      writing-mode: vertical-rl;
+      padding: 7px 0;
+    }
+    @media (max-width: 860px) {
+      .landing-collab-layout { grid-template-columns: 1fr; }
+      .landing-collab-mid { display: none; }
+    }
+
+    /* ── Quote section ── */
+    .landing-quote-section {
+      padding: 24px 0 72px;
+      background: #F0F0ED;
+    }
+    .landing-quote-wrap {
+      width: min(100%, 980px);
+      margin: 0 auto;
+      padding: 0 16px;
+      text-align: center;
+    }
+    .landing-quote-card {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 72px 68px;
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .landing-quote-mark {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: Georgia, serif;
+      font-size: 46px;
+      line-height: 1;
+      color: rgba(17,17,16,0.15);
+    }
+    .landing-quote-text {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: 24px;
+      line-height: 1.35;
+      color: #111110;
+      letter-spacing: -0.01em;
+      max-width: 860px;
+      font-style: italic;
+      text-align: center;
+    }
+    .landing-quote-attribution {
+      margin-top: 16px;
+      display: block;
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #8f8f8f;
+    }
+    @media (max-width: 860px) {
+      .landing-quote-card { padding: 44px 36px; }
+      .landing-quote-text { font-size: 20px; }
+    }
+
+    /* ── What makes it different ── */
+    .landing-diff-grid {
+      width: min(100%, 980px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 400px);
+      column-gap: 32px;
+      row-gap: 32px;
+      justify-content: center;
+    }
+    .landing-diff-card {
+      background: rgba(255, 255, 255, 0.4);
+      border: 1px solid #e8e8e8;
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 280px;
+      width: 400px;
+      max-width: 100%;
+      margin: 0 auto;
+      box-shadow: 0 16px 30px 5px rgba(21, 21, 32, 0.10);
+    }
+    .landing-diff-card--dark {
+      background: #111111;
+      border-color: #111111;
+      color: #ffffff;
+    }
+    .landing-diff-card--amber {
+      background: rgba(255, 255, 255, 0.4);
+      border: none;
+    }
+    .landing-diff-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid #d9d9d9;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #111;
+    }
+    .landing-diff-card--dark .landing-diff-icon {
+      border-color: rgba(255,255,255,0.35);
+      color: #fff;
+    }
+    .landing-diff-label {
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #8f8f8f;
+    }
+    .landing-diff-card--dark .landing-diff-label { color: rgba(255,255,255,0.62); }
+    .landing-diff-title {
+      font-family: Georgia, serif;
+      font-size: 32px;
+      line-height: 1.05;
+      font-weight: 400;
+      color: #111;
+      margin: 48px 0 0;
+    }
+    .landing-diff-card--dark .landing-diff-title { color: #fff; }
+    .landing-diff-rule {
+      border: 0;
+      border-top: 1px solid #efefef;
+      margin: 2px 0 0;
+    }
+    .landing-diff-card--dark .landing-diff-rule { border-top-color: rgba(255,255,255,0.2); }
+    .landing-diff-card--amber .landing-diff-rule { border-top-color: rgba(17,17,16,0.18); }
+    .landing-diff-desc {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 16px;
+      line-height: 1.55;
+      color: #676767;
+      margin-top: auto;
+    }
+    .landing-diff-card--dark .landing-diff-desc { color: rgba(255,255,255,0.72); }
+    .landing-diff-card--amber .landing-diff-desc { color: rgba(17,17,16,0.72); }
+    @media (max-width: 860px) {
+      .landing-diff-grid {
+        grid-template-columns: 1fr;
+        column-gap: 32px;
+        row-gap: 32px;
+      }
+      .landing-diff-card { min-height: 0; }
+      .landing-diff-title { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const Serif = ({ className = "", children }) => (
+      <div
+        className={className}
+        style={{
+          fontFamily:
+            "Georgia, serif",
+          fontWeight: 400,
+        }}
+      >
+        {children}
+      </div>
+    );
+
+    const Mono = ({ className = "", children }) => (
+      <div
+        className={className}
+        style={{
+          fontFamily:
+            '"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+        }}
+      >
+        {children}
+      </div>
+    );
+
+    const Sans = ({ className = "", children }) => (
+      <div
+        className={className}
+        style={{
+          fontFamily:
+            'Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"',
+        }}
+      >
+        {children}
+      </div>
+    );
+
+    function Section({
+      id,
+      tone,
+      eyebrow,
+      headline,
+      body,
+      cta,
+      media,
+      mediaWrapClassName = "",
+      sectionClassName = "",
+      containerClassName = "",
+      align = "center",
+      vAlign = "center",
+      useMediaCard = true,
+      allowOverflow = false,
+    }) {
+      const isDark = tone === "dark";
+      const baseBg = isDark ? "bg-[#111111] text-neutral-50" : "bg-[#F0F0ED] text-neutral-950";
+      const subtle = isDark ? "text-neutral-300/80" : "text-neutral-600";
+      const hairline = isDark ? "border-neutral-700/50" : "border-neutral-200";
+      const hasCopy = Boolean(eyebrow || headline || body);
+      const sectionOverflow = allowOverflow ? "overflow-visible" : "overflow-hidden";
+
+      return (
+        <section id={id} className={`${baseBg} relative min-h-[72vh] w-full ${sectionOverflow} ${sectionClassName}`}>
+          {/* Breathing radial for dark sections */}
+          {isDark && (
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background: "radial-gradient(900px 520px at 50% 0%, rgba(255,255,255,0.10), transparent 60%)",
+                animation: "breathe 7s ease-in-out infinite",
+              }}
+            />
+          )}
+
+          <div className={`relative mx-auto flex min-h-[72vh] max-w-[1200px] flex-col px-6 pb-12 pt-16 sm:px-10 ${containerClassName}`}>
+
+            {align === "center" && (
+              <div className={`flex flex-1 flex-col items-center ${vAlign === "top" ? "justify-start pt-10" : "justify-center"} ${hasCopy ? "gap-10" : "gap-0"}`}>
+                {hasCopy && (
+                  <div className="w-full max-w-[900px] text-center motion-reveal" data-reveal data-reveal-delay="90" data-scale-in>
+                    {eyebrow && <Mono className={`mb-5 text-[11px] tracking-[0.28em] ${subtle}`}>{eyebrow}</Mono>}
+                    <Serif className="text-balance text-[clamp(40px,5vw,64px)] leading-[1.05]">{headline}</Serif>
+                    {body && <Sans className={`mx-auto mt-6 max-w-[720px] text-pretty text-base leading-relaxed ${subtle}`}>{body}</Sans>}
+                  </div>
+                )}
+
+                {media && (
+                  <div className={`${mediaWrapClassName || "w-full max-w-[980px]"} motion-reveal`} data-reveal data-reveal-delay="170">
+                    {useMediaCard ? <MediaCard hairline={hairline} isDark={isDark}>{media}</MediaCard> : media}
+                  </div>
+                )}
+
+                {cta && <div className="pt-2 motion-reveal" data-reveal data-reveal-delay="240">{cta}</div>}
+              </div>
+            )}
+
+            {align === "split" && (
+              <div className="grid flex-1 grid-cols-1 items-center gap-y-10 pt-10 lg:grid-cols-2 lg:gap-x-[60px]">
+                <div className="motion-reveal" data-reveal data-reveal-delay="80" data-from-left>
+                  {eyebrow && <Mono className={`mb-5 text-[11px] tracking-[0.28em] ${subtle}`}>{eyebrow}</Mono>}
+                  <Serif className="text-balance text-[clamp(40px,5vw,60px)] leading-[1.05]">{headline}</Serif>
+                  {body && <Sans className={`mt-6 max-w-[560px] text-pretty text-base leading-relaxed ${subtle}`}>{body}</Sans>}
+                  {cta && <div className="mt-10">{cta}</div>}
+                </div>
+                {media && (
+                  <div className="motion-reveal" data-reveal data-reveal-delay="200" data-from-right>
+                    {useMediaCard ? <MediaCard hairline={hairline} isDark={isDark}>{media}</MediaCard> : media}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {align === "half" && (
+              <div className="grid flex-1 grid-cols-1 items-center gap-y-10 pt-10 lg:grid-cols-12 lg:gap-x-[60px]">
+                <div className="lg:col-span-5 motion-reveal" data-reveal data-reveal-delay="80" data-from-left>
+                  {eyebrow && <Mono className={`mb-5 text-[11px] tracking-[0.28em] ${subtle}`}>{eyebrow}</Mono>}
+                  <Serif className="text-balance text-[clamp(40px,5vw,56px)] leading-[1.05]">{headline}</Serif>
+                  {body && <Sans className={`mt-6 max-w-[520px] text-pretty text-base leading-relaxed ${subtle}`}>{body}</Sans>}
+                  {cta && <div className="mt-10">{cta}</div>}
+                </div>
+                <div className="lg:col-span-7 motion-reveal" data-reveal data-reveal-delay="200" data-from-right>
+                  {media && (useMediaCard ? <MediaCard hairline={hairline} isDark={isDark}>{media}</MediaCard> : media)}
+                </div>
+              </div>
+            )}
+
+            {align === "stacked" && (
+              <div className="flex flex-1 flex-col justify-start pt-10">
+                <div className="w-full motion-reveal" data-reveal data-reveal-delay="80" data-from-left>
+                  {eyebrow && <Mono className={`mb-5 text-[11px] tracking-[0.28em] ${subtle}`}>{eyebrow}</Mono>}
+                  <Serif className="text-balance text-[clamp(40px,5vw,60px)] leading-[1.05]">{headline}</Serif>
+                  {body && <Sans className={`mt-6 max-w-[620px] text-pretty text-base leading-relaxed ${subtle}`}>{body}</Sans>}
+                  {cta && <div className="mt-10">{cta}</div>}
+                </div>
+                {media && (
+                  <div className={`${mediaWrapClassName || "mt-10 w-full"} motion-reveal`} data-reveal data-reveal-delay="200">
+                    {useMediaCard ? <MediaCard hairline={hairline} isDark={isDark}>{media}</MediaCard> : media}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </section>
+      );
+    }
+
+    function PlaceholderClip({ label, aspect = "aspect-[16/9]" }) {
+      return (
+        <div className={`${aspect} w-full`} aria-label={label} role="img">
+          <div className="absolute inset-0" />
+          <div className="relative h-full w-full">
+            <div className="absolute inset-0">
+              <div className="h-full w-full bg-gradient-to-b from-white/50 to-white/10 dark:from-white/10 dark:to-white/0" />
+              <div className="absolute inset-0 bg-[radial-gradient(900px_500px_at_40%_10%,rgba(255,255,255,0.35),transparent_55%)]" />
+            </div>
+
+            <div className="absolute inset-0 p-6 sm:p-8">
+              <div className="flex items-center justify-between">
+                <div className="h-3 w-24 rounded-full bg-black/10 dark:bg-white/10" />
+                <div className="flex gap-2">
+                  <div className="h-3 w-3 rounded-full bg-black/10 dark:bg-white/10" />
+                  <div className="h-3 w-3 rounded-full bg-black/10 dark:bg-white/10" />
+                  <div className="h-3 w-3 rounded-full bg-black/10 dark:bg-white/10" />
+                </div>
+              </div>
+
+              <div className="mt-8 grid grid-cols-12 gap-4">
+                <div className="col-span-7 space-y-3">
+                  <div className="h-5 w-2/3 rounded-lg bg-black/10 dark:bg-white/10" />
+                  <div className="h-4 w-5/6 rounded-lg bg-black/10 dark:bg-white/10" />
+                  <div className="h-4 w-4/6 rounded-lg bg-black/10 dark:bg-white/10" />
+                  <div className="mt-5 space-y-2">
+                    <div className="h-10 rounded-xl bg-black/10 dark:bg-white/10" />
+                    <div className="h-10 rounded-xl bg-black/10 dark:bg-white/10" />
+                  </div>
+                </div>
+                <div className="col-span-5 space-y-3">
+                  <div className="h-28 rounded-2xl bg-black/10 dark:bg-white/10" />
+                  <div className="h-24 rounded-2xl bg-black/10 dark:bg-white/10" />
+                  <div className="h-20 rounded-2xl bg-black/10 dark:bg-white/10" />
+                </div>
+              </div>
+
+              <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between">
+                <Mono className="text-[11px] tracking-[0.28em] text-black/45 dark:text-white/45">{label}</Mono>
+                <Mono className="text-[11px] tracking-[0.28em] text-black/30 dark:text-white/30">PLACEHOLDER CLIP</Mono>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function SubtleLink({ children, href = "#" }) {
+      return (
+        <a href={href} className="subtle-link inline-flex items-center gap-2" aria-label={typeof children === "string" ? children : "link"}>
+          <Mono className="subtle-link-text text-[11px] tracking-[0.28em] opacity-80">{children}</Mono>
+          <span className="subtle-link-arrow translate-y-[1px] opacity-70">→</span>
+        </a>
+      );
+    }
+
+    /* ── Hooks ── */
+    function useScrolled(threshold = 40) {
+      const [scrolled, setScrolled] = React.useState(false);
+      React.useEffect(() => {
+        const handler = () => setScrolled(window.scrollY > threshold);
+        window.addEventListener("scroll", handler, { passive: true });
+        return () => window.removeEventListener("scroll", handler);
+      }, [threshold]);
+      return scrolled;
+    }
+
+    /* ── Fixed scroll-aware nav ── */
+    function Nav() {
+      const scrolled = useScrolled(40);
+      return (
+        <nav className={`nav-bar flex items-center justify-between px-6 sm:px-10 py-5 ${scrolled ? "nav-scrolled" : ""}`}>
+          <Mono className="text-xs tracking-[0.22em] text-black/70">FLOWD</Mono>
+          <div className="flex items-center gap-6 text-neutral-600">
+            <Mono className="text-[11px] tracking-[0.22em] nav-link opacity-70">Overview</Mono>
+            <Mono className="text-[11px] tracking-[0.22em] nav-link opacity-70">Product</Mono>
+            <a href="#early-access" style={{ textDecoration: "none", color: "inherit" }}>
+              <Mono className="text-[11px] tracking-[0.22em] nav-link opacity-70">Early Access</Mono>
+            </a>
+          </div>
+        </nav>
+      );
+    }
+
+    /* ── Media card with cursor glow + hover lift ── */
+    function MediaCard({ children, hairline, isDark, className = "" }) {
+      const [glow, setGlow] = React.useState({ x: 50, y: 50, show: false });
+      const handleMove = (e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        setGlow({ x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100, show: true });
+      };
+      const handleLeave = () => setGlow(g => ({ ...g, show: false }));
+      return (
+        <div
+          className={`media-card-wrapper relative overflow-hidden rounded-3xl border ${hairline} ${isDark ? "bg-white/5" : "bg-black/5"} shadow-[0_30px_70px_rgba(0,0,0,0.18)] ${className}`}
+          onMouseMove={handleMove}
+          onMouseLeave={handleLeave}
+        >
+          {children}
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              opacity: glow.show ? 1 : 0,
+              transition: "opacity 0.4s ease",
+              background: `radial-gradient(320px 220px at ${glow.x}% ${glow.y}%, ${isDark ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.65)"}, transparent 70%)`,
+            }}
+          />
+        </div>
+      );
+    }
+
+    const HOME_SHOWCASE_PROJECTS = [
+      {
+        id: 1,
+        title: "Ember",
+        subtitle: "ADHD creative idea app",
+        lastActive: "2 hours ago",
+        illustration: `<svg viewBox="0 0 130 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 18 C34 6, 54 31, 74 18 S102 16, 112 18" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 4"/>
+          <line x1="18" y1="34" x2="88" y2="34" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="6 4"/>
+          <circle cx="62" cy="48" r="9" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 4"/>
+          <line x1="34" y1="62" x2="90" y2="62" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="6 4"/>
+          <line x1="50" y1="72" x2="74" y2="72" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="6 4"/>
+          <line x1="34" y1="84" x2="102" y2="84" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="6 4"/>
+        </svg>`,
+      },
+      {
+        id: 2,
+        title: "Music Production",
+        subtitle: "Learning from zero",
+        lastActive: "Yesterday",
+        illustration: `<svg viewBox="0 0 130 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="18" y="10" width="94" height="78" rx="8" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="18" y1="46" x2="112" y2="46" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="65" y1="46" x2="65" y2="88" stroke="#111" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="40" cy="28" r="8" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>`,
+      },
+      {
+        id: 3,
+        title: "Living Systems",
+        subtitle: "Speculative habitats",
+        lastActive: "3 days ago",
+        illustration: `<svg viewBox="0 0 130 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 20 C40 58, 60 58, 108 20" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M22 84 C40 46, 60 46, 108 84" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <rect x="55" y="44" width="20" height="20" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>`,
+      },
+      {
+        id: 4,
+        title: "Mastering",
+        subtitle: "Mix workflows",
+        lastActive: "2023/10/19",
+        illustration: `<svg viewBox="0 0 130 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="50" y="12" width="30" height="80" stroke="#111" stroke-width="1.8" fill="none"/>
+          <line x1="50" y1="28" x2="80" y2="28" stroke="#111" stroke-width="1.8"/>
+          <line x1="50" y1="44" x2="80" y2="44" stroke="#111" stroke-width="1.8"/>
+          <line x1="50" y1="60" x2="80" y2="60" stroke="#111" stroke-width="1.8"/>
+          <line x1="50" y1="76" x2="80" y2="76" stroke="#111" stroke-width="1.8"/>
+          <circle cx="65" cy="20" r="3.2" stroke="#111" stroke-width="1.8" fill="none"/>
+        </svg>`,
+      },
+    ];
+
+    function HomeProjectCard({ project, index }) {
+      return (
+        <div
+          style={{
+            borderRadius: 16,
+            overflow: "hidden",
+            cursor: "default",
+            background: "#ffffff",
+            position: "relative",
+            height: "100%",
+            width: "100%",
+            boxShadow: "0 1px 0 rgba(0,0,0,.03), 0 8px 18px rgba(0,0,0,.05)",
+            transform: "translateY(0)",
+            animation: `homeCardIn .45s cubic-bezier(0.215,0.61,0.355,1) both`,
+            animationDelay: `${index * 0.08}s`,
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: 16,
+              left: 16,
+              right: 16,
+              display: "flex",
+              gap: 16,
+            }}
+          >
+            <span
+              style={{
+                fontFamily: '"Courier New", monospace',
+                fontSize: 10,
+                letterSpacing: "0.05em",
+                textTransform: "uppercase",
+                color: "#888888",
+              }}
+            >
+              {project.lastActive}
+            </span>
+          </div>
+          <div
+            className="home-showcase-card-illustration"
+            style={{
+              position: "absolute",
+              top: 60,
+              left: 16,
+              right: 16,
+              height: 96,
+              overflow: "hidden",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            dangerouslySetInnerHTML={{ __html: project.illustration }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              bottom: 14,
+              left: 16,
+              right: 16,
+            }}
+          >
+            <div
+              style={{
+                fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+                fontSize: 18,
+                fontWeight: 700,
+                color: "#111111",
+                letterSpacing: "-0.5px",
+                marginBottom: 4,
+                lineHeight: 1.2,
+              }}
+            >
+              {project.title}
+            </div>
+            <div
+              style={{
+                fontFamily: '"Space Mono","Courier New",monospace',
+                fontSize: 10,
+                color: "#888888",
+                lineHeight: 1.5,
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+            >
+              {project.subtitle || "No description yet"}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function FlowdHomeShowcase() {
+      return (
+        <div className="home-showcase" style={{ position: "relative", height: "100%", width: "100%", background: "#F0F0ED" }}>
+          <style>{`
+            @keyframes homeCardIn {
+              from { opacity: 0; transform: translateY(12px); }
+              to { opacity: 1; transform: translateY(0); }
+            }
+            .home-showcase .home-showcase-card-illustration svg {
+              width: 90%;
+              height: 90%;
+            }
+          `}</style>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "16px 24px 24px",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: '"Space Mono","Courier New",monospace',
+                fontSize: 10,
+                fontWeight: 400,
+                textTransform: "uppercase",
+                color: "#888888",
+                letterSpacing: "0.05em",
+                marginTop: 24,
+              }}
+            >
+              Flowd
+            </span>
+          </div>
+
+          <div
+            style={{
+              padding: "0 16px 100px",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gridAutoRows: 265,
+              gap: 12,
+            }}
+          >
+            {HOME_SHOWCASE_PROJECTS.map((project, index) => (
+              <HomeProjectCard key={project.id} project={project} index={index} />
+            ))}
+          </div>
+
+          <button
+            type="button"
+            style={{
+              position: "absolute",
+              bottom: 24,
+              left: "50%",
+              transform: "translateX(-50%)",
+              background: "#111111",
+              border: "none",
+              cursor: "default",
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              padding: "14px 20px",
+              borderRadius: 51,
+              boxShadow: "0px 4px 28px rgba(38,38,38,0.42)",
+              zIndex: 20,
+              whiteSpace: "nowrap",
+            }}
+          >
+            <span
+              style={{
+                width: 20,
+                height: 20,
+                borderRadius: 51,
+                background: "#ffffff",
+                color: "#111111",
+                fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+                fontSize: 14,
+                fontWeight: 600,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+                lineHeight: 1,
+              }}
+            >
+              +
+            </span>
+            <span
+              style={{
+                fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+                fontSize: 16,
+                fontWeight: 600,
+                color: "#ffffff",
+                lineHeight: 1.2,
+              }}
+            >
+              New Entry
+            </span>
+          </button>
+        </div>
+      );
+    }
+
+    function FlowdProjectMobileShowcase() {
+      return (
+        <div className="landing-project-mobile-wrap" role="img" aria-label="Flowd project view mobile screen">
+          <div className="landing-project-mobile-frame">
+            <div className="landing-project-mobile-screen">
+              <div className="landing-project-mobile-scroll">
+                <div className="landing-project-mobile-nav">
+                  <div className="landing-project-mobile-nav-left">
+                    <button className="landing-project-mobile-back" aria-hidden="true">←</button>
+                    <span className="landing-project-mobile-back-label">Back to Archive</span>
+                  </div>
+                  <button className="landing-project-mobile-menu" aria-hidden="true">⋮</button>
+                </div>
+
+                <div className="landing-project-mobile-header">
+                  <div className="landing-project-mobile-meta">2 hours ago</div>
+                  <h2 className="landing-project-mobile-title">Flowd</h2>
+                  <p className="landing-project-mobile-sub">
+                    Notes, links, media, and chat stay together as one project memory.
+                  </p>
+                </div>
+
+                <div className="landing-project-mobile-tabs" aria-hidden="true">
+                  <button className="landing-project-mobile-tab active">
+                    <span className="landing-project-mobile-tab-dot" />
+                    Now
+                  </button>
+                  <button className="landing-project-mobile-tab">
+                    <span className="landing-project-mobile-tab-dot" />
+                    The Thoughts
+                  </button>
+                  <button className="landing-project-mobile-tab">
+                    <span className="landing-project-mobile-tab-dot" />
+                    The Thread
+                  </button>
+                </div>
+
+                <div className="landing-project-mobile-cards">
+                  <article className="landing-project-mobile-card">
+                    <div className="landing-project-mobile-card-header">
+                      <span className="landing-project-mobile-card-label">Framing</span>
+                      <span className="landing-project-mobile-card-meta">updated 1d ago</span>
+                    </div>
+                    <h3 className="landing-project-mobile-card-title">Where you are right now</h3>
+                    <p className="landing-project-mobile-card-body">
+                      A thinking space where notes, links, media, and conversation are equal inputs, and AI maintains project state across sessions.
+                    </p>
+                    <div className="landing-project-mobile-card-divider" />
+                    <div className="landing-project-mobile-card-list">
+                      <button className="landing-project-mobile-card-row">
+                        <div className="landing-project-mobile-card-main">
+                          <span className="landing-project-mobile-card-row-text">AI keeps state across sessions</span>
+                          <span className="landing-project-mobile-card-row-source">project framing · now</span>
+                        </div>
+                        <span className="landing-project-mobile-card-arrow">→</span>
+                      </button>
+                      <button className="landing-project-mobile-card-row">
+                        <div className="landing-project-mobile-card-main">
+                          <span className="landing-project-mobile-card-row-text">Conversation is one equal input type</span>
+                          <span className="landing-project-mobile-card-row-source">system principle · locked</span>
+                        </div>
+                        <span className="landing-project-mobile-card-arrow">→</span>
+                      </button>
+                    </div>
+                  </article>
+
+                  <article className="landing-project-mobile-card">
+                    <div className="landing-project-mobile-card-header">
+                      <span className="landing-project-mobile-card-label">Pivots</span>
+                      <span className="landing-project-mobile-card-meta">updated 2d ago</span>
+                    </div>
+                    <h3 className="landing-project-mobile-card-title">How you came here</h3>
+                    <p className="landing-project-mobile-card-body">
+                      Started as an ADHD idea browser, then reframed into a Thinking Space once re-entry became the core problem.
+                    </p>
+                    <div className="landing-project-mobile-card-divider" />
+                    <div className="landing-project-mobile-card-list">
+                      <button className="landing-project-mobile-card-row">
+                        <div className="landing-project-mobile-card-main">
+                          <span className="landing-project-mobile-card-row-text">From capture tool to re-entry engine</span>
+                          <span className="landing-project-mobile-card-row-source">pivot · 3 days ago</span>
+                        </div>
+                        <span className="landing-project-mobile-card-arrow">→</span>
+                      </button>
+                      <button className="landing-project-mobile-card-row">
+                        <div className="landing-project-mobile-card-main">
+                          <span className="landing-project-mobile-card-row-text">From chatbot framing to thinking space</span>
+                          <span className="landing-project-mobile-card-row-source">reframe · 2 days ago</span>
+                        </div>
+                        <span className="landing-project-mobile-card-arrow">→</span>
+                      </button>
+                    </div>
+                  </article>
+
+                  <article className="landing-project-mobile-card">
+                    <div className="landing-project-mobile-card-header">
+                      <span className="landing-project-mobile-card-label">Decisions</span>
+                      <span className="landing-project-mobile-card-meta">3</span>
+                    </div>
+                    <h3 className="landing-project-mobile-card-title">Decisions you made</h3>
+                    <p className="landing-project-mobile-card-body">
+                      Core calls are surfaced directly so the team can move forward without re-reading sessions.
+                    </p>
+                    <div className="landing-project-mobile-card-divider" />
+                    <div className="landing-project-mobile-card-list">
+                      <button className="landing-project-mobile-card-row">
+                        <div className="landing-project-mobile-card-main">
+                          <span className="landing-project-mobile-card-row-text">Position as Thinking OS — not a whiteboard, not a chatbot</span>
+                          <span className="landing-project-mobile-card-row-source">from conversation · 3 days ago</span>
+                        </div>
+                        <span className="landing-project-mobile-card-arrow">→</span>
+                      </button>
+                    </div>
+                  </article>
+
+                  <article className="landing-project-mobile-card">
+                    <div className="landing-project-mobile-card-header">
+                      <span className="landing-project-mobile-card-label">Open Questions</span>
+                      <span className="landing-project-mobile-card-meta">3</span>
+                    </div>
+                    <h3 className="landing-project-mobile-card-title">What's still open</h3>
+                    <p className="landing-project-mobile-card-body">
+                      The live tensions are around context interaction, signature moments, and the wrap/commit experience.
+                    </p>
+                    <div className="landing-project-mobile-card-divider" />
+                    <div className="landing-project-mobile-card-list">
+                      <button className="landing-project-mobile-card-row">
+                        <div className="landing-project-mobile-card-main">
+                          <span className="landing-project-mobile-card-row-text">How should Context Dock feel as an interaction?</span>
+                          <span className="landing-project-mobile-card-row-source">open · 1 day ago</span>
+                        </div>
+                        <span className="landing-project-mobile-card-arrow">→</span>
+                      </button>
+                      <button className="landing-project-mobile-card-row">
+                        <div className="landing-project-mobile-card-main">
+                          <span className="landing-project-mobile-card-row-text">What makes Flowd uniquely not-Miro?</span>
+                          <span className="landing-project-mobile-card-row-source">open · 2 days ago</span>
+                        </div>
+                        <span className="landing-project-mobile-card-arrow">→</span>
+                      </button>
+                    </div>
+                  </article>
+
+                  <article className="landing-project-mobile-card">
+                    <div className="landing-project-mobile-card-header">
+                      <span className="landing-project-mobile-card-label">Next</span>
+                      <span className="landing-project-mobile-card-meta">3 moves</span>
+                    </div>
+                    <h3 className="landing-project-mobile-card-title">Where you can go</h3>
+                    <p className="landing-project-mobile-card-body">
+                      Continue where you left off, think through the hottest open question, or test a fresh angle.
+                    </p>
+                    <div className="landing-project-mobile-card-divider" />
+                    <div className="landing-project-mobile-card-list">
+                      <button className="landing-project-mobile-card-row">
+                        <div className="landing-project-mobile-card-main">
+                          <span className="landing-project-mobile-card-row-text">Continue: Raw vs Organized Split</span>
+                          <span className="landing-project-mobile-card-row-source">picked up 2 days ago</span>
+                        </div>
+                        <span className="landing-project-mobile-card-arrow">→</span>
+                      </button>
+                      <button className="landing-project-mobile-card-row">
+                        <div className="landing-project-mobile-card-main">
+                          <span className="landing-project-mobile-card-row-text">Explore: first-time user in 60 seconds</span>
+                          <span className="landing-project-mobile-card-row-source">✦ drift suggests</span>
+                        </div>
+                        <span className="landing-project-mobile-card-arrow">→</span>
+                      </button>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function ThoughtsCardsCollage() {
+      return (
+        <div className="landing-process-grid-wrap py-2" role="img" aria-label="Flowd thoughts card collage">
+          <div className="landing-process-grid">
+            <div className="landing-process-card landing-process-card--square">
+              <div className="landing-process-meta">
+                <span className="landing-process-meta-item">2026/03/04</span>
+                <span className="landing-process-meta-item">note.txt</span>
+              </div>
+              <div className="landing-process-note-body">
+                Three zones: Now, Thoughts, Thread. Raw capture first, structure later.
+              </div>
+            </div>
+
+            <div className="landing-process-card landing-process-card--square">
+              <div className="landing-process-meta">
+                <span className="landing-process-meta-item">2026/03/03</span>
+                <span className="landing-process-meta-item">link.url</span>
+              </div>
+              <div className="landing-process-link-main">
+                <div className="landing-process-link-logo">⌘</div>
+                <div className="landing-process-link-text">
+                  <span className="landing-process-link-title">Thinking OS references</span>
+                  <span className="landing-process-link-url">flowd.run/research/context-systems</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="landing-process-card landing-process-card--square landing-process-card--image">
+              <img
+                src="https://i.pinimg.com/avif/736x/c9/28/89/c92889fb0316cbd99c518fdfadeeed57.avf"
+                alt=""
+                className="landing-process-image"
+              />
+            </div>
+
+            <div className="landing-process-card landing-process-card--square landing-process-card--decision">
+              <div className="landing-process-meta">
+                <span className="landing-process-meta-item">2026/03/05</span>
+              </div>
+              <div className="landing-process-decision-body">
+                <div className="landing-process-decision-line">
+                  <span className="landing-process-decision-check">✓</span>
+                  <span className="landing-process-decision-text">Start with mobile only</span>
+                </div>
+                <div className="landing-process-decision-line">
+                  <span className="landing-process-decision-check">✓</span>
+                  <span className="landing-process-decision-text">Position as Thinking OS</span>
+                </div>
+              </div>
+              <span className="landing-process-decision-label">✓ decided</span>
+            </div>
+
+            <div className="landing-process-card landing-process-card--doc">
+              <div className="process-doc-card">
+                <div className="process-doc-top">
+                  <span className="process-doc-type">PROJECT BRIEF</span>
+                  <span className="process-doc-icon" aria-hidden="true">📄</span>
+                </div>
+                <h3 className="process-doc-title">Flowd — Project Brief</h3>
+                <p className="process-doc-preview">
+                  A thinking space where notes, links, media, and conversation are equal inputs.
+                </p>
+                <div className="process-doc-bottom">
+                  <button className="process-doc-open">OPEN →</button>
+                  <span className="process-doc-updated">updated 2d</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function NowCardsShowcase() {
+      return (
+        <div className="landing-now-wrap py-[60px]" role="img" aria-label="Flowd now tab cards">
+          <div className="landing-now-stack">
+            <div className="landing-now-card">
+              <div className="landing-now-header">
+                <span className="landing-now-label">Framing</span>
+                <span className="landing-now-count">updated 1d ago</span>
+              </div>
+              <h3 className="landing-now-title">Where you are right now</h3>
+              <p className="landing-now-summary">
+                A thinking space where notes, links, media, and conversation are equal inputs — and AI maintains project state across sessions.
+              </p>
+              <div className="landing-now-divider" />
+              <div className="landing-now-list">
+                <div className="landing-now-row">
+                  <div className="landing-now-main">
+                    <span className="landing-now-text">AI keeps state across sessions</span>
+                    <span className="landing-now-source">project framing · now</span>
+                  </div>
+                  <span className="landing-now-arrow">→</span>
+                </div>
+                <div className="landing-now-row">
+                  <div className="landing-now-main">
+                    <span className="landing-now-text">Conversation is one equal input type</span>
+                    <span className="landing-now-source">system principle · locked</span>
+                  </div>
+                  <span className="landing-now-arrow">→</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="landing-now-card">
+              <div className="landing-now-header">
+                <span className="landing-now-label">Pivots</span>
+                <span className="landing-now-count">updated 2d ago</span>
+              </div>
+              <h3 className="landing-now-title">How you came here</h3>
+              <p className="landing-now-summary">
+                Started as an ADHD idea browser, then reframed into a Thinking Space once re-entry became the core problem.
+              </p>
+              <div className="landing-now-divider" />
+              <div className="landing-now-list">
+                <div className="landing-now-row">
+                  <div className="landing-now-main">
+                    <span className="landing-now-text">From capture tool to re-entry engine</span>
+                    <span className="landing-now-source">pivot · 3 days ago</span>
+                  </div>
+                  <span className="landing-now-arrow">→</span>
+                </div>
+                <div className="landing-now-row">
+                  <div className="landing-now-main">
+                    <span className="landing-now-text">From chatbot framing to thinking space</span>
+                    <span className="landing-now-source">reframe · 2 days ago</span>
+                  </div>
+                  <span className="landing-now-arrow">→</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="landing-now-card">
+              <div className="landing-now-header">
+                <span className="landing-now-label">Decisions</span>
+                <span className="landing-now-count">3</span>
+              </div>
+              <h3 className="landing-now-title">Decisions you made</h3>
+              <p className="landing-now-summary">
+                Core calls are surfaced directly so you can move forward without re-reading long history.
+              </p>
+              <div className="landing-now-divider" />
+              <div className="landing-now-list">
+                <div className="landing-now-row">
+                  <div className="landing-now-main">
+                    <span className="landing-now-text">Position as Thinking OS — not a whiteboard, not a chatbot</span>
+                    <span className="landing-now-source">from conversation · 3 days ago</span>
+                  </div>
+                  <span className="landing-now-arrow">→</span>
+                </div>
+                <div className="landing-now-row">
+                  <div className="landing-now-main">
+                    <span className="landing-now-text">Notes, links, media, and conversation are peer input methods</span>
+                    <span className="landing-now-source">from conversation · 2 days ago</span>
+                  </div>
+                  <span className="landing-now-arrow">→</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="landing-now-card">
+              <div className="landing-now-header">
+                <span className="landing-now-label">Open questions</span>
+                <span className="landing-now-count">3</span>
+              </div>
+              <h3 className="landing-now-title">What's still open</h3>
+              <p className="landing-now-summary">
+                The most alive unresolved questions stay visible and ready to resume in context.
+              </p>
+              <div className="landing-now-divider" />
+              <div className="landing-now-list">
+                <div className="landing-now-row">
+                  <div className="landing-now-main">
+                    <span className="landing-now-text">How should Context Dock feel as an interaction?</span>
+                    <span className="landing-now-source">open · 1 day ago</span>
+                  </div>
+                  <span className="landing-now-arrow">→</span>
+                </div>
+                <div className="landing-now-row">
+                  <div className="landing-now-main">
+                    <span className="landing-now-text">What makes Drift/Flowd uniquely not-Miro?</span>
+                    <span className="landing-now-source">open · 2 days ago</span>
+                  </div>
+                  <span className="landing-now-arrow">→</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="landing-now-card">
+              <div className="landing-now-header">
+                <span className="landing-now-label">Next</span>
+                <span className="landing-now-count">3 moves</span>
+              </div>
+              <h3 className="landing-now-title">Where you can go</h3>
+              <p className="landing-now-summary">
+                Suggested continuations keep momentum: one continuation, one live question, one new angle.
+              </p>
+              <div className="landing-now-divider" />
+              <div className="landing-now-list">
+                <div className="landing-now-row">
+                  <div className="landing-now-main">
+                    <span className="landing-now-text">Continue: Raw vs Organized Split</span>
+                    <span className="landing-now-source">picked up 2 days ago</span>
+                  </div>
+                  <span className="landing-now-arrow">→</span>
+                </div>
+                <div className="landing-now-row">
+                  <div className="landing-now-main">
+                    <span className="landing-now-text">Explore: first-time user in 60 seconds</span>
+                    <span className="landing-now-source">✦ drift suggests</span>
+                  </div>
+                  <span className="landing-now-arrow">→</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function ThreadCardsShowcase() {
+      return (
+        <div className="relative mx-auto w-[430px] py-2" role="img" aria-label="Flowd thread cards">
+          <div className="landing-thread-list">
+            <div className="landing-thread-card">
+              <div className="landing-thread-card-header">
+                <span className="landing-thread-ts">2h ago</span>
+                <span className="landing-thread-session">· session 12</span>
+                <span className="landing-thread-type-tag landing-thread-type-tag--deciding">DECIDING</span>
+              </div>
+              <div className="landing-thread-title">Raw vs Organized Split</div>
+              <div className="landing-thread-key-exchange">
+                <p className="landing-thread-ke-user">If everything is capture-first, how do users not drown in clutter?</p>
+                <p className="landing-thread-ke-ai">Keep capture raw in Thoughts, then let Now and Thread do the organizing so users always return to a clear state.</p>
+              </div>
+            </div>
+
+            <div className="landing-thread-card">
+              <div className="landing-thread-card-header">
+                <span className="landing-thread-ts">1d ago</span>
+                <span className="landing-thread-session">· session 11</span>
+                <span className="landing-thread-type-tag landing-thread-type-tag--reframing">REFRAMING</span>
+              </div>
+              <div className="landing-thread-title">Thinking Space, not chatbot</div>
+              <div className="landing-thread-key-exchange">
+                <p className="landing-thread-ke-user">People keep reading this like another AI chat app.</p>
+                <p className="landing-thread-ke-ai">Position it as a thinking space where conversation is one artifact type among notes, links, images, and docs.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function ThreadChatShowcase() {
+      return (
+        <div className="relative mx-auto w-[430px] py-2" role="img" aria-label="Flowd chat view">
+          <div className="landing-thread-chat">
+            <div className="landing-thread-chat-header">
+              <span className="landing-thread-chat-label">Chat session</span>
+              <span className="landing-thread-chat-time">session 12</span>
+            </div>
+            <div className="landing-thread-chat-messages">
+              <div className="landing-thread-chat-msg landing-thread-chat-msg--user">
+                <p className="landing-thread-chat-bubble">If everything is capture-first, how do users not drown in clutter?</p>
+              </div>
+              <div className="landing-thread-chat-msg landing-thread-chat-msg--ai">
+                <p className="landing-thread-chat-bubble">Keep capture raw in Thoughts, then let Now and Thread do the organizing so users always return to a clear state.</p>
+              </div>
+              <div className="landing-thread-chat-msg landing-thread-chat-msg--user">
+                <p className="landing-thread-chat-bubble">People keep reading this like another AI chat app, how should we frame it?</p>
+              </div>
+              <div className="landing-thread-chat-msg landing-thread-chat-msg--ai">
+                <p className="landing-thread-chat-bubble">Position it as a thinking space where conversation is one artifact type among notes, links, images, and docs.</p>
+              </div>
+            </div>
+            <div className="landing-thread-chat-input-row" aria-hidden="true">
+              <div className="landing-thread-chat-ta">Talk through your idea...</div>
+              <div className="landing-thread-chat-send">↗</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function ThreadFlowShowcase() {
+      return (
+        <div className="landing-thread-flow" role="img" aria-label="Chat turns into thread segments">
+          <ThreadChatShowcase />
+          <div className="landing-thread-flow-arrow" aria-hidden="true">→</div>
+          <ThreadCardsShowcase />
+        </div>
+      );
+    }
+
+    function CollaborationFramesShowcase() {
+      return (
+        <div className="mx-auto w-full py-2" role="img" aria-label="Collaboration frames">
+          <div className="landing-collab-layout">
+            <div className="landing-collab-col">
+              <div className="landing-collab-label">You bring the thinking</div>
+              <div className="landing-raw-item">"oh great because right now my project is in js/react. how can i turn it into an ios app?"</div>
+              <div className="landing-raw-item">"drop a brainfart here..."</div>
+              <div className="landing-raw-item">"im more and more realizing this tab is almost the product"</div>
+              <div className="landing-raw-item">"maybe the tab should be called something else? the pulse? now?"</div>
+            </div>
+            <div className="landing-collab-mid">
+              <div className="landing-collab-line" />
+              <div className="landing-collab-mid-label">Flowd</div>
+              <div className="landing-collab-line" />
+            </div>
+            <div className="landing-collab-col">
+              <div className="landing-collab-label">Flowd organizes it</div>
+              <div className="landing-res-item">
+                <div className="landing-res-tag">Decided</div>
+                <div className="landing-res-text">React Native as iOS migration path</div>
+              </div>
+              <div className="landing-res-item">
+                <div className="landing-res-tag landing-res-tag--amber">Open question</div>
+                <div className="landing-res-text">What name for the central tab?</div>
+              </div>
+              <div className="landing-res-item">
+                <div className="landing-res-tag">Reframe</div>
+                <div className="landing-res-text">Now tab is the entire user-facing product</div>
+              </div>
+              <div className="landing-res-item">
+                <div className="landing-res-tag">Next move</div>
+                <div className="landing-res-text">Think about: tab naming direction</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function QuoteShowcase() {
+      return (
+        <section className="landing-quote-section" aria-label="Tester quote">
+          <div className="landing-quote-wrap">
+            <div className="landing-quote-card">
+              <span className="landing-quote-mark">"</span>
+              <p className="landing-quote-text">
+                I used to have 40 voice memos and 12 half-finished Notion pages. Flowd is the first thing that&apos;s actually kept up with my brain.
+              </p>
+              <span className="landing-quote-attribution">Early tester — product designer, London</span>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function DifferentFeaturesShowcase() {
+      return (
+        <div className="w-full py-2" role="img" aria-label="What makes it different">
+          <div className="landing-diff-grid">
+            <div className="landing-diff-card">
+              <span className="landing-diff-icon">⚡</span>
+              <span className="landing-diff-label">Initiation</span>
+              <h3 className="landing-diff-title">Low initiation<br />cost</h3>
+              <hr className="landing-diff-rule" />
+              <p className="landing-diff-desc">Flowd minimizes the amount of structure required to begin. Capture can start before naming, organizing, or deciding what something is.</p>
+            </div>
+
+            <div className="landing-diff-card landing-diff-card--dark">
+              <span className="landing-diff-icon">↻</span>
+              <span className="landing-diff-label">Re-entry</span>
+              <h3 className="landing-diff-title">Stateful<br />re-entry</h3>
+              <hr className="landing-diff-rule" />
+              <p className="landing-diff-desc">Work rarely continues in one uninterrupted line. Flowd helps users return to a project by restoring context, current state, and likely next points of action.</p>
+            </div>
+
+            <div className="landing-diff-card">
+              <span className="landing-diff-icon">💬</span>
+              <span className="landing-diff-label">Dialogue</span>
+              <h3 className="landing-diff-title">Dialogic<br />thinking</h3>
+              <hr className="landing-diff-rule" />
+              <p className="landing-diff-desc">Thinking is often clarified through exchange. Flowd preserves AI conversation as part of the project record, rather than treating it as disposable chat.</p>
+            </div>
+
+            <div className="landing-diff-card landing-diff-card--amber">
+              <span className="landing-diff-icon">≡</span>
+              <span className="landing-diff-label">Memory</span>
+              <h3 className="landing-diff-title">Persistent project<br />memory</h3>
+              <hr className="landing-diff-rule" />
+              <p className="landing-diff-desc">Project context should not be scattered across notes, chats, and fragments. Flowd keeps evolving materials within one continuous thread.</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function FlowdLandingPage() {
+      React.useEffect(() => {
+        const nodes = Array.from(document.querySelectorAll("[data-reveal]"));
+        if (nodes.length === 0) return undefined;
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              // Apply staggered delay from data attribute before triggering transition
+              const delay = entry.target.dataset.revealDelay || "0";
+              entry.target.style.setProperty("--reveal-delay", `${delay}ms`);
+              entry.target.classList.add("in-view");
+              observer.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.10, rootMargin: "0px 0px -6% 0px" },
+        );
+        nodes.forEach((node) => observer.observe(node));
+        return () => observer.disconnect();
+      }, []);
+
+      return (
+        <div className="min-h-screen w-full bg-[#F0F0ED]">
+          <Nav />
+          <Section
+            id="hero"
+            vAlign="center"
+            tone="light"
+            sectionClassName="min-h-screen"
+            containerClassName="min-h-screen"
+            eyebrow={<span className="opacity-60">A SPECULATIVE PROJECT · 2026</span>}
+            headline={
+              <span style={{ fontSize: "72px", lineHeight: "1.04" }}>
+                A creative space for
+                <br />
+                <em className="opacity-40">non-linear thinking.</em>
+              </span>
+            }
+            body={
+              <span className="mx-auto block max-w-[560px]">
+                Flowd is a thinking space built for how ADHD brains actually work — raw and fast in, organized over time, always where you left off.
+              </span>
+            }
+            cta={<SubtleLink href="#early-access">EARLY ACCESS</SubtleLink>}
+            align="center"
+          />
+
+          <section className="relative w-full min-h-[90vh] bg-[#F0F0ED]">
+            <div className="mx-auto max-w-[1200px] px-6 pb-8 sm:px-10">
+              <div className="motion-reveal" data-reveal data-reveal-delay="120">
+                <FlowdProjectMobileShowcase />
+              </div>
+            </div>
+          </section>
+
+          <Section
+            id="different"
+            tone="light"
+            eyebrow="WHAT MAKES IT DIFFERENT"
+            headline={
+              <>
+                Built for the way
+                <br />
+                <span className="italic opacity-40">creative brains work.</span>
+              </>
+            }
+            sectionClassName="min-h-[72vh]"
+            containerClassName="pt-10 pb-10"
+            media={<DifferentFeaturesShowcase />}
+            align="center"
+            useMediaCard={false}
+            allowOverflow={true}
+          />
+
+          <Section
+            id="thesis"
+            tone="light"
+            headline={
+              <>
+                <span className="italic opacity-40">Not a whiteboard.</span>
+                <br />
+                <span className="italic opacity-40">Not a chatbot.</span>
+                <br />
+                A thinking space.
+              </>
+            }
+            body={
+              <>
+                Drop a note. Share a link. Have a conversation.
+                <br />
+                Everything becomes context. Nothing gets lost.
+              </>
+            }
+            align="center"
+          />
+
+          <Section
+            id="process"
+            tone="light"
+            eyebrow="THE PROCESS"
+            headline={
+              <>
+                <span className="whitespace-nowrap">Capture everything.</span>
+                <br />
+                <span className="italic opacity-40">Organize nothing.</span>
+              </>
+            }
+            body={
+              <div className="max-w-[620px] text-left">
+                <p className="m-0 text-[16px] leading-[1.45] text-neutral-400">
+                  Raw materials live here. Images, notes, links, decisions, conversations — all artifact types treated equally. Nothing is filed or categorized.
+                </p>
+              </div>
+            }
+            media={<ThoughtsCardsCollage />}
+            align="stacked"
+            sectionClassName="min-h-[72vh]"
+            containerClassName="pt-16 pb-10"
+            useMediaCard={false}
+            allowOverflow={true}
+          />
+
+          <Section
+            id="thread"
+            tone="light"
+            eyebrow="THE THREAD"
+            headline={
+              <>
+                Thinking as a readable
+                <br />
+                <span className="italic opacity-40">sequence.</span>
+              </>
+            }
+            body={
+              <div className="max-w-[620px] text-left">
+                <p className="m-0 text-[16px] leading-[1.45] text-neutral-400">
+                  Each session is segmented by topic and intent — exploring, deciding, reframing. Named, typed, and tappable. The raw chat stays in the background.
+                </p>
+              </div>
+            }
+            media={<ThreadFlowShowcase />}
+            align="stacked"
+            sectionClassName="min-h-[72vh]"
+            containerClassName="pt-16 pb-10"
+            useMediaCard={false}
+            allowOverflow={true}
+          />
+
+          <Section
+            id="now"
+            tone="light"
+            eyebrow="THE NOW TAB"
+            headline={
+              <>
+                A clear state
+                <br />
+                <span className="italic opacity-40">on every return.</span>
+              </>
+            }
+            body={
+              <div className="max-w-[620px] text-left">
+                <p className="m-0 text-[16px] leading-[1.45] text-neutral-400">
+                  On each project open, Flowd synthesizes the captured material into a navigable index — current framing, decisions made, open questions, and suggested next moves.
+                </p>
+              </div>
+            }
+            media={<NowCardsShowcase />}
+            align="stacked"
+            sectionClassName="min-h-[72vh]"
+            containerClassName="pt-16 pb-10"
+            useMediaCard={false}
+            allowOverflow={true}
+          />
+
+          <Section
+            id="collaboration"
+            tone="light"
+            eyebrow="HUMAN × AI"
+            headline={
+              <>
+                AI doesn't organize <span className="italic opacity-40">for you.</span>
+                <br />
+                It organizes <span className="italic opacity-40">with you.</span>
+              </>
+            }
+            body={
+              <>
+                Flowd makes a first pass. You refine what's wrong. The framing is always yours.
+                The structure is always current.
+              </>
+            }
+            media={<CollaborationFramesShowcase />}
+            align="center"
+            useMediaCard={false}
+            allowOverflow={true}
+          />
+
+          <QuoteShowcase />
+
+          <section id="early-access" className="relative min-h-[72vh] w-full overflow-hidden bg-[#111111] text-neutral-50">
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background: "radial-gradient(900px 520px at 50% 0%, rgba(255,255,255,0.10), transparent 60%)",
+                animation: "breathe 7s ease-in-out infinite",
+              }}
+            />
+            <div className="relative mx-auto flex min-h-[72vh] max-w-[1200px] flex-col items-center justify-center px-6 py-16 sm:px-10">
+              <div className="mt-12 text-center motion-reveal" data-reveal data-reveal-delay="150">
+                <Mono className="text-[11px] tracking-[0.28em] text-white/70">REQUEST ACCESS · 2026</Mono>
+              </div>
+
+              <Serif
+                className="mt-8 text-center text-balance text-[clamp(44px,5vw,72px)] leading-[1.03]"
+              >
+                Flowd is in
+                <br />
+                <span className="italic opacity-40">early development.</span>
+              </Serif>
+
+              <p
+                className="mt-8 text-center text-white/45 motion-reveal"
+                data-reveal
+                data-reveal-delay="170"
+                style={{
+                  fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"',
+                  fontSize: "14px",
+                }}
+              >
+                Feedback and questions are welcome.
+              </p>
+
+              <form
+                className="mt-20 w-full max-w-[520px] motion-reveal"
+                data-reveal
+                data-reveal-delay="210"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  alert("Thanks — request sent.");
+                }}
+              >
+                <div className="cta-input-wrap flex w-full items-center gap-3 rounded-2xl border border-white/15 bg-white/5 p-2">
+                  <input
+                    type="email"
+                    required
+                    placeholder="Email"
+                    className="w-full bg-transparent px-4 py-3 text-base text-white placeholder:text-white/40 focus:outline-none"
+                    style={{ fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"' }}
+                  />
+                  <button
+                    type="submit"
+                    className="cta-submit-btn whitespace-nowrap rounded-xl bg-white px-4 py-3 text-sm font-semibold text-neutral-950 opacity-90"
+                    style={{ fontFamily: '"Space Mono", "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace', fontSize: "12px", letterSpacing: "0.12em" }}
+                  >
+                    REQUEST ACCESS →
+                  </button>
+                </div>
+                <Mono className="mt-4 text-center text-[11px] tracking-[0.28em] text-white/55">
+                  No spam. Request access invites only.
+                </Mono>
+              </form>
+
+              <div className="mt-16 flex w-full max-w-[1200px] flex-col items-center justify-between gap-4 border-t border-white/10 pt-10 sm:flex-row motion-reveal" data-reveal data-reveal-delay="270">
+                <Mono className="text-[11px] tracking-[0.28em] text-white/45">© {new Date().getFullYear()} FLOWD</Mono>
+                <div className="flex items-center gap-6">
+                  <a className="text-white/55 hover:text-white" href="#hero">
+                    <Mono className="text-[11px] tracking-[0.28em]">Back to top</Mono>
+                  </a>
+                  <a className="text-white/55 hover:text-white" href="#now">
+                    <Mono className="text-[11px] tracking-[0.28em]">Now Tab</Mono>
+                  </a>
+                  <a className="text-white/55 hover:text-white" href="#process">
+                    <Mono className="text-[11px] tracking-[0.28em]">Process</Mono>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<FlowdLandingPage />);
+  </script>
+</body>
+</html>
