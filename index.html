@@ -10,8 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     html, body, #root { height: 100%; }
+    html { scroll-behavior: smooth; }
     html, body { overflow-x: hidden; }
-    body { margin: 0; background: #F0F0ED; animation: pageFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    body { margin: 0; background: #E8E8E4; animation: pageFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
     @keyframes pageFadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -43,7 +44,7 @@
     .motion-reveal .landing-diff-grid > .landing-diff-card,
     .motion-reveal .landing-thread-chat,
     .motion-reveal .landing-thread-list > .landing-thread-card,
-    .motion-reveal .landing-project-mobile-cards > .landing-project-mobile-card,
+    .motion-reveal .landing-thoughts-mobile-masonry .landing-thoughts-card,
     .motion-reveal .landing-collab-col:first-child .landing-raw-item,
     .motion-reveal .landing-collab-col:last-child .landing-res-item {
       opacity: 0;
@@ -58,7 +59,7 @@
     .motion-reveal.in-view .landing-diff-grid > .landing-diff-card,
     .motion-reveal.in-view .landing-thread-chat,
     .motion-reveal.in-view .landing-thread-list > .landing-thread-card,
-    .motion-reveal.in-view .landing-project-mobile-cards > .landing-project-mobile-card,
+    .motion-reveal.in-view .landing-thoughts-mobile-masonry .landing-thoughts-card,
     .motion-reveal.in-view .landing-collab-col:first-child .landing-raw-item,
     .motion-reveal.in-view .landing-collab-col:last-child .landing-res-item {
       opacity: 1;
@@ -85,16 +86,16 @@
     .motion-reveal .landing-thread-chat { transition-delay: 90ms; }
     .motion-reveal .landing-thread-list > .landing-thread-card:nth-child(1) { transition-delay: 320ms; }
     .motion-reveal .landing-thread-list > .landing-thread-card:nth-child(2) { transition-delay: 500ms; }
-    /* Project mobile cards: top -> bottom */
-    .motion-reveal .landing-project-mobile-cards > .landing-project-mobile-card {
+    /* Thoughts mobile cards: top -> bottom */
+    .motion-reveal .landing-thoughts-mobile-masonry .landing-thoughts-card {
       transform: translateY(48px);
       transition-duration: 920ms;
     }
-    .motion-reveal .landing-project-mobile-cards > .landing-project-mobile-card:nth-child(1) { transition-delay: 120ms; }
-    .motion-reveal .landing-project-mobile-cards > .landing-project-mobile-card:nth-child(2) { transition-delay: 320ms; }
-    .motion-reveal .landing-project-mobile-cards > .landing-project-mobile-card:nth-child(3) { transition-delay: 520ms; }
-    .motion-reveal .landing-project-mobile-cards > .landing-project-mobile-card:nth-child(4) { transition-delay: 720ms; }
-    .motion-reveal .landing-project-mobile-cards > .landing-project-mobile-card:nth-child(5) { transition-delay: 920ms; }
+    .motion-reveal .landing-thoughts-card-chat { transition-delay: 120ms; }
+    .motion-reveal .landing-thoughts-card-image { transition-delay: 280ms; }
+    .motion-reveal .landing-thoughts-card-note { transition-delay: 440ms; }
+    .motion-reveal .landing-thoughts-card-decision { transition-delay: 600ms; }
+    .motion-reveal .landing-thoughts-card-link { transition-delay: 760ms; }
     /* Human × AI: top -> bottom by row */
     .motion-reveal .landing-collab-col:first-child .landing-raw-item:nth-of-type(1) { transition-delay: 90ms; }
     .motion-reveal .landing-collab-col:last-child .landing-res-item:nth-of-type(1) { transition-delay: 150ms; }
@@ -112,7 +113,7 @@
       border-bottom: 1px solid transparent;
     }
     .nav-bar.nav-scrolled {
-      background: rgba(240, 240, 237, 0.86);
+      background: rgba(232, 232, 228, 0.86);
       border-color: rgba(0, 0, 0, 0.06);
     }
     .nav-link {
@@ -243,7 +244,7 @@
       justify-content: center;
     }
     .landing-process-card {
-      background: #ffffff;
+      background: #fff;
       border: 1px solid #ececec;
       border-radius: 18px;
       padding: 14px;
@@ -269,6 +270,7 @@
       box-shadow: 0 16px 30px 5px rgba(21, 21, 32, 0.10);
       padding: 18px 18px 14px;
       gap: 0;
+      background: rgba(255,255,255,0.6);
     }
     .landing-process-card--doc .process-doc-top {
       margin-bottom: 26px;
@@ -428,7 +430,8 @@
       border: 1px solid #e9e9e9;
       background: linear-gradient(180deg, #EBEBEB 0%, #D3C7BD 100%);
       overflow: hidden;
-      height: min(76vh, 800px);
+      height: 932px;
+      position: relative;
     }
     .landing-project-mobile-scroll {
       height: 100%;
@@ -437,6 +440,10 @@
       background: transparent;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
+    }
+    .landing-project-mobile-scroll--with-fab {
+      padding-bottom: 116px;
+      overflow-y: hidden;
     }
     .landing-project-mobile-scroll::-webkit-scrollbar { display: none; }
     .landing-project-mobile-nav {
@@ -566,6 +573,9 @@
       padding: 18px;
       box-shadow: 0 16px 30px 5px rgba(21, 21, 32, 0.10);
     }
+    .landing-project-mobile-screen--now .landing-project-mobile-card {
+      border: none;
+    }
     .landing-project-mobile-card-header {
       display: flex;
       align-items: center;
@@ -650,6 +660,362 @@
       padding-top: 2px;
       flex-shrink: 0;
     }
+    .landing-home-mobile-screen {
+      border-radius: 18px;
+      border: 1px solid #e9e9e9;
+      background: #E8E8E4;
+      overflow: hidden;
+      height: 932px;
+    }
+    .landing-home-mobile-screen .home-showcase {
+      height: 100%;
+      width: 100%;
+    }
+    .landing-thoughts-mobile-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 2px 0 12px;
+    }
+    .landing-project-mobile-scroll--with-fab .landing-thoughts-mobile-controls {
+      margin-top: -10px;
+      padding-top: 0;
+    }
+    .landing-project-mobile-scroll--thread {
+      overflow-y: hidden;
+      padding-bottom: 116px;
+    }
+    .landing-project-mobile-scroll--thread .landing-thoughts-mobile-controls {
+      margin-top: -10px;
+      padding-top: 0;
+    }
+    .landing-thoughts-mobile-search {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245, 245, 245, 0.55);
+      border-radius: 10px;
+      padding: 0 10px;
+      min-height: 38px;
+    }
+    .landing-thoughts-mobile-search-icon {
+      font-size: 16px;
+      color: #bbb;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .landing-thoughts-mobile-search-text {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 14px;
+      color: #bbb;
+    }
+    .landing-thoughts-mobile-chips {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 2px;
+    }
+    .landing-thoughts-mobile-chips::-webkit-scrollbar { display: none; }
+    .landing-thoughts-mobile-chip {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 10px;
+      color: #888;
+      background: rgba(240,240,240,0.45);
+      border: none;
+      border-radius: 100px;
+      padding: 6px 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .landing-thoughts-mobile-chip.active {
+      background: #111;
+      color: #fff;
+    }
+    .landing-thoughts-mobile-masonry {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 12px;
+      padding-bottom: 6px;
+      align-items: start;
+    }
+    .landing-thoughts-mobile-col {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
+    }
+    .landing-thoughts-fab-bar {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      z-index: 8;
+      pointer-events: none;
+    }
+    .landing-thoughts-fab-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 999px;
+      padding: 7px 9px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      pointer-events: auto;
+    }
+    .landing-thoughts-fab-side {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: none;
+      background: #fff;
+      color: #111;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .landing-thoughts-fab-side svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+      fill: #111;
+      stroke: none;
+    }
+    .landing-thoughts-fab-side--chat svg {
+      transform: translateY(2px);
+    }
+    .landing-thoughts-fab-side--star svg {
+      width: 21px;
+      height: 21px;
+    }
+    .landing-thoughts-fab-main {
+      width: 48px;
+      height: 48px;
+      border-radius: 999px;
+      border: 1px solid #111;
+      background: #111;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .landing-thoughts-fab-main svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .landing-thoughts-card {
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 0 rgba(0,0,0,.03), 0 12px 24px rgba(0,0,0,.09);
+      background: #fff;
+      border: 1px solid #f0f0f0;
+    }
+    .landing-thoughts-card-note {
+      background: #fff;
+      min-height: 148px;
+      position: relative;
+      padding: 15px 16px;
+      border: none;
+      grid-column: 2;
+      grid-row: 1;
+      align-self: start;
+    }
+    .landing-thoughts-note-deco {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 44px;
+      bottom: 12px;
+      background-image: repeating-linear-gradient(
+        transparent 0px,
+        transparent 18px,
+        rgba(0, 0, 0, 0.055) 18px,
+        rgba(0, 0, 0, 0.055) 19px
+      );
+      pointer-events: none;
+    }
+    .landing-thoughts-note-inner {
+      position: relative;
+      min-height: 134px;
+      display: flex;
+      flex-direction: column;
+    }
+    .landing-thoughts-note-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .landing-thoughts-note-date,
+    .landing-thoughts-note-filetype {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 10px;
+      color: #888;
+      letter-spacing: 0.05em;
+    }
+    .landing-thoughts-note-date { text-transform: uppercase; }
+    .landing-thoughts-note-filetype { text-transform: none; }
+    .landing-thoughts-note-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 16px;
+      padding-bottom: 10px;
+    }
+    .landing-thoughts-note-text {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 14px;
+      color: #000;
+      letter-spacing: -0.5px;
+      line-height: 1.3;
+      font-weight: 500;
+      transform: rotate(-1.6deg);
+      display: block;
+      width: 100%;
+    }
+    .landing-thoughts-card-link {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      grid-column: 2;
+      grid-row: 3;
+    }
+    .landing-thoughts-link-domain {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      color: #9d9d9d;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .landing-thoughts-link-title {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #111;
+    }
+    .landing-thoughts-link-logo {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      background: #f1f1f1;
+      border: 1px solid #e7e7e7;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      font-size: 13px;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+    .landing-thoughts-link-url {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      color: #ababab;
+      letter-spacing: .04em;
+      text-transform: lowercase;
+    }
+    .landing-thoughts-card-image {
+      padding: 0;
+      border: none;
+      background: transparent;
+      grid-column: 1;
+      grid-row: 2;
+    }
+    .landing-thoughts-card-image img {
+      display: block;
+      width: 100%;
+      height: 198px;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+    .landing-thoughts-card-decision {
+      background: #111;
+      border-color: #111;
+      padding: 12px;
+      color: #fff;
+      grid-column: 2;
+      grid-row: 2;
+      align-self: start;
+    }
+    .landing-thoughts-decision-tag {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.62);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .landing-thoughts-decision-text {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 15px;
+      line-height: 1.45;
+      font-weight: 500;
+    }
+    .landing-thoughts-card-chat {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: rgba(255,255,255,0.6);
+      height: 200px;
+      min-height: 200px;
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .landing-thoughts-chat-tag {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      color: #aaa;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .landing-thoughts-chat-text {
+      font-family: Georgia, serif;
+      font-size: 16px;
+      line-height: 1.45;
+      color: #222;
+    }
+    .landing-thoughts-chat-view {
+      margin-top: auto;
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      color: #9d9d9d;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      align-self: flex-start;
+    }
+    .landing-thoughts-card-doc {
+      padding: 0;
+      background: transparent;
+      border: none;
+      grid-column: 1;
+      grid-row: 3 / span 2;
+    }
+    .landing-thoughts-card-doc .process-doc-card {
+      border-radius: 14px;
+      box-shadow: 0 2px 0 rgba(0,0,0,.03), 0 12px 24px rgba(0,0,0,.09);
+    }
 
     /* ── Now cards showcase (matched to app Now tab style) ── */
     .landing-now-wrap {
@@ -672,7 +1038,7 @@
       padding: 0 40px 4px max(24px, calc((100vw - 1200px) / 2 + 40px));
     }
     .landing-now-card {
-      background: #ffffff;
+      background: #fff;
       border-radius: 20px;
       padding: 20px;
       display: flex;
@@ -775,9 +1141,9 @@
     }
 
     /* ── Thread cards showcase (matched to app thread cards) ── */
-    .landing-thread-list { display: flex; flex-direction: column; gap: 24px; padding-top: 8px; }
+    .landing-thread-list { display: flex; flex-direction: column; gap: 20px; padding-top: 8px; }
     .landing-thread-card {
-      background: #fff;
+      background: rgba(255, 255, 255, 0.6);
       border: 1px solid #eee;
       border-radius: 14px;
       padding: 14px 16px;
@@ -845,10 +1211,13 @@
     .landing-thread-flow {
       width: 100%;
       display: grid;
-      grid-template-columns: minmax(300px, 430px) 34px minmax(300px, 430px);
+      grid-template-columns: minmax(420px, 560px) 24px minmax(420px, 560px);
       justify-content: center;
       align-items: center;
-      gap: 20px;
+      gap: 8px;
+    }
+    .landing-thread-flow .landing-project-mobile-wrap {
+      width: min(520px, 100%);
     }
     .landing-thread-chat {
       background: rgba(255, 255, 255, 0.4);
@@ -966,10 +1335,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #9c9c9c;
-      font-size: 30px;
+      color: #616161;
       line-height: 1;
       user-select: none;
+      margin-left: 0;
+    }
+    .landing-thread-flow-arrow svg {
+      width: 1240px;
+      height: 360px;
+      display: block;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
     @media (max-width: 1080px) {
       .landing-thread-flow {
@@ -978,6 +1357,7 @@
       }
       .landing-thread-flow-arrow {
         transform: rotate(90deg);
+        margin-left: 0;
       }
     }
 
@@ -1008,19 +1388,19 @@
     }
     .landing-raw-item {
       padding: 14px 16px;
-      background: #ffffff;
-      border: 1px solid #eeeeee;
+      background: #e3e3e3;
+      border: 1px solid #d6d6d6;
       border-radius: 14px;
       margin-bottom: 10px;
       font-family: Georgia, serif;
       font-size: 16px;
       font-style: italic;
-      color: rgba(17,17,16,0.38);
+      color: #4a4a4a;
       line-height: 1.5;
     }
     .landing-res-item {
       padding: 14px 16px;
-      background: #ffffff;
+      background: #fff;
       border: 1px solid #eeeeee;
       border-radius: 14px;
       margin-bottom: 10px;
@@ -1073,7 +1453,7 @@
     /* ── Quote section ── */
     .landing-quote-section {
       padding: 24px 0 72px;
-      background: #F0F0ED;
+      background: #E8E8E4;
     }
     .landing-quote-wrap {
       width: min(100%, 980px);
@@ -1281,7 +1661,7 @@
       allowOverflow = false,
     }) {
       const isDark = tone === "dark";
-      const baseBg = isDark ? "bg-[#111111] text-neutral-50" : "bg-[#F0F0ED] text-neutral-950";
+      const baseBg = isDark ? "bg-[#111111] text-neutral-50" : "bg-[#E8E8E4] text-neutral-950";
       const subtle = isDark ? "text-neutral-300/80" : "text-neutral-600";
       const hairline = isDark ? "border-neutral-700/50" : "border-neutral-200";
       const hasCopy = Boolean(eyebrow || headline || body);
@@ -1442,14 +1822,26 @@
     /* ── Fixed scroll-aware nav ── */
     function Nav() {
       const scrolled = useScrolled(40);
+      const scrollTo = (id) => (e) => {
+        e.preventDefault();
+        const target = document.getElementById(id);
+        if (!target) return;
+        const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        target.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth", block: "start" });
+        window.history.replaceState(null, "", "#" + id);
+      };
       return (
         <nav className={`nav-bar flex items-center justify-between px-6 sm:px-10 py-5 ${scrolled ? "nav-scrolled" : ""}`}>
           <Mono className="text-xs tracking-[0.22em] text-black/70">FLOWD</Mono>
           <div className="flex items-center gap-6 text-neutral-600">
-            <Mono className="text-[11px] tracking-[0.22em] nav-link opacity-70">Overview</Mono>
-            <Mono className="text-[11px] tracking-[0.22em] nav-link opacity-70">Product</Mono>
-            <a href="#early-access" style={{ textDecoration: "none", color: "inherit" }}>
-              <Mono className="text-[11px] tracking-[0.22em] nav-link opacity-70">Early Access</Mono>
+            <a href="#hero" onClick={scrollTo("hero")} style={{ textDecoration: "none", color: "inherit" }}>
+              <Mono className="text-[11px] tracking-[0.22em] nav-link opacity-70">OVERVIEW</Mono>
+            </a>
+            <a href="#product" onClick={scrollTo("product")} style={{ textDecoration: "none", color: "inherit" }}>
+              <Mono className="text-[11px] tracking-[0.22em] nav-link opacity-70">PRODUCT</Mono>
+            </a>
+            <a href="#early-access" onClick={scrollTo("early-access")} style={{ textDecoration: "none", color: "inherit" }}>
+              <Mono className="text-[11px] tracking-[0.22em] nav-link opacity-70">EARLY ACCESS</Mono>
             </a>
           </div>
         </nav>
@@ -1633,7 +2025,7 @@
 
     function FlowdHomeShowcase() {
       return (
-        <div className="home-showcase" style={{ position: "relative", height: "100%", width: "100%", background: "#F0F0ED" }}>
+        <div className="home-showcase" style={{ position: "relative", height: "100%", width: "100%", background: "#E8E8E4" }}>
           <style>{`
             @keyframes homeCardIn {
               from { opacity: 0; transform: translateY(12px); }
@@ -1736,11 +2128,160 @@
       );
     }
 
+    function FlowdHomeMobileShowcase() {
+      return (
+        <div className="landing-project-mobile-wrap" role="img" aria-label="Flowd home mobile view">
+          <div className="landing-project-mobile-frame">
+            <div className="landing-home-mobile-screen">
+              <FlowdHomeShowcase />
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     function FlowdProjectMobileShowcase() {
       return (
-        <div className="landing-project-mobile-wrap" role="img" aria-label="Flowd project view mobile screen">
+        <div className="landing-project-mobile-wrap" role="img" aria-label="Flowd project thoughts tab mobile view">
           <div className="landing-project-mobile-frame">
             <div className="landing-project-mobile-screen">
+              <div className="landing-project-mobile-scroll landing-project-mobile-scroll--with-fab">
+                <div className="landing-project-mobile-nav">
+                  <div className="landing-project-mobile-nav-left">
+                    <button className="landing-project-mobile-back" aria-hidden="true">←</button>
+                    <span className="landing-project-mobile-back-label">Back to Archive</span>
+                  </div>
+                  <button className="landing-project-mobile-menu" aria-hidden="true">⋮</button>
+                </div>
+
+                <div className="landing-project-mobile-header">
+                  <div className="landing-project-mobile-meta">2 hours ago</div>
+                  <h2 className="landing-project-mobile-title">Flowd</h2>
+                  <p className="landing-project-mobile-sub">
+                    Raw materials live here. Capture first, structure later.
+                  </p>
+                </div>
+
+                <div className="landing-project-mobile-tabs" aria-hidden="true">
+                  <button className="landing-project-mobile-tab">
+                    <span className="landing-project-mobile-tab-dot" />
+                    Now
+                  </button>
+                  <button className="landing-project-mobile-tab active">
+                    <span className="landing-project-mobile-tab-dot" />
+                    The Thoughts
+                  </button>
+                  <button className="landing-project-mobile-tab">
+                    <span className="landing-project-mobile-tab-dot" />
+                    The Thread
+                  </button>
+                </div>
+
+                <div className="landing-thoughts-mobile-controls" aria-hidden="true">
+                  <div className="landing-thoughts-mobile-search">
+                    <span className="landing-thoughts-mobile-search-icon">⌕</span>
+                    <span className="landing-thoughts-mobile-search-text">Search workspace…</span>
+                  </div>
+                  <div className="landing-thoughts-mobile-chips">
+                    <span className="landing-thoughts-mobile-chip active">All</span>
+                    <span className="landing-thoughts-mobile-chip">Note</span>
+                    <span className="landing-thoughts-mobile-chip">Decision</span>
+                    <span className="landing-thoughts-mobile-chip">Image</span>
+                  </div>
+                </div>
+
+                <div className="landing-thoughts-mobile-masonry">
+                  <div className="landing-thoughts-mobile-col">
+                    <article className="landing-thoughts-card landing-thoughts-card-chat">
+                      <span className="landing-thoughts-chat-tag">Chat summary</span>
+                      <div className="landing-thoughts-chat-text">Raw in, organized out. Thoughts is the dump zone. Now and Thread surface meaning.</div>
+                      <span className="landing-thoughts-chat-view">view chat -></span>
+                    </article>
+
+                    <article className="landing-thoughts-card landing-thoughts-card-image">
+                      <img src="https://i.pinimg.com/avif/736x/c9/28/89/c92889fb0316cbd99c518fdfadeeed57.avf" alt="" />
+                    </article>
+
+                    <article className="landing-thoughts-card landing-thoughts-card-doc">
+                      <div className="process-doc-card">
+                        <div className="process-doc-top">
+                          <span className="process-doc-type">PROJECT BRIEF</span>
+                          <span className="process-doc-icon" aria-hidden="true">📄</span>
+                        </div>
+                        <h3 className="process-doc-title">Flowd — Project Brief</h3>
+                        <p className="process-doc-preview">
+                          A thinking space where notes, links, media, and conversation become one project memory.
+                        </p>
+                        <div className="process-doc-bottom">
+                          <button className="process-doc-open">OPEN →</button>
+                          <span className="process-doc-updated">updated 2d</span>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+
+                  <div className="landing-thoughts-mobile-col">
+                    <article className="landing-thoughts-card landing-thoughts-card-note">
+                      <div className="landing-thoughts-note-deco" aria-hidden="true" />
+                      <div className="landing-thoughts-note-inner">
+                        <div className="landing-thoughts-note-top">
+                          <span className="landing-thoughts-note-date">2026/03/04</span>
+                          <span className="landing-thoughts-note-filetype">note.txt</span>
+                        </div>
+                        <div className="landing-thoughts-note-body">
+                          <p className="landing-thoughts-note-text">Three zones: Now, Thoughts, Thread. Raw capture first, structure later.</p>
+                        </div>
+                      </div>
+                    </article>
+
+                    <article className="landing-thoughts-card landing-thoughts-card-decision">
+                      <span className="landing-thoughts-decision-tag">✓ decided</span>
+                      <div className="landing-thoughts-decision-text">Position as thinking OS.</div>
+                    </article>
+
+                    <article className="landing-thoughts-card landing-thoughts-card-link">
+                      <span className="landing-thoughts-link-domain">Research</span>
+                      <span className="landing-thoughts-link-logo">⌘</span>
+                      <span className="landing-thoughts-link-title">Thinking OS references</span>
+                      <span className="landing-thoughts-link-url">flowd.run/research/context-systems</span>
+                    </article>
+
+                    <article className="landing-thoughts-card landing-thoughts-card-image">
+                      <img src="https://i.pinimg.com/736x/39/8f/82/398f82cb8ba795c10ca528e803323d69.jpg" alt="" />
+                    </article>
+                  </div>
+                </div>
+              </div>
+              <div className="landing-thoughts-fab-bar" aria-hidden="true">
+                <div className="landing-thoughts-fab-pill">
+                  <span className="landing-thoughts-fab-side landing-thoughts-fab-side--star" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 3L14.4 9.6L21 12L14.4 14.4L12 21L9.6 14.4L3 12L9.6 9.6L12 3Z" />
+                    </svg>
+                  </span>
+                  <span className="landing-thoughts-fab-main" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                  </span>
+                  <span className="landing-thoughts-fab-side landing-thoughts-fab-side--chat" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M4 5.25A3.25 3.25 0 0 1 7.25 2h9.5A3.25 3.25 0 0 1 20 5.25v6.5A3.25 3.25 0 0 1 16.75 15H11l-4.75 4v-4H7.25A3.25 3.25 0 0 1 4 11.75v-6.5Z" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function FlowdProjectNowMobileShowcase() {
+      return (
+        <div className="landing-project-mobile-wrap" role="img" aria-label="Flowd project now tab mobile view">
+          <div className="landing-project-mobile-frame">
+            <div className="landing-project-mobile-screen landing-project-mobile-screen--now">
               <div className="landing-project-mobile-scroll">
                 <div className="landing-project-mobile-nav">
                   <div className="landing-project-mobile-nav-left">
@@ -1754,7 +2295,7 @@
                   <div className="landing-project-mobile-meta">2 hours ago</div>
                   <h2 className="landing-project-mobile-title">Flowd</h2>
                   <p className="landing-project-mobile-sub">
-                    Notes, links, media, and chat stay together as one project memory.
+                    A clear state on every return.
                   </p>
                 </div>
 
@@ -2172,7 +2713,7 @@
 
     function ThreadChatShowcase() {
       return (
-        <div className="relative mx-auto w-[430px] py-2" role="img" aria-label="Flowd chat view">
+        <div className="relative mx-auto w-[520px] py-2" role="img" aria-label="Flowd chat view">
           <div className="landing-thread-chat">
             <div className="landing-thread-chat-header">
               <span className="landing-thread-chat-label">Chat session</span>
@@ -2201,12 +2742,116 @@
       );
     }
 
+    function ThreadTabMobileShowcase() {
+      return (
+        <div className="landing-project-mobile-wrap py-2" role="img" aria-label="Flowd thread tab mobile view">
+          <div className="landing-project-mobile-frame">
+            <div className="landing-project-mobile-screen">
+              <div className="landing-project-mobile-scroll landing-project-mobile-scroll--thread">
+                <div className="landing-project-mobile-nav">
+                  <div className="landing-project-mobile-nav-left">
+                    <button className="landing-project-mobile-back" aria-hidden="true">←</button>
+                    <span className="landing-project-mobile-back-label">Back to Archive</span>
+                  </div>
+                  <button className="landing-project-mobile-menu" aria-hidden="true">⋮</button>
+                </div>
+
+                <div className="landing-project-mobile-header">
+                  <div className="landing-project-mobile-meta">2 hours ago</div>
+                  <h2 className="landing-project-mobile-title">Flowd</h2>
+                  <p className="landing-project-mobile-sub">Thinking as a readable sequence.</p>
+                </div>
+
+                <div className="landing-project-mobile-tabs" aria-hidden="true">
+                  <button className="landing-project-mobile-tab">
+                    <span className="landing-project-mobile-tab-dot" />
+                    Now
+                  </button>
+                  <button className="landing-project-mobile-tab">
+                    <span className="landing-project-mobile-tab-dot" />
+                    The Thoughts
+                  </button>
+                  <button className="landing-project-mobile-tab active">
+                    <span className="landing-project-mobile-tab-dot" />
+                    The Thread
+                  </button>
+                </div>
+
+                <div className="landing-thoughts-mobile-controls" aria-hidden="true">
+                  <div className="landing-thoughts-mobile-search">
+                    <span className="landing-thoughts-mobile-search-icon">⌕</span>
+                    <span className="landing-thoughts-mobile-search-text">Search conversations…</span>
+                  </div>
+                  <div className="landing-thoughts-mobile-chips">
+                    <span className="landing-thoughts-mobile-chip active">Latest → Old</span>
+                    <span className="landing-thoughts-mobile-chip">Old → Latest</span>
+                  </div>
+                </div>
+
+                <div className="landing-thread-list">
+                  <div className="landing-thread-card">
+                    <div className="landing-thread-card-header">
+                      <span className="landing-thread-ts">2h ago</span>
+                      <span className="landing-thread-session">· session 12</span>
+                      <span className="landing-thread-type-tag landing-thread-type-tag--deciding">DECIDING</span>
+                    </div>
+                    <div className="landing-thread-title">Raw vs Organized Split</div>
+                    <div className="landing-thread-key-exchange">
+                      <p className="landing-thread-ke-user">If everything is capture-first, how do users not drown in clutter?</p>
+                      <p className="landing-thread-ke-ai">Keep capture raw in Thoughts, then let Now and Thread do the organizing so users always return to a clear state.</p>
+                    </div>
+                  </div>
+
+                  <div className="landing-thread-card">
+                    <div className="landing-thread-card-header">
+                      <span className="landing-thread-ts">1d ago</span>
+                      <span className="landing-thread-session">· session 11</span>
+                      <span className="landing-thread-type-tag landing-thread-type-tag--reframing">REFRAMING</span>
+                    </div>
+                    <div className="landing-thread-title">Thinking Space, not chatbot</div>
+                    <div className="landing-thread-key-exchange">
+                      <p className="landing-thread-ke-user">People keep reading this like another AI chat app.</p>
+                      <p className="landing-thread-ke-ai">Position it as a thinking space where conversation is one artifact type among notes, links, images, and docs.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="landing-thoughts-fab-bar" aria-hidden="true">
+                <div className="landing-thoughts-fab-pill">
+                  <span className="landing-thoughts-fab-side landing-thoughts-fab-side--star" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 3L14.4 9.6L21 12L14.4 14.4L12 21L9.6 14.4L3 12L9.6 9.6L12 3Z" />
+                    </svg>
+                  </span>
+                  <span className="landing-thoughts-fab-main" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                  </span>
+                  <span className="landing-thoughts-fab-side landing-thoughts-fab-side--chat" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M4 5.25A3.25 3.25 0 0 1 7.25 2h9.5A3.25 3.25 0 0 1 20 5.25v6.5A3.25 3.25 0 0 1 16.75 15H11l-4.75 4v-4H7.25A3.25 3.25 0 0 1 4 11.75v-6.5Z" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     function ThreadFlowShowcase() {
       return (
         <div className="landing-thread-flow" role="img" aria-label="Chat turns into thread segments">
           <ThreadChatShowcase />
-          <div className="landing-thread-flow-arrow" aria-hidden="true">→</div>
-          <ThreadCardsShowcase />
+          <div className="landing-thread-flow-arrow" aria-hidden="true">
+            <svg viewBox="0 0 960 280" aria-hidden="true">
+              <path d="M30 140H900" />
+              <path d="M800 60L900 140L800 220" />
+            </svg>
+          </div>
+          <ThreadTabMobileShowcase />
         </div>
       );
     }
@@ -2329,7 +2974,7 @@
       }, []);
 
       return (
-        <div className="min-h-screen w-full bg-[#F0F0ED]">
+        <div className="min-h-screen w-full bg-[#E8E8E4]">
           <Nav />
           <Section
             id="hero"
@@ -2354,7 +2999,7 @@
             align="center"
           />
 
-          <section className="relative w-full min-h-[90vh] bg-[#F0F0ED]">
+          <section id="product" className="relative w-full min-h-[90vh] bg-[#E8E8E4]">
             <div className="mx-auto max-w-[1200px] px-6 pb-8 sm:px-10">
               <div className="motion-reveal" data-reveal data-reveal-delay="120">
                 <FlowdProjectMobileShowcase />
@@ -2473,7 +3118,7 @@
                 </p>
               </div>
             }
-            media={<NowCardsShowcase />}
+            media={<FlowdProjectNowMobileShowcase />}
             align="stacked"
             sectionClassName="min-h-[72vh]"
             containerClassName="pt-16 pb-10"
