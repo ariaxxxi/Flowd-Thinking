@@ -1211,10 +1211,10 @@
     .landing-thread-flow {
       width: 100%;
       display: grid;
-      grid-template-columns: minmax(420px, 560px) 24px minmax(420px, 560px);
+      grid-template-columns: minmax(420px, 560px) 88px minmax(420px, 560px);
       justify-content: center;
       align-items: center;
-      gap: 8px;
+      gap: 20px;
     }
     .landing-thread-flow .landing-project-mobile-wrap {
       width: min(520px, 100%);
@@ -1335,20 +1335,23 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #616161;
-      line-height: 1;
       user-select: none;
-      margin-left: 0;
+      margin-left: 24px;
     }
-    .landing-thread-flow-arrow svg {
-      width: 1240px;
-      height: 360px;
-      display: block;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 10;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    .landing-thread-flow-arrow-icon {
+      transform: rotate(180deg);
+      flex-shrink: 0;
+      width: auto;
+      height: auto;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      color: #8f8f8f;
+      font-size: 24px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     @media (max-width: 1080px) {
       .landing-thread-flow {
@@ -1357,7 +1360,6 @@
       }
       .landing-thread-flow-arrow {
         transform: rotate(90deg);
-        margin-left: 0;
       }
     }
 
@@ -2846,10 +2848,7 @@
         <div className="landing-thread-flow" role="img" aria-label="Chat turns into thread segments">
           <ThreadChatShowcase />
           <div className="landing-thread-flow-arrow" aria-hidden="true">
-            <svg viewBox="0 0 960 280" aria-hidden="true">
-              <path d="M30 140H900" />
-              <path d="M800 60L900 140L800 220" />
-            </svg>
+            <span className="landing-thread-flow-arrow-icon">←</span>
           </div>
           <ThreadTabMobileShowcase />
         </div>
