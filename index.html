@@ -45,8 +45,8 @@
     .motion-reveal .landing-thread-chat,
     .motion-reveal .landing-thread-list > .landing-thread-card,
     .motion-reveal .landing-thoughts-mobile-masonry .landing-thoughts-card,
-    .motion-reveal .landing-collab-col:first-child .landing-raw-item,
-    .motion-reveal .landing-collab-col:last-child .landing-res-item {
+    .motion-reveal .landing-collab-row .landing-raw-item,
+    .motion-reveal .landing-collab-row .landing-res-item {
       opacity: 0;
       transform: translateY(28px);
       transition:
@@ -60,8 +60,8 @@
     .motion-reveal.in-view .landing-thread-chat,
     .motion-reveal.in-view .landing-thread-list > .landing-thread-card,
     .motion-reveal.in-view .landing-thoughts-mobile-masonry .landing-thoughts-card,
-    .motion-reveal.in-view .landing-collab-col:first-child .landing-raw-item,
-    .motion-reveal.in-view .landing-collab-col:last-child .landing-res-item {
+    .motion-reveal.in-view .landing-collab-row .landing-raw-item,
+    .motion-reveal.in-view .landing-collab-row .landing-res-item {
       opacity: 1;
       transform: none;
     }
@@ -126,14 +126,14 @@
     .motion-reveal .landing-project-mobile-now-section:nth-child(4) .landing-project-mobile-now-track > .landing-project-mobile-now-card:nth-child(1) > * { transition-delay: 700ms; }
     .motion-reveal .landing-project-mobile-now-section:nth-child(4) .landing-project-mobile-now-track > .landing-project-mobile-now-card:nth-child(2) > * { transition-delay: 800ms; }
     /* Human × AI: top -> bottom by row */
-    .motion-reveal .landing-collab-col:first-child .landing-raw-item:nth-of-type(1) { transition-delay: 90ms; }
-    .motion-reveal .landing-collab-col:last-child .landing-res-item:nth-of-type(1) { transition-delay: 150ms; }
-    .motion-reveal .landing-collab-col:first-child .landing-raw-item:nth-of-type(2) { transition-delay: 230ms; }
-    .motion-reveal .landing-collab-col:last-child .landing-res-item:nth-of-type(2) { transition-delay: 290ms; }
-    .motion-reveal .landing-collab-col:first-child .landing-raw-item:nth-of-type(3) { transition-delay: 370ms; }
-    .motion-reveal .landing-collab-col:last-child .landing-res-item:nth-of-type(3) { transition-delay: 430ms; }
-    .motion-reveal .landing-collab-col:first-child .landing-raw-item:nth-of-type(4) { transition-delay: 510ms; }
-    .motion-reveal .landing-collab-col:last-child .landing-res-item:nth-of-type(4) { transition-delay: 570ms; }
+    .motion-reveal .landing-collab-row:nth-child(1) .landing-raw-item { transition-delay: 90ms; }
+    .motion-reveal .landing-collab-row:nth-child(1) .landing-res-item { transition-delay: 150ms; }
+    .motion-reveal .landing-collab-row:nth-child(2) .landing-raw-item { transition-delay: 230ms; }
+    .motion-reveal .landing-collab-row:nth-child(2) .landing-res-item { transition-delay: 290ms; }
+    .motion-reveal .landing-collab-row:nth-child(3) .landing-raw-item { transition-delay: 370ms; }
+    .motion-reveal .landing-collab-row:nth-child(3) .landing-res-item { transition-delay: 430ms; }
+    .motion-reveal .landing-collab-row:nth-child(4) .landing-raw-item { transition-delay: 510ms; }
+    .motion-reveal .landing-collab-row:nth-child(4) .landing-res-item { transition-delay: 570ms; }
 
     /* ── Fixed nav ── */
     .nav-bar {
@@ -1835,17 +1835,71 @@
     .landing-res-item {
       padding: 14px 16px;
       background: #fff;
-      border: 1px solid #eeeeee;
+      border: 1px solid #ececec;
       border-radius: 14px;
       margin-bottom: 10px;
+      box-shadow: 0 10px 22px rgba(21, 21, 32, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .landing-res-item--thread {
+      background: #fbfbfb;
+    }
+    .landing-res-item--question {
+      background: #fffdfa;
+      border-color: rgba(184, 92, 16, 0.35);
+      border-style: dashed;
+    }
+    .landing-res-item--decision {
+      background: #f5f4f2;
+    }
+    .landing-res-item--doc {
+      border-left: 3px solid #111111;
+      background: #ffffff;
+    }
+    .landing-res-topline {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 8px;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: rgba(17,17,16,0.40);
+    }
+    .landing-res-thread-chip {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #ece8e3;
+      color: #7a7269;
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 8px;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    .landing-res-title {
+      font-family: Georgia, serif;
+      font-size: 17px;
+      line-height: 1.3;
+      color: #151514;
+      margin: 0;
+      font-weight: 500;
+    }
+    .landing-res-sub {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 13px;
+      line-height: 1.4;
+      color: #707070;
+      margin: 0;
     }
     .landing-res-tag {
-      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 7px;
-      letter-spacing: .12em;
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 8px;
+      letter-spacing: .10em;
       text-transform: uppercase;
-      color: rgba(17,17,16,0.38);
-      margin-bottom: 3px;
+      color: rgba(17,17,16,0.42);
+      margin-bottom: 2px;
     }
     .landing-res-tag--amber { color: #B85C10; }
     .landing-res-text {
@@ -1854,6 +1908,23 @@
       font-weight: 500;
       color: #111110;
       line-height: 1.4;
+    }
+    .landing-res-meta {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: .05em;
+      color: #9a9a9a;
+      text-transform: lowercase;
+    }
+    .landing-res-doc-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .landing-res-doc-icon {
+      font-size: 16px;
+      line-height: 1;
     }
     .landing-collab-mid {
       display: flex;
@@ -1882,6 +1953,141 @@
     @media (max-width: 860px) {
       .landing-collab-layout { grid-template-columns: 1fr; }
       .landing-collab-mid { display: none; }
+    }
+
+    /* Human x AI pair alignment overrides */
+    .landing-collab-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: min(100%, 980px);
+      max-width: 980px;
+      margin: 24px auto 0;
+      align-items: stretch;
+    }
+    .landing-collab-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr);
+      gap: 20px;
+      align-items: center;
+    }
+    .landing-collab-label {
+      margin-bottom: 0;
+      color: #8d8d8d;
+    }
+    .landing-collab-mid {
+      min-height: 20px;
+      padding-top: 0;
+      align-self: center;
+    }
+    .landing-collab-mid-label {
+      writing-mode: horizontal-tb;
+      padding: 0;
+      color: #111111;
+    }
+    .landing-collab-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .landing-collab-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr);
+      gap: 20px;
+      align-items: center;
+    }
+    .landing-collab-row-mid {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #9f9588;
+      font-size: 14px;
+      line-height: 1;
+      user-select: none;
+    }
+    .landing-collab-row .landing-raw-item,
+    .landing-collab-row .landing-res-item {
+      margin-bottom: 0;
+    }
+    .landing-collab-row .landing-raw-item {
+      max-width: none;
+      justify-self: stretch;
+    }
+    .landing-collab-row .landing-res-item {
+      padding: 15px 16px;
+      border: none;
+      border-radius: 14px;
+      background: #F2F0EE;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.03), 0 12px 24px rgba(0,0,0,0.09);
+      gap: 14px;
+    }
+    .landing-collab-row .landing-res-item--thread {
+      background: #F2F0EE;
+    }
+    .landing-collab-row .landing-res-item--question {
+      background: #ffffff;
+      border: none;
+    }
+    .landing-collab-row .landing-res-item--decision {
+      background: #111111;
+    }
+    .landing-collab-row .landing-res-item--doc {
+      background: #ffffff;
+      border-left: 3px solid #111111;
+    }
+    .landing-collab-row .landing-res-title {
+      font-size: 18px;
+      line-height: 1.36;
+      margin: 0;
+    }
+    .landing-collab-row .landing-res-sub {
+      font-size: 14px;
+      line-height: 1.52;
+      color: #6f6f6f;
+      margin: 0;
+    }
+    .landing-collab-row .landing-res-text {
+      line-height: 1.52;
+    }
+    .landing-collab-row .landing-res-thread-chip,
+    .landing-collab-row .landing-res-tag,
+    .landing-collab-row .landing-res-topline,
+    .landing-collab-row .landing-res-meta {
+      color: #a9a9a9;
+    }
+    .landing-collab-row .landing-res-item--decision .landing-res-tag {
+      color: rgba(255, 255, 255, 0.64);
+    }
+    .landing-collab-row .landing-res-item--decision .landing-res-title,
+    .landing-collab-row .landing-res-item--decision .landing-res-text {
+      color: #f2f2f2;
+    }
+    .landing-collab-row .landing-res-item--decision .landing-res-sub,
+    .landing-collab-row .landing-res-item--decision .landing-res-meta {
+      color: rgba(255, 255, 255, 0.62);
+    }
+    @media (max-width: 860px) {
+      .landing-collab-head {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .landing-collab-head .landing-collab-mid {
+        display: none;
+      }
+      .landing-collab-rows {
+        gap: 14px;
+      }
+      .landing-collab-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .landing-collab-row .landing-raw-item {
+        max-width: none;
+        justify-self: stretch;
+      }
+      .landing-collab-row-mid {
+        display: none;
+      }
     }
 
     /* ── Quote section ── */
@@ -3349,35 +3555,62 @@
       return (
         <div className="mx-auto w-full py-2" role="img" aria-label="Collaboration frames">
           <div className="landing-collab-layout">
-            <div className="landing-collab-col">
-              <div className="landing-collab-label">You bring the thinking</div>
-              <div className="landing-raw-item">"oh great because right now my project is in js/react. how can i turn it into an ios app?"</div>
-              <div className="landing-raw-item">"drop a brainfart here..."</div>
-              <div className="landing-raw-item">"im more and more realizing this tab is almost the product"</div>
-              <div className="landing-raw-item">"maybe the tab should be called something else? the pulse? now?"</div>
+            <div className="landing-collab-head">
+              <div className="landing-collab-col">
+                <div className="landing-collab-label">You bring the thinking</div>
+              </div>
+              <div className="landing-collab-mid">
+                <div className="landing-collab-mid-label">Flowd</div>
+              </div>
+              <div className="landing-collab-col">
+                <div className="landing-collab-label">Flowd organizes it</div>
+              </div>
             </div>
-            <div className="landing-collab-mid">
-              <div className="landing-collab-line" />
-              <div className="landing-collab-mid-label">Flowd</div>
-              <div className="landing-collab-line" />
-            </div>
-            <div className="landing-collab-col">
-              <div className="landing-collab-label">Flowd organizes it</div>
-              <div className="landing-res-item">
-                <div className="landing-res-tag">Decided</div>
-                <div className="landing-res-text">React Native as iOS migration path</div>
+
+            <div className="landing-collab-rows">
+              <div className="landing-collab-row">
+                <div className="landing-raw-item">"people keep reading this like another ai chat app"</div>
+                <div className="landing-collab-row-mid" aria-hidden="true">→</div>
+                <div className="landing-res-item landing-res-item--thread">
+                  <span className="landing-res-thread-chip">Reframing</span>
+                  <p className="landing-res-title">Reframe positioning from chat app to thinking space</p>
+                  <p className="landing-res-sub">people keep reading this like another ai chat app</p>
+                  <span className="landing-res-meta">thread · session 11 · 1d ago</span>
+                </div>
               </div>
-              <div className="landing-res-item">
-                <div className="landing-res-tag landing-res-tag--amber">Open question</div>
-                <div className="landing-res-text">What name for the central tab?</div>
+
+              <div className="landing-collab-row">
+                <div className="landing-raw-item">"if capture is raw-first, how do users avoid clutter when they return?"</div>
+                <div className="landing-collab-row-mid" aria-hidden="true">→</div>
+                <div className="landing-res-item landing-res-item--question">
+                  <span className="landing-res-tag landing-res-tag--amber">Open question</span>
+                  <div className="landing-res-text">How should raw capture stay flexible without making re-entry feel cluttered?</div>
+                  <span className="landing-res-meta">question extracted from thread · 1d ago</span>
+                </div>
               </div>
-              <div className="landing-res-item">
-                <div className="landing-res-tag">Reframe</div>
-                <div className="landing-res-text">Now tab is the entire user-facing product</div>
+
+              <div className="landing-collab-row">
+                <div className="landing-raw-item">"this is what we decided: now should be the first tab and the face of the project"</div>
+                <div className="landing-collab-row-mid" aria-hidden="true">→</div>
+                <div className="landing-res-item landing-res-item--decision">
+                  <span className="landing-res-tag">✓ Decided</span>
+                  <div className="landing-res-text">Now tab opens first and becomes the project primary orientation surface</div>
+                  <span className="landing-res-meta">decision locked · session 10</span>
+                </div>
               </div>
-              <div className="landing-res-item">
-                <div className="landing-res-tag">Next move</div>
-                <div className="landing-res-text">Think about: tab naming direction</div>
+
+              <div className="landing-collab-row">
+                <div className="landing-raw-item">"can we turn all this into a one-page brief i can share?"</div>
+                <div className="landing-collab-row-mid" aria-hidden="true">→</div>
+                <div className="landing-res-item landing-res-item--doc">
+                  <div className="landing-res-doc-head">
+                    <span className="landing-res-topline">Project brief</span>
+                    <span className="landing-res-doc-icon">📄</span>
+                  </div>
+                  <p className="landing-res-title">Flowd — Product Brief</p>
+                  <p className="landing-res-sub">A shareable one-page summary generated from threads, decisions, and captured artifacts.</p>
+                  <span className="landing-res-meta">open → · updated now</span>
+                </div>
               </div>
             </div>
           </div>
