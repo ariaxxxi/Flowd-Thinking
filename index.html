@@ -96,6 +96,35 @@
     .motion-reveal .landing-thoughts-card-note { transition-delay: 440ms; }
     .motion-reveal .landing-thoughts-card-decision { transition-delay: 600ms; }
     .motion-reveal .landing-thoughts-card-link { transition-delay: 760ms; }
+    /* Now mobile view: section head first, then cards */
+    .motion-reveal .landing-project-mobile-now .landing-project-mobile-now-head,
+    .motion-reveal .landing-project-mobile-now .landing-project-mobile-now-track > .landing-project-mobile-now-card > * {
+      opacity: 0;
+      transform: translateY(30px);
+      transition:
+        opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+    .motion-reveal.in-view .landing-project-mobile-now .landing-project-mobile-now-head,
+    .motion-reveal.in-view .landing-project-mobile-now .landing-project-mobile-now-track > .landing-project-mobile-now-card > * {
+      opacity: 1;
+      transform: none;
+    }
+    .motion-reveal .landing-project-mobile-now-section:nth-child(1) .landing-project-mobile-now-head { transition-delay: 100ms; }
+    .motion-reveal .landing-project-mobile-now-section:nth-child(2) .landing-project-mobile-now-head { transition-delay: 260ms; }
+    .motion-reveal .landing-project-mobile-now-section:nth-child(3) .landing-project-mobile-now-head { transition-delay: 420ms; }
+    .motion-reveal .landing-project-mobile-now-section:nth-child(4) .landing-project-mobile-now-head { transition-delay: 580ms; }
+    .motion-reveal .landing-project-mobile-now-section:nth-child(1) .landing-project-mobile-now-track > .landing-project-mobile-now-card:nth-child(1) > * { transition-delay: 220ms; }
+    .motion-reveal .landing-project-mobile-now-section:nth-child(1) .landing-project-mobile-now-track > .landing-project-mobile-now-card:nth-child(2) > * { transition-delay: 320ms; }
+    .motion-reveal .landing-project-mobile-now-section:nth-child(1) .landing-project-mobile-now-track > .landing-project-mobile-now-card:nth-child(3) > * { transition-delay: 420ms; }
+    .motion-reveal .landing-project-mobile-now-section:nth-child(1) .landing-project-mobile-now-track > .landing-project-mobile-now-card:nth-child(4) > * { transition-delay: 520ms; }
+    .motion-reveal .landing-project-mobile-now-section:nth-child(2) .landing-project-mobile-now-track > .landing-project-mobile-now-card:nth-child(1) > * { transition-delay: 380ms; }
+    .motion-reveal .landing-project-mobile-now-section:nth-child(2) .landing-project-mobile-now-track > .landing-project-mobile-now-card:nth-child(2) > * { transition-delay: 480ms; }
+    .motion-reveal .landing-project-mobile-now-section:nth-child(3) .landing-project-mobile-now-track > .landing-project-mobile-now-card:nth-child(1) > * { transition-delay: 540ms; }
+    .motion-reveal .landing-project-mobile-now-section:nth-child(3) .landing-project-mobile-now-track > .landing-project-mobile-now-card:nth-child(2) > * { transition-delay: 640ms; }
+    .motion-reveal .landing-project-mobile-now-section:nth-child(4) .landing-project-mobile-now-track > .landing-project-mobile-now-card:nth-child(1) > * { transition-delay: 700ms; }
+    .motion-reveal .landing-project-mobile-now-section:nth-child(4) .landing-project-mobile-now-track > .landing-project-mobile-now-card:nth-child(2) > * { transition-delay: 800ms; }
     /* Human × AI: top -> bottom by row */
     .motion-reveal .landing-collab-col:first-child .landing-raw-item:nth-of-type(1) { transition-delay: 90ms; }
     .motion-reveal .landing-collab-col:last-child .landing-res-item:nth-of-type(1) { transition-delay: 150ms; }
@@ -282,7 +311,7 @@
       margin-top: 8px;
     }
     .landing-process-card--doc .process-doc-bottom {
-      margin-top: auto;
+      margin-top: 12px;
     }
     .landing-process-card--image {
       padding: 0;
@@ -415,7 +444,7 @@
       width: 100%;
       display: flex;
       justify-content: center;
-      padding: 6px 0 14px;
+      padding: 20px 0 28px !important;
     }
     .landing-project-mobile-frame {
       width: min(430px, 100%);
@@ -587,7 +616,7 @@
       font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 9px;
       letter-spacing: .06em;
-      color: #c0c0c0;
+      color: #a8a8a8;
       text-transform: uppercase;
     }
     .landing-project-mobile-card-title {
@@ -660,6 +689,400 @@
       padding-top: 2px;
       flex-shrink: 0;
     }
+
+    .landing-project-mobile-now {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-bottom: 8px;
+    }
+    .landing-project-mobile-now-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .landing-project-mobile-now-head {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 0 2px;
+    }
+    .landing-project-mobile-now-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .landing-project-mobile-now-label,
+    .landing-project-mobile-now-meta {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: .06em;
+      color: #a8a8a8;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .landing-project-mobile-now-title {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      line-height: 1.2;
+      color: #333;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+    .landing-project-mobile-now-description {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 16px;
+      line-height: 1.4;
+      color: rgba(8, 8, 8, 0.56);
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+      overflow: hidden;
+    }
+    .landing-project-mobile-now-rail {
+      overflow-x: auto;
+      overflow-y: visible;
+      padding: 16px 30px 28px 30px;
+      margin-left: -24px;
+      margin-right: -24px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .landing-project-mobile-now-rail::-webkit-scrollbar { display: none; }
+    .landing-project-mobile-now-rail--thread-only {
+      padding-top: 22px;
+      padding-bottom: 44px;
+    }
+    .landing-project-mobile-now-track {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      width: max-content;
+      min-width: 100%;
+      padding: 0 2px;
+    }
+    .landing-project-mobile-now-card {
+      flex: 0 0 auto;
+      transform: rotate(var(--now-tilt, -1deg));
+      transform-origin: center center;
+      transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+    .landing-project-mobile-now-rail.is-scrolling .landing-project-mobile-now-card:nth-child(odd) {
+      transform: rotate(1deg);
+    }
+    .landing-project-mobile-now-rail.is-scrolling .landing-project-mobile-now-card:nth-child(even) {
+      transform: rotate(-1deg);
+    }
+    .landing-project-mobile-now-card + .landing-project-mobile-now-card {
+      margin-left: -2px;
+    }
+    .landing-project-mobile-now-card--small { width: 173px; }
+    .landing-project-mobile-now-card--doc { width: 264px; }
+    .landing-project-mobile-now-card--thread { width: 264px; }
+
+    .landing-project-mobile-now-surface {
+      border-radius: 14px;
+      border: none;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.03), 0 12px 24px rgba(0,0,0,0.09);
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .landing-project-mobile-now-note {
+      background: #fff;
+      min-height: 148px;
+      padding: 15px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .landing-project-mobile-now-note::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 36px;
+      bottom: 10px;
+      background-image: repeating-linear-gradient(
+        transparent 0px,
+        transparent 18px,
+        rgba(170, 170, 170, 0.4) 18px,
+        rgba(170, 170, 170, 0.4) 19px
+      );
+      pointer-events: none;
+    }
+    .landing-project-mobile-now-note > * {
+      position: relative;
+      z-index: 1;
+    }
+    .landing-project-mobile-now-note-label {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: .06em;
+      color: #aaa;
+      text-transform: uppercase;
+    }
+    .landing-project-mobile-now-note-text {
+      margin: 0;
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 14px;
+      line-height: 1.35;
+      color: #111;
+      font-weight: 500;
+      letter-spacing: -0.4px;
+      transform: rotate(-1.2deg);
+    }
+
+    .landing-project-mobile-now-image {
+      background: #fff;
+      min-height: 0;
+      aspect-ratio: 1 / 1;
+      padding: 0;
+      overflow: hidden;
+    }
+    .landing-project-mobile-now-image img {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      object-fit: cover;
+      display: block;
+    }
+
+    .landing-project-mobile-now-url {
+      background: #fff;
+      min-height: 148px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .landing-project-mobile-now-url-domain {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      color: #9d9d9d;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .landing-project-mobile-now-url-logo {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      border: 1px solid #efefef;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: #6f6f6f;
+      background: #fafafa;
+    }
+    .landing-project-mobile-now-url-title {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.35;
+      color: #111;
+    }
+    .landing-project-mobile-now-url-link {
+      margin-top: auto;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 11px;
+      line-height: 1.35;
+      color: #8c8c8c;
+      word-break: break-all;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+    }
+
+    .landing-project-mobile-now-chat {
+      background: #F2F0EE;
+      min-height: 200px;
+      height: 200px;
+      padding: 15px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .landing-project-mobile-now-chat-tag {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: .06em;
+      color: #aaa;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .landing-project-mobile-now-chat-text {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: 16px;
+      line-height: 1.45;
+      font-weight: 400;
+      color: #222;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 5;
+      overflow: hidden;
+    }
+    .landing-project-mobile-now-chat-link {
+      margin-top: auto;
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      color: #9d9d9d;
+      letter-spacing: .05em;
+      text-transform: none;
+    }
+
+    .landing-project-mobile-now-doc {
+      background: #fff;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+    .landing-project-mobile-now-doc-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .landing-project-mobile-now-doc-type {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      color: #a8a8a8;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .landing-project-mobile-now-doc-icon {
+      font-size: 24px;
+      line-height: 1;
+    }
+    .landing-project-mobile-now-doc-title {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 500;
+      color: #111;
+    }
+    .landing-project-mobile-now-doc-desc {
+      margin: 12px 0 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 12px;
+      line-height: 1.45;
+      color: rgba(8, 8, 8, 0.5);
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+    }
+    .landing-project-mobile-now-doc-meta {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      color: #9f9f9f;
+      letter-spacing: .05em;
+      text-transform: lowercase;
+    }
+
+    .landing-project-mobile-now-decision {
+      background: #111;
+      min-height: 148px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .landing-project-mobile-now-decision-mark {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .landing-project-mobile-now-decision-text {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 16px;
+      line-height: 1.35;
+      color: #f2f2f2;
+      font-weight: 600;
+    }
+
+    .landing-thread-mobile-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 8px;
+    }
+    .landing-thread-mobile-card {
+      background: #F2F0EE;
+      border: none;
+      border-radius: 14px;
+      padding: 14px 16px;
+      transition: background 0.12s;
+    }
+    .landing-thread-mobile-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .landing-thread-mobile-card-header .landing-thread-mobile-type-tag { margin-left: auto; }
+    .landing-thread-mobile-title {
+      margin-top: 12px;
+      margin-bottom: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      display: block;
+      overflow: visible;
+    }
+    .landing-thread-mobile-ke-user {
+      margin: 2px 0 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 13px;
+      color: #888;
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+    }
+    .landing-thread-mobile-ts,
+    .landing-thread-mobile-session {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      color: #bbb;
+    }
+    .landing-thread-mobile-type-tag {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      padding: 2px 8px;
+      border-radius: 100px;
+      white-space: nowrap;
+      border: none;
+      flex-shrink: 0;
+    }
+    .landing-thread-mobile-type-tag--exploring { background: rgba(125, 108, 92, 0.14); color: #6b5b4d; }
+    .landing-thread-mobile-type-tag--deciding { background: rgba(17, 17, 17, 0.9); color: #f7f5f2; }
+    .landing-thread-mobile-type-tag--questioning { background: rgba(196, 141, 68, 0.18); color: #966124; }
+    .landing-thread-mobile-type-tag--reframing { background: rgba(90, 99, 120, 0.18); color: #4f566b; }
+    .landing-thread-mobile-type-tag--building { background: rgba(97, 126, 98, 0.18); color: #45684a; }
+    .landing-thread-mobile-type-tag--pivoting { background: rgba(116, 96, 130, 0.18); color: #6b5579; }
+
     .landing-home-mobile-screen {
       border-radius: 18px;
       border: 1px solid #e9e9e9;
@@ -1068,7 +1491,7 @@
     .landing-now-count {
       font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 10px;
-      color: #c0c0c0;
+      color: #a8a8a8;
       letter-spacing: 0.05em;
       text-transform: uppercase;
     }
@@ -1154,17 +1577,15 @@
     .landing-thread-card-header .landing-thread-type-tag { margin-left: auto; }
     .landing-thread-title {
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
       color: #333;
       letter-spacing: -0.02em;
       margin-top: 24px;
       margin-bottom: 8px;
       line-height: 1.3;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      overflow: hidden;
+      display: block;
+      overflow: visible;
     }
     .landing-thread-type-tag {
       font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -1235,7 +1656,7 @@
       font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 9px;
       letter-spacing: 0.05em;
-      color: #b8b8b8;
+      color: #a8a8a8;
       text-transform: uppercase;
     }
     .landing-thread-chat-messages {
@@ -1298,7 +1719,7 @@
       padding: 11px 14px;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 16px;
-      color: #b8b8b8;
+      color: #a8a8a8;
       line-height: 1.4;
       min-height: 44px;
       display: flex;
@@ -1317,6 +1738,27 @@
       justify-content: center;
       font-size: 14px;
       line-height: 1;
+    }
+    .landing-thread-topic-callout {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 14px 14px;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .landing-thread-topic-callout-text {
+      font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #a3a3a3;
+    }
+    .landing-thread-topic-callout-arrow {
+      color: #969696;
+      font-size: 20px;
+      line-height: 1;
+      transform: translateY(1px);
     }
     .landing-thread-flow-arrow {
       display: flex;
@@ -1347,6 +1789,9 @@
       }
       .landing-thread-flow-arrow {
         transform: rotate(90deg);
+      }
+      .landing-thread-topic-callout {
+        display: flex;
       }
     }
 
@@ -1657,7 +2102,7 @@
       const sectionOverflow = allowOverflow ? "overflow-visible" : "overflow-hidden";
 
       return (
-        <section id={id} className={`${baseBg} relative min-h-[72vh] w-full ${sectionOverflow} ${sectionClassName}`}>
+        <section id={id} className={`${baseBg} relative min-h-[64vh] w-full ${sectionOverflow} ${sectionClassName}`}>
           {/* Breathing radial for dark sections */}
           {isDark && (
             <div
@@ -1669,7 +2114,7 @@
             />
           )}
 
-          <div className={`relative mx-auto flex min-h-[72vh] max-w-[1200px] flex-col px-6 pb-12 pt-16 sm:px-10 ${containerClassName}`}>
+          <div className={`relative mx-auto flex min-h-[64vh] max-w-[1200px] flex-col px-6 pb-16 pt-20 sm:px-10 ${containerClassName}`}>
 
             {align === "center" && (
               <div className={`flex flex-1 flex-col items-center ${vAlign === "top" ? "justify-start pt-10" : "justify-center"} ${hasCopy ? "gap-10" : "gap-0"}`}>
@@ -2158,7 +2603,7 @@
                   </button>
                   <button className="landing-project-mobile-tab active">
                     <span className="landing-project-mobile-tab-dot" />
-                    The Thoughts
+                    The Space
                   </button>
                   <button className="landing-project-mobile-tab">
                     <span className="landing-project-mobile-tab-dot" />
@@ -2268,7 +2713,6 @@
         </div>
       );
     }
-
     function FlowdProjectNowMobileShowcase() {
       return (
         <div className="landing-project-mobile-wrap" role="img" aria-label="Flowd project now tab mobile view">
@@ -2286,9 +2730,7 @@
                 <div className="landing-project-mobile-header">
                   <div className="landing-project-mobile-meta">2 hours ago</div>
                   <h2 className="landing-project-mobile-title">Flowd</h2>
-                  <p className="landing-project-mobile-sub">
-                    A clear state on every return.
-                  </p>
+                  <p className="landing-project-mobile-sub">A clear state on every return.</p>
                 </div>
 
                 <div className="landing-project-mobile-tabs" aria-hidden="true">
@@ -2298,7 +2740,7 @@
                   </button>
                   <button className="landing-project-mobile-tab">
                     <span className="landing-project-mobile-tab-dot" />
-                    The Thoughts
+                    The Space
                   </button>
                   <button className="landing-project-mobile-tab">
                     <span className="landing-project-mobile-tab-dot" />
@@ -2306,139 +2748,182 @@
                   </button>
                 </div>
 
-                <div className="landing-project-mobile-cards">
-                  <article className="landing-project-mobile-card">
-                    <div className="landing-project-mobile-card-header">
-                      <span className="landing-project-mobile-card-label">Framing</span>
-                      <span className="landing-project-mobile-card-meta">updated 1d ago</span>
+                <div className="landing-project-mobile-now">
+                  <section className="landing-project-mobile-now-section">
+                    <div className="landing-project-mobile-now-head">
+                      <div className="landing-project-mobile-now-label-row">
+                        <span className="landing-project-mobile-now-label">Framing</span>
+                        <span className="landing-project-mobile-now-meta">updated 1d ago</span>
+                      </div>
+                      <h3 className="landing-project-mobile-now-title">Where you are right now</h3>
+                      <p className="landing-project-mobile-now-description">Flowd keeps notes, links, media, and chat in one place so you can always pick up where you left off.</p>
                     </div>
-                    <h3 className="landing-project-mobile-card-title">Where you are right now</h3>
-                    <p className="landing-project-mobile-card-body">
-                      A thinking space where notes, links, media, and conversation are equal inputs, and AI maintains project state across sessions.
-                    </p>
-                    <div className="landing-project-mobile-card-divider" />
-                    <div className="landing-project-mobile-card-list">
-                      <button className="landing-project-mobile-card-row">
-                        <div className="landing-project-mobile-card-main">
-                          <span className="landing-project-mobile-card-row-text">AI keeps state across sessions</span>
-                          <span className="landing-project-mobile-card-row-source">project framing · now</span>
+                    <div className="landing-project-mobile-now-rail">
+                      <div className="landing-project-mobile-now-track">
+                        <div className="landing-project-mobile-now-card landing-project-mobile-now-card--small" style={{ "--now-tilt": "-1deg" }}>
+                          <article className="landing-project-mobile-now-surface landing-project-mobile-now-chat">
+                            <span className="landing-project-mobile-now-chat-tag">chat summary</span>
+                            <p className="landing-project-mobile-now-chat-text">Flowd should keep capture raw in The Space while Now and Thread organize meaning for fast re-entry.</p>
+                            <span className="landing-project-mobile-now-chat-link">view chat →</span>
+                          </article>
                         </div>
-                        <span className="landing-project-mobile-card-arrow">→</span>
-                      </button>
-                      <button className="landing-project-mobile-card-row">
-                        <div className="landing-project-mobile-card-main">
-                          <span className="landing-project-mobile-card-row-text">Conversation is one equal input type</span>
-                          <span className="landing-project-mobile-card-row-source">system principle · locked</span>
-                        </div>
-                        <span className="landing-project-mobile-card-arrow">→</span>
-                      </button>
-                    </div>
-                  </article>
 
-                  <article className="landing-project-mobile-card">
-                    <div className="landing-project-mobile-card-header">
-                      <span className="landing-project-mobile-card-label">Pivots</span>
-                      <span className="landing-project-mobile-card-meta">updated 2d ago</span>
-                    </div>
-                    <h3 className="landing-project-mobile-card-title">How you came here</h3>
-                    <p className="landing-project-mobile-card-body">
-                      Started as an ADHD idea browser, then reframed into a Thinking Space once re-entry became the core problem.
-                    </p>
-                    <div className="landing-project-mobile-card-divider" />
-                    <div className="landing-project-mobile-card-list">
-                      <button className="landing-project-mobile-card-row">
-                        <div className="landing-project-mobile-card-main">
-                          <span className="landing-project-mobile-card-row-text">From capture tool to re-entry engine</span>
-                          <span className="landing-project-mobile-card-row-source">pivot · 3 days ago</span>
+                        <div className="landing-project-mobile-now-card landing-project-mobile-now-card--doc" style={{ "--now-tilt": "1deg" }}>
+                          <article className="landing-project-mobile-now-surface landing-project-mobile-now-doc">
+                            <div className="landing-project-mobile-now-doc-top">
+                              <span className="landing-project-mobile-now-doc-type">Project brief</span>
+                              <span className="landing-project-mobile-now-doc-icon">📄</span>
+                            </div>
+                            <h4 className="landing-project-mobile-now-doc-title">Flowd — Project Brief</h4>
+                            <p className="landing-project-mobile-now-doc-desc">A thinking space where notes and chat stay connected.</p>
+                            <div className="landing-project-mobile-now-doc-meta">
+                              <span>open →</span>
+                              <span>updated 1d</span>
+                            </div>
+                          </article>
                         </div>
-                        <span className="landing-project-mobile-card-arrow">→</span>
-                      </button>
-                      <button className="landing-project-mobile-card-row">
-                        <div className="landing-project-mobile-card-main">
-                          <span className="landing-project-mobile-card-row-text">From chatbot framing to thinking space</span>
-                          <span className="landing-project-mobile-card-row-source">reframe · 2 days ago</span>
-                        </div>
-                        <span className="landing-project-mobile-card-arrow">→</span>
-                      </button>
-                    </div>
-                  </article>
 
-                  <article className="landing-project-mobile-card">
-                    <div className="landing-project-mobile-card-header">
-                      <span className="landing-project-mobile-card-label">Decisions</span>
-                      <span className="landing-project-mobile-card-meta">3</span>
-                    </div>
-                    <h3 className="landing-project-mobile-card-title">Decisions you made</h3>
-                    <p className="landing-project-mobile-card-body">
-                      Core calls are surfaced directly so the team can move forward without re-reading sessions.
-                    </p>
-                    <div className="landing-project-mobile-card-divider" />
-                    <div className="landing-project-mobile-card-list">
-                      <button className="landing-project-mobile-card-row">
-                        <div className="landing-project-mobile-card-main">
-                          <span className="landing-project-mobile-card-row-text">Position as Thinking OS — not a whiteboard, not a chatbot</span>
-                          <span className="landing-project-mobile-card-row-source">from conversation · 3 days ago</span>
+                        <div className="landing-project-mobile-now-card landing-project-mobile-now-card--small" style={{ "--now-tilt": "-1deg" }}>
+                          <article className="landing-project-mobile-now-surface landing-project-mobile-now-image">
+                            <img src="https://i.pinimg.com/avif/736x/c9/28/89/c92889fb0316cbd99c518fdfadeeed57.avf" alt="" />
+                          </article>
                         </div>
-                        <span className="landing-project-mobile-card-arrow">→</span>
-                      </button>
+                      </div>
                     </div>
-                  </article>
+                  </section>
 
-                  <article className="landing-project-mobile-card">
-                    <div className="landing-project-mobile-card-header">
-                      <span className="landing-project-mobile-card-label">Open Questions</span>
-                      <span className="landing-project-mobile-card-meta">3</span>
+                  <section className="landing-project-mobile-now-section">
+                    <div className="landing-project-mobile-now-head">
+                      <div className="landing-project-mobile-now-label-row">
+                        <span className="landing-project-mobile-now-label">Pivots</span>
+                        <span className="landing-project-mobile-now-meta">updated 2d ago</span>
+                      </div>
+                      <h3 className="landing-project-mobile-now-title">How you came here</h3>
+                      <p className="landing-project-mobile-now-description">Started as an ADHD idea browser, then reframed into a Thinking Space once re-entry became the core problem.</p>
                     </div>
-                    <h3 className="landing-project-mobile-card-title">What's still open</h3>
-                    <p className="landing-project-mobile-card-body">
-                      The live tensions are around context interaction, signature moments, and the wrap/commit experience.
-                    </p>
-                    <div className="landing-project-mobile-card-divider" />
-                    <div className="landing-project-mobile-card-list">
-                      <button className="landing-project-mobile-card-row">
-                        <div className="landing-project-mobile-card-main">
-                          <span className="landing-project-mobile-card-row-text">How should Context Dock feel as an interaction?</span>
-                          <span className="landing-project-mobile-card-row-source">open · 1 day ago</span>
+                    <div className="landing-project-mobile-now-rail">
+                      <div className="landing-project-mobile-now-track">
+                        <div className="landing-project-mobile-now-card landing-project-mobile-now-card--small" style={{ "--now-tilt": "-1deg" }}>
+                          <article className="landing-project-mobile-now-surface landing-project-mobile-now-image">
+                            <img src="https://i.pinimg.com/736x/39/8f/82/398f82cb8ba795c10ca528e803323d69.jpg" alt="" />
+                          </article>
                         </div>
-                        <span className="landing-project-mobile-card-arrow">→</span>
-                      </button>
-                      <button className="landing-project-mobile-card-row">
-                        <div className="landing-project-mobile-card-main">
-                          <span className="landing-project-mobile-card-row-text">What makes Flowd uniquely not-Miro?</span>
-                          <span className="landing-project-mobile-card-row-source">open · 2 days ago</span>
-                        </div>
-                        <span className="landing-project-mobile-card-arrow">→</span>
-                      </button>
-                    </div>
-                  </article>
 
-                  <article className="landing-project-mobile-card">
-                    <div className="landing-project-mobile-card-header">
-                      <span className="landing-project-mobile-card-label">Next</span>
-                      <span className="landing-project-mobile-card-meta">3 moves</span>
-                    </div>
-                    <h3 className="landing-project-mobile-card-title">Where you can go</h3>
-                    <p className="landing-project-mobile-card-body">
-                      Continue where you left off, think through the hottest open question, or test a fresh angle.
-                    </p>
-                    <div className="landing-project-mobile-card-divider" />
-                    <div className="landing-project-mobile-card-list">
-                      <button className="landing-project-mobile-card-row">
-                        <div className="landing-project-mobile-card-main">
-                          <span className="landing-project-mobile-card-row-text">Continue: Raw vs Organized Split</span>
-                          <span className="landing-project-mobile-card-row-source">picked up 2 days ago</span>
+                        <div className="landing-project-mobile-now-card landing-project-mobile-now-card--small" style={{ "--now-tilt": "1deg" }}>
+                          <article className="landing-project-mobile-now-surface landing-project-mobile-now-url">
+                            <span className="landing-project-mobile-now-url-domain">Research</span>
+                            <span className="landing-project-mobile-now-url-logo">⌘</span>
+                            <span className="landing-project-mobile-now-url-title">Thinking OS references</span>
+                            <span className="landing-project-mobile-now-url-link">flowd.run/research/context-systems</span>
+                          </article>
                         </div>
-                        <span className="landing-project-mobile-card-arrow">→</span>
-                      </button>
-                      <button className="landing-project-mobile-card-row">
-                        <div className="landing-project-mobile-card-main">
-                          <span className="landing-project-mobile-card-row-text">Explore: first-time user in 60 seconds</span>
-                          <span className="landing-project-mobile-card-row-source">✦ drift suggests</span>
+
+                        <div className="landing-project-mobile-now-card landing-project-mobile-now-card--small" style={{ "--now-tilt": "-1deg" }}>
+                          <article className="landing-project-mobile-now-surface landing-project-mobile-now-decision">
+                            <span className="landing-project-mobile-now-decision-mark">✓ Decided</span>
+                            <p className="landing-project-mobile-now-decision-text">Re-entry clarity is the core problem, not idea capture volume.</p>
+                          </article>
                         </div>
-                        <span className="landing-project-mobile-card-arrow">→</span>
-                      </button>
+
+                        <div className="landing-project-mobile-now-card landing-project-mobile-now-card--thread" style={{ "--now-tilt": "1deg" }}>
+                          <article className="landing-project-mobile-now-surface landing-thread-mobile-card">
+                            <div className="landing-thread-mobile-card-header">
+                              <span className="landing-thread-mobile-ts">1d ago</span>
+                              <span className="landing-thread-mobile-session">· session 11</span>
+                              <span className="landing-thread-mobile-type-tag landing-thread-mobile-type-tag--reframing">REFRAMING</span>
+                            </div>
+                            <div className="landing-thread-mobile-title">Reframe product narrative from ai chat app to thinking space</div>
+                            <p className="landing-thread-mobile-ke-user">People keep reading this like another AI chat app.</p>
+                          </article>
+                        </div>
+                      </div>
                     </div>
-                  </article>
+                  </section>
+
+                  <section className="landing-project-mobile-now-section">
+                    <div className="landing-project-mobile-now-head">
+                      <div className="landing-project-mobile-now-label-row">
+                        <span className="landing-project-mobile-now-label">Decisions</span>
+                        <span className="landing-project-mobile-now-meta">3</span>
+                      </div>
+                      <h3 className="landing-project-mobile-now-title">Decisions you made</h3>
+                      <p className="landing-project-mobile-now-description">Core calls are surfaced directly so the team can move forward without re-reading sessions.</p>
+                    </div>
+                    <div className="landing-project-mobile-now-rail">
+                      <div className="landing-project-mobile-now-track">
+                        <div className="landing-project-mobile-now-card landing-project-mobile-now-card--small" style={{ "--now-tilt": "-1deg" }}>
+                          <article className="landing-project-mobile-now-surface landing-project-mobile-now-decision">
+                            <span className="landing-project-mobile-now-decision-mark">✓ Decided</span>
+                            <p className="landing-project-mobile-now-decision-text">Position as Thinking OS — not a whiteboard, not a chatbot</p>
+                          </article>
+                        </div>
+
+                        <div className="landing-project-mobile-now-card landing-project-mobile-now-card--small" style={{ "--now-tilt": "1deg" }}>
+                          <article className="landing-project-mobile-now-surface landing-project-mobile-now-note">
+                            <span className="landing-project-mobile-now-note-label">Note</span>
+                            <p className="landing-project-mobile-now-note-text">Decision is clear; next is prototyping how this framing reads in first 60 seconds.</p>
+                          </article>
+                        </div>
+
+                        <div className="landing-project-mobile-now-card landing-project-mobile-now-card--thread" style={{ "--now-tilt": "-1deg" }}>
+                          <article className="landing-project-mobile-now-surface landing-thread-mobile-card">
+                            <div className="landing-thread-mobile-card-header">
+                              <span className="landing-thread-mobile-ts">1d ago</span>
+                              <span className="landing-thread-mobile-session">· session 10</span>
+                              <span className="landing-thread-mobile-type-tag landing-thread-mobile-type-tag--deciding">DECIDING</span>
+                            </div>
+                            <div className="landing-thread-mobile-title">Lock positioning as thinking space instead of chatbot product framing</div>
+                            <p className="landing-thread-mobile-ke-user">People keep reading this like another AI chat app.</p>
+                          </article>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section className="landing-project-mobile-now-section">
+                    <div className="landing-project-mobile-now-head">
+                      <div className="landing-project-mobile-now-label-row">
+                        <span className="landing-project-mobile-now-label">Open questions</span>
+                        <span className="landing-project-mobile-now-meta">3</span>
+                      </div>
+                      <h3 className="landing-project-mobile-now-title">What's still open</h3>
+                      <p className="landing-project-mobile-now-description">The live tensions are around context interaction, signature moments, and the wrap/commit experience.</p>
+                    </div>
+                    <div className="landing-project-mobile-now-rail">
+                      <div className="landing-project-mobile-now-track">
+                        <div className="landing-project-mobile-now-card landing-project-mobile-now-card--thread" style={{ "--now-tilt": "-1deg" }}>
+                          <article className="landing-project-mobile-now-surface landing-thread-mobile-card">
+                            <div className="landing-thread-mobile-card-header">
+                              <span className="landing-thread-mobile-ts">2d ago</span>
+                              <span className="landing-thread-mobile-session">· session 9</span>
+                              <span className="landing-thread-mobile-type-tag landing-thread-mobile-type-tag--questioning">QUESTIONING</span>
+                            </div>
+                            <div className="landing-thread-mobile-title">Define how context dock should feel during live collaboration</div>
+                            <p className="landing-thread-mobile-ke-user">How should Context Dock feel as an interaction?</p>
+                          </article>
+                        </div>
+
+                        <div className="landing-project-mobile-now-card landing-project-mobile-now-card--small" style={{ "--now-tilt": "1deg" }}>
+                          <article className="landing-project-mobile-now-surface landing-project-mobile-now-note">
+                            <span className="landing-project-mobile-now-note-label">Question note</span>
+                            <p className="landing-project-mobile-now-note-text">What are the 3 signature moments that feel uniquely Flowd and not Miro?</p>
+                          </article>
+                        </div>
+
+                        <div className="landing-project-mobile-now-card landing-project-mobile-now-card--thread" style={{ "--now-tilt": "-1deg" }}>
+                          <article className="landing-project-mobile-now-surface landing-thread-mobile-card">
+                            <div className="landing-thread-mobile-card-header">
+                              <span className="landing-thread-mobile-ts">2d ago</span>
+                              <span className="landing-thread-mobile-session">· session 8</span>
+                              <span className="landing-thread-mobile-type-tag landing-thread-mobile-type-tag--exploring">EXPLORING</span>
+                            </div>
+                            <div className="landing-thread-mobile-title">Identify signature moments that make flowd feel unlike miro</div>
+                            <p className="landing-thread-mobile-ke-user">What makes Flowd uniquely not-Miro?</p>
+                          </article>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
                 </div>
               </div>
             </div>
@@ -2446,6 +2931,7 @@
         </div>
       );
     }
+
 
     function ThoughtsCardsCollage() {
       return (
@@ -2606,6 +3092,13 @@
                   </div>
                   <span className="landing-now-arrow">→</span>
                 </div>
+                <div className="landing-now-row">
+                  <div className="landing-now-main">
+                    <span className="landing-now-text">Thread: Lock positioning as thinking space instead of chatbot product framing</span>
+                    <span className="landing-now-source">thread · deciding · 1 day ago</span>
+                  </div>
+                  <span className="landing-now-arrow">→</span>
+                </div>
               </div>
             </div>
 
@@ -2629,8 +3122,8 @@
                 </div>
                 <div className="landing-now-row">
                   <div className="landing-now-main">
-                    <span className="landing-now-text">What makes Flowd uniquely not-Miro?</span>
-                    <span className="landing-now-source">open · 2 days ago</span>
+                    <span className="landing-now-text">Question note: What makes Flowd uniquely not-Miro?</span>
+                    <span className="landing-now-source">question note · open · 2 days ago</span>
                   </div>
                   <span className="landing-now-arrow">→</span>
                 </div>
@@ -2723,11 +3216,14 @@
               <div className="landing-thread-chat-ta">Talk through your idea...</div>
               <div className="landing-thread-chat-send">↗</div>
             </div>
+            <div className="landing-thread-topic-callout" aria-hidden="true">
+              <span className="landing-thread-topic-callout-text">new topic/intent detected</span>
+              <span className="landing-thread-topic-callout-arrow">↙</span>
+            </div>
           </div>
         </div>
       );
     }
-
     function ThreadTabMobileShowcase() {
       return (
         <div className="landing-project-mobile-wrap py-2" role="img" aria-label="Flowd thread tab mobile view">
@@ -2755,7 +3251,7 @@
                   </button>
                   <button className="landing-project-mobile-tab">
                     <span className="landing-project-mobile-tab-dot" />
-                    The Thoughts
+                    The Space
                   </button>
                   <button className="landing-project-mobile-tab active">
                     <span className="landing-project-mobile-tab-dot" />
@@ -2779,25 +3275,35 @@
                   </div>
                 </div>
 
-                <div className="landing-thread-list">
-                  <div className="landing-thread-card">
-                    <div className="landing-thread-card-header">
-                      <span className="landing-thread-ts">2h ago</span>
-                      <span className="landing-thread-session">· session 12</span>
-                      <span className="landing-thread-type-tag landing-thread-type-tag--deciding">DECIDING</span>
+                <div className="landing-thread-mobile-list">
+                  <div className="landing-thread-mobile-card">
+                    <div className="landing-thread-mobile-card-header">
+                      <span className="landing-thread-mobile-ts">2h ago</span>
+                      <span className="landing-thread-mobile-session">· session 12</span>
+                      <span className="landing-thread-mobile-type-tag landing-thread-mobile-type-tag--deciding">DECIDING</span>
                     </div>
-                    <div className="landing-thread-title">Define raw capture and organized view boundaries</div>
-                    <p className="landing-thread-ke-user">If everything is capture-first, how do users not drown in clutter?</p>
+                    <div className="landing-thread-mobile-title">Explore ux design strategies to enhance flowd for adhd users</div>
+                    <p className="landing-thread-mobile-ke-user">If everything is capture-first, how do users not drown in clutter?</p>
                   </div>
 
-                  <div className="landing-thread-card">
-                    <div className="landing-thread-card-header">
-                      <span className="landing-thread-ts">1d ago</span>
-                      <span className="landing-thread-session">· session 11</span>
-                      <span className="landing-thread-type-tag landing-thread-type-tag--reframing">REFRAMING</span>
+                  <div className="landing-thread-mobile-card">
+                    <div className="landing-thread-mobile-card-header">
+                      <span className="landing-thread-mobile-ts">1d ago</span>
+                      <span className="landing-thread-mobile-session">· session 11</span>
+                      <span className="landing-thread-mobile-type-tag landing-thread-mobile-type-tag--reframing">REFRAMING</span>
                     </div>
-                    <div className="landing-thread-title">Position as thinking space, not chatbot</div>
-                    <p className="landing-thread-ke-user">People keep reading this like another AI chat app.</p>
+                    <div className="landing-thread-mobile-title">Reframe product narrative from ai chat app to thinking space</div>
+                    <p className="landing-thread-mobile-ke-user">People keep reading this like another AI chat app.</p>
+                  </div>
+
+                  <div className="landing-thread-mobile-card">
+                    <div className="landing-thread-mobile-card-header">
+                      <span className="landing-thread-mobile-ts">3d ago</span>
+                      <span className="landing-thread-mobile-session">· session 10</span>
+                      <span className="landing-thread-mobile-type-tag landing-thread-mobile-type-tag--building">BUILDING</span>
+                    </div>
+                    <div className="landing-thread-mobile-title">Define chat formatting rules for readable mobile ai responses</div>
+                    <p className="landing-thread-mobile-ke-user">Long AI responses are hard to scan on mobile unless they are structured.</p>
                   </div>
                 </div>
               </div>
@@ -2825,6 +3331,7 @@
         </div>
       );
     }
+
 
     function ThreadFlowShowcase() {
       return (
@@ -2955,6 +3462,32 @@
         return () => observer.disconnect();
       }, []);
 
+      React.useEffect(() => {
+        const rails = Array.from(document.querySelectorAll(".landing-project-mobile-now-rail"));
+        if (rails.length === 0) return undefined;
+        const resetTimers = new Map();
+        const onRailScroll = (event) => {
+          const rail = event.currentTarget;
+          rail.classList.add("is-scrolling");
+          const current = resetTimers.get(rail);
+          if (current) clearTimeout(current);
+          const next = setTimeout(() => {
+            rail.classList.remove("is-scrolling");
+            resetTimers.delete(rail);
+          }, 160);
+          resetTimers.set(rail, next);
+        };
+        rails.forEach((rail) => rail.addEventListener("scroll", onRailScroll, { passive: true }));
+        return () => {
+          rails.forEach((rail) => {
+            rail.removeEventListener("scroll", onRailScroll);
+            rail.classList.remove("is-scrolling");
+          });
+          resetTimers.forEach((timer) => clearTimeout(timer));
+          resetTimers.clear();
+        };
+      }, []);
+
       return (
         <div className="min-h-screen w-full bg-[#E8E8E4]">
           <Nav />
@@ -2982,7 +3515,7 @@
           />
 
           <section id="product" className="relative w-full min-h-[90vh] bg-[#E8E8E4]">
-            <div className="mx-auto max-w-[1200px] px-6 pb-8 sm:px-10">
+            <div className="mx-auto max-w-[1200px] px-6 pt-6 pb-16 sm:px-10">
               <div className="motion-reveal" data-reveal data-reveal-delay="120">
                 <FlowdProjectMobileShowcase />
               </div>
@@ -3000,7 +3533,7 @@
                 <span className="italic opacity-40">creative brains work.</span>
               </>
             }
-            sectionClassName="min-h-[72vh]"
+            sectionClassName="min-h-[64vh]"
             containerClassName="pt-10 pb-10"
             media={<DifferentFeaturesShowcase />}
             align="center"
@@ -3050,7 +3583,7 @@
             }
             media={<ThoughtsCardsCollage />}
             align="stacked"
-            sectionClassName="min-h-[72vh]"
+            sectionClassName="min-h-[64vh]"
             containerClassName="pt-16 pb-10"
             useMediaCard={false}
             allowOverflow={true}
@@ -3076,7 +3609,7 @@
             }
             media={<ThreadFlowShowcase />}
             align="stacked"
-            sectionClassName="min-h-[72vh]"
+            sectionClassName="min-h-[64vh]"
             containerClassName="pt-16 pb-10"
             useMediaCard={false}
             allowOverflow={true}
@@ -3102,7 +3635,7 @@
             }
             media={<FlowdProjectNowMobileShowcase />}
             align="stacked"
-            sectionClassName="min-h-[72vh]"
+            sectionClassName="min-h-[64vh]"
             containerClassName="pt-16 pb-10"
             useMediaCard={false}
             allowOverflow={true}
@@ -3133,7 +3666,7 @@
 
           <QuoteShowcase />
 
-          <section id="early-access" className="relative min-h-[72vh] w-full overflow-hidden bg-[#111111] text-neutral-50">
+          <section id="early-access" className="relative min-h-[64vh] w-full overflow-hidden bg-[#111111] text-neutral-50">
             <div
               className="pointer-events-none absolute inset-0"
               style={{
@@ -3141,7 +3674,7 @@
                 animation: "breathe 7s ease-in-out infinite",
               }}
             />
-            <div className="relative mx-auto flex min-h-[72vh] max-w-[1200px] flex-col items-center justify-center px-6 py-16 sm:px-10">
+            <div className="relative mx-auto flex min-h-[64vh] max-w-[1200px] flex-col items-center justify-center px-6 py-16 sm:px-10">
               <div className="mt-12 text-center motion-reveal" data-reveal data-reveal-delay="150">
                 <Mono className="text-[11px] tracking-[0.28em] text-white/70">REQUEST ACCESS · 2026</Mono>
               </div>
