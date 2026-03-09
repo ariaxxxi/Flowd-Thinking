@@ -292,26 +292,27 @@
       padding: 0;
       border: none;
       background: transparent;
-      height: 200px;
+      height: 150px;
     }
     .landing-process-card--doc .process-doc-card {
       height: 100%;
       box-shadow: 0 16px 30px 5px rgba(21, 21, 32, 0.10);
       padding: 18px 18px 14px;
       gap: 0;
-      background: rgba(255,255,255,0.6);
+      background: #f4f2f1;
     }
     .landing-process-card--doc .process-doc-top {
-      margin-bottom: 26px;
+      margin-bottom: 10px;
     }
     .landing-process-card--doc .process-doc-title {
       margin-top: 0;
     }
     .landing-process-card--doc .process-doc-preview {
-      margin-top: 8px;
+      margin-top: 6px;
+      color: rgba(8, 8, 8, 0.7);
     }
     .landing-process-card--doc .process-doc-bottom {
-      margin-top: 12px;
+      margin-top: auto;
     }
     .landing-process-card--image {
       padding: 0;
@@ -350,12 +351,17 @@
       margin-top: auto;
       padding: 8px 10px;
       border-radius: 10px;
-      background-image: repeating-linear-gradient(transparent 0px, transparent 18px, rgba(0,0,0,0.06) 18px, rgba(0,0,0,0.06) 19px);
+      background-image: repeating-linear-gradient(transparent 0px, transparent 18px, rgba(173,173,173,0.5) 18px, rgba(173,173,173,0.5) 19px);
       font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 16px;
       line-height: 1.35;
       color: #111111;
       font-weight: 500;
+    }
+    .landing-process-note-text {
+      display: block;
+      transform: rotate(-2deg);
+      transform-origin: left top;
     }
     .landing-process-link-main {
       margin-top: auto;
@@ -437,6 +443,137 @@
       text-transform: uppercase;
       color: rgba(255, 255, 255, 0.5);
       align-self: flex-start;
+    }
+
+    /* ── Process composite animation (scatter -> hold -> settle -> frame) ── */
+    .landing-process-composite {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 24px 0 42px;
+      overflow: visible;
+    }
+    .landing-process-composite-stage {
+      position: relative;
+      width: min(100%, 1080px);
+      min-height: 1060px;
+      overflow: visible;
+    }
+    .landing-process-composite-cards {
+      position: absolute;
+      left: 50%;
+      top: 48px;
+      width: 664px;
+      height: 432px;
+      transform: translateX(-50%);
+      transform-origin: center top;
+      transition: opacity 520ms cubic-bezier(0.22, 1, 0.36, 1), transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+      z-index: 2;
+      overflow: visible;
+    }
+    .landing-process-composite-grid {
+      width: 664px;
+      height: 432px;
+      position: relative;
+      display: block;
+      overflow: visible;
+    }
+    .landing-process-composite-grid .landing-process-card {
+      position: absolute;
+      margin: 0;
+    }
+    .landing-process-composite-grid .landing-process-composite-card--1 { left: 0; top: 0; width: 200px; height: 200px; }
+    .landing-process-composite-grid .landing-process-composite-card--2 { left: 232px; top: 0; width: 200px; height: 200px; }
+    .landing-process-composite-grid .landing-process-composite-card--3 { left: 464px; top: 0; width: 200px; height: 200px; }
+    .landing-process-composite-grid .landing-process-composite-card--4 { left: 0; top: 232px; width: 200px; height: 200px; }
+    .landing-process-composite-grid .landing-process-composite-card--5 { left: 232px; top: 232px; width: 358px; height: 150px; }
+    .landing-process-composite-card {
+      opacity: 0;
+      transform: translate3d(var(--scatter-x, 0px), calc(var(--scatter-y, 0px) + 242px), 0) scale(0.98);
+      transition-property: transform, opacity;
+      transition-duration: 700ms, 700ms;
+      transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1), cubic-bezier(0.22, 1, 0.36, 1);
+      transition-delay: calc(var(--card-index, 0) * 120ms), calc(var(--card-index, 0) * 120ms);
+      will-change: transform, opacity;
+      transform-origin: top left;
+    }
+    .phase-scatter-in .landing-process-composite-card,
+    .phase-scatter-hold .landing-process-composite-card {
+      opacity: 1;
+      transform: translate3d(var(--scatter-x, 0px), calc(var(--scatter-y, 0px) + 200px), 0) scale(1);
+    }
+    .phase-settle-phone .landing-process-composite-card,
+    .phase-frame-reveal .landing-process-composite-card,
+    .phase-done .landing-process-composite-card {
+      opacity: 1;
+      transform: translate3d(var(--target-x, 0px), var(--target-y, 0px), 0) scale(var(--target-sx, 1), var(--target-sy, 1));
+      transition-duration: 1500ms, 1500ms;
+      transition-delay: 0ms, 0ms;
+      transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1), cubic-bezier(0.65, 0, 0.35, 1);
+      transition-timing-function: linear(0.0000 0.00%, 0.0006 0.86%, 0.0025 1.78%, 0.0060 2.74%, 0.0113 3.74%, 0.0186 4.76%, 0.0281 5.80%, 0.0402 6.86%, 0.0549 7.91%, 0.0725 8.96%, 0.0933 9.99%, 0.1174 11.00%, 0.1452 11.98%, 0.1768 12.91%, 0.2124 13.80%, 0.2523 14.62%, 0.2967 15.38%, 0.3459 16.07%, 0.4000 16.67%, 0.4344 17.02%, 0.4678 17.37%, 0.5000 17.75%, 0.5312 18.15%, 0.5613 18.59%, 0.5903 19.08%, 0.6182 19.62%, 0.6451 20.22%, 0.6709 20.90%, 0.6957 21.66%, 0.7195 22.51%, 0.7422 23.46%, 0.7639 24.52%, 0.7846 25.69%, 0.8043 27.00%, 0.8230 28.44%, 0.8408 30.03%, 0.8575 31.77%, 0.8733 33.68%, 0.8881 35.76%, 0.9019 38.02%, 0.9148 40.47%, 0.9268 43.12%, 0.9378 45.99%, 0.9479 49.07%, 0.9570 52.38%, 0.9653 55.92%, 0.9727 59.72%, 0.9791 63.76%, 0.9847 68.07%, 0.9894 72.66%, 0.9933 77.53%, 0.9962 82.68%, 0.9983 88.14%, 0.9996 93.91%, 1.0000 100.00%), linear(0.0000 0.00%, 0.0006 0.86%, 0.0025 1.78%, 0.0060 2.74%, 0.0113 3.74%, 0.0186 4.76%, 0.0281 5.80%, 0.0402 6.86%, 0.0549 7.91%, 0.0725 8.96%, 0.0933 9.99%, 0.1174 11.00%, 0.1452 11.98%, 0.1768 12.91%, 0.2124 13.80%, 0.2523 14.62%, 0.2967 15.38%, 0.3459 16.07%, 0.4000 16.67%, 0.4344 17.02%, 0.4678 17.37%, 0.5000 17.75%, 0.5312 18.15%, 0.5613 18.59%, 0.5903 19.08%, 0.6182 19.62%, 0.6451 20.22%, 0.6709 20.90%, 0.6957 21.66%, 0.7195 22.51%, 0.7422 23.46%, 0.7639 24.52%, 0.7846 25.69%, 0.8043 27.00%, 0.8230 28.44%, 0.8408 30.03%, 0.8575 31.77%, 0.8733 33.68%, 0.8881 35.76%, 0.9019 38.02%, 0.9148 40.47%, 0.9268 43.12%, 0.9378 45.99%, 0.9479 49.07%, 0.9570 52.38%, 0.9653 55.92%, 0.9727 59.72%, 0.9791 63.76%, 0.9847 68.07%, 0.9894 72.66%, 0.9933 77.53%, 0.9962 82.68%, 0.9983 88.14%, 0.9996 93.91%, 1.0000 100.00%);
+    }
+    .landing-process-composite-frame {
+      position: absolute;
+      left: 50%;
+      top: 32px;
+      transform: translate(-50%, 0) scale(1);
+      opacity: 0;
+      transition: opacity 650ms cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1;
+      width: min(430px, 100%);
+      pointer-events: none;
+      overflow: visible;
+    }
+    .phase-frame-reveal .landing-process-composite-frame,
+    .phase-done .landing-process-composite-frame {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1);
+    }
+    .phase-frame-reveal .landing-process-composite-cards {
+      opacity: 0.82;
+      transform: translateX(-50%) scale(1);
+    }
+    .phase-done .landing-process-composite-cards {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+
+    .landing-process-composite-card--1 { --scatter-x: -62px; --scatter-y: 28px; }
+    .landing-process-composite-card--2 { --scatter-x: 52px; --scatter-y: 18px; }
+    .landing-process-composite-card--3 { --scatter-x: -34px; --scatter-y: 42px; }
+    .landing-process-composite-card--4 { --scatter-x: 58px; --scatter-y: -16px; }
+    .landing-process-composite-card--5 { --scatter-x: -44px; --scatter-y: 22px; }
+
+    @media (max-width: 980px) {
+      .landing-process-composite-stage {
+        min-height: 930px;
+      }
+      .landing-process-composite-cards,
+      .landing-process-composite-grid {
+        width: 620px;
+        height: 406px;
+        top: 24px;
+      }
+      .landing-process-composite-frame {
+        top: 18px;
+      }
+      .landing-thoughts-mobile-settle-bounds {
+        height: 540px;
+      }
+      .landing-process-composite-grid .landing-process-composite-card--1 { left: 0; top: 0; width: 185px; height: 185px; }
+      .landing-process-composite-grid .landing-process-composite-card--2 { left: 207px; top: 0; width: 185px; height: 185px; }
+      .landing-process-composite-grid .landing-process-composite-card--3 { left: 414px; top: 0; width: 185px; height: 185px; }
+      .landing-process-composite-grid .landing-process-composite-card--4 { left: 0; top: 207px; width: 185px; height: 185px; }
+      .landing-process-composite-grid .landing-process-composite-card--5 { left: 207px; top: 207px; width: 358px; height: 150px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .landing-process-composite-card,
+      .landing-process-composite-cards,
+      .landing-process-composite-frame {
+        transition: none !important;
+      }
     }
 
     /* ── Project view mobile showcase (from Flowd app) ── */
@@ -837,7 +974,7 @@
       color: #111;
       font-weight: 500;
       letter-spacing: -0.4px;
-      transform: rotate(-1.2deg);
+      transform: rotate(-2deg);
     }
 
     .landing-project-mobile-now-image {
@@ -1040,7 +1177,7 @@
     .landing-thread-mobile-title {
       margin-top: 12px;
       margin-bottom: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: Georgia, serif;
       font-size: 16px;
       font-weight: 600;
       color: #333;
@@ -1439,6 +1576,16 @@
       border-radius: 14px;
       box-shadow: 0 2px 0 rgba(0,0,0,.03), 0 12px 24px rgba(0,0,0,.09);
     }
+    .landing-thoughts-card-doc .process-doc-preview {
+      margin-top: -2px;
+    }
+
+    .landing-thoughts-mobile-settle-bounds {
+      width: 100%;
+      height: 620px;
+      margin-top: 8px;
+      pointer-events: none;
+    }
 
     /* ── Now cards showcase (matched to app Now tab style) ── */
     .landing-now-wrap {
@@ -1576,7 +1723,7 @@
     .landing-thread-card-header { display: flex; align-items: center; gap: 6px; }
     .landing-thread-card-header .landing-thread-type-tag { margin-left: auto; }
     .landing-thread-title {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: Georgia, serif;
       font-size: 16px;
       font-weight: 600;
       color: #333;
@@ -2477,7 +2624,7 @@
             <a href="#hero" onClick={scrollTo("hero")} style={{ textDecoration: "none", color: "inherit" }}>
               <Mono className="text-[11px] tracking-[0.22em] nav-link opacity-70">OVERVIEW</Mono>
             </a>
-            <a href="#product" onClick={scrollTo("product")} style={{ textDecoration: "none", color: "inherit" }}>
+            <a href="#process" onClick={scrollTo("process")} style={{ textDecoration: "none", color: "inherit" }}>
               <Mono className="text-[11px] tracking-[0.22em] nav-link opacity-70">PRODUCT</Mono>
             </a>
             <a href="#early-access" onClick={scrollTo("early-access")} style={{ textDecoration: "none", color: "inherit" }}>
@@ -2780,12 +2927,12 @@
       );
     }
 
-    function FlowdProjectMobileShowcase() {
+    function FlowdProjectMobileShowcase({ hideThoughtCards = false, settleBoundsRef = null } = {}) {
       return (
         <div className="landing-project-mobile-wrap" role="img" aria-label="Flowd project thoughts tab mobile view">
           <div className="landing-project-mobile-frame">
             <div className="landing-project-mobile-screen">
-              <div className="landing-project-mobile-scroll landing-project-mobile-scroll--with-fab">
+              <div className={hideThoughtCards ? "landing-project-mobile-scroll" : "landing-project-mobile-scroll landing-project-mobile-scroll--with-fab"}>
                 <div className="landing-project-mobile-nav">
                   <div className="landing-project-mobile-nav-left">
                     <button className="landing-project-mobile-back" aria-hidden="true">←</button>
@@ -2833,92 +2980,99 @@
                   </div>
                 </div>
 
-                <div className="landing-thoughts-mobile-masonry">
-                  <div className="landing-thoughts-mobile-col">
-                    <article className="landing-thoughts-card landing-thoughts-card-chat">
-                      <span className="landing-thoughts-chat-tag">Chat summary</span>
-                      <div className="landing-thoughts-chat-text">Raw in, organized out. Thoughts is the dump zone. Now and Thread surface meaning.</div>
-                      <span className="landing-thoughts-chat-view">view chat -></span>
-                    </article>
+                {!hideThoughtCards ? (
+                  <div className="landing-thoughts-mobile-masonry">
+                    <div className="landing-thoughts-mobile-col">
+                      <article className="landing-thoughts-card landing-thoughts-card-chat">
+                        <span className="landing-thoughts-chat-tag">Chat summary</span>
+                        <div className="landing-thoughts-chat-text">Raw in, organized out. Thoughts is the dump zone. Now and Thread surface meaning.</div>
+                        <span className="landing-thoughts-chat-view">view chat -&gt;</span>
+                      </article>
 
-                    <article className="landing-thoughts-card landing-thoughts-card-image">
-                      <img src="https://i.pinimg.com/avif/736x/c9/28/89/c92889fb0316cbd99c518fdfadeeed57.avf" alt="" />
-                    </article>
+                      <article className="landing-thoughts-card landing-thoughts-card-image">
+                        <img src="https://i.pinimg.com/avif/736x/c9/28/89/c92889fb0316cbd99c518fdfadeeed57.avf" alt="" />
+                      </article>
 
-                    <article className="landing-thoughts-card landing-thoughts-card-doc">
-                      <div className="process-doc-card">
-                        <div className="process-doc-top">
-                          <span className="process-doc-type">PROJECT BRIEF</span>
-                          <span className="process-doc-icon" aria-hidden="true">📄</span>
+                      <article className="landing-thoughts-card landing-thoughts-card-doc">
+                        <div className="process-doc-card">
+                          <div className="process-doc-top">
+                            <span className="process-doc-type">PROJECT BRIEF</span>
+                            <span className="process-doc-icon" aria-hidden="true">📄</span>
+                          </div>
+                          <h3 className="process-doc-title">Flowd — Project Brief</h3>
+                          <p className="process-doc-preview">
+                            A thinking space where notes, links, media, and conversation become one project memory.
+                          </p>
+                          <div className="process-doc-bottom">
+                            <button className="process-doc-open">OPEN →</button>
+                            <span className="process-doc-updated">updated 2d</span>
+                          </div>
                         </div>
-                        <h3 className="process-doc-title">Flowd — Project Brief</h3>
-                        <p className="process-doc-preview">
-                          A thinking space where notes, links, media, and conversation become one project memory.
-                        </p>
-                        <div className="process-doc-bottom">
-                          <button className="process-doc-open">OPEN →</button>
-                          <span className="process-doc-updated">updated 2d</span>
+                      </article>
+                    </div>
+
+                    <div className="landing-thoughts-mobile-col">
+                      <article className="landing-thoughts-card landing-thoughts-card-note">
+                        <div className="landing-thoughts-note-deco" aria-hidden="true" />
+                        <div className="landing-thoughts-note-inner">
+                          <div className="landing-thoughts-note-top">
+                            <span className="landing-thoughts-note-date">2026/03/04</span>
+                            <span className="landing-thoughts-note-filetype">note.txt</span>
+                          </div>
+                          <div className="landing-thoughts-note-body">
+                            <p className="landing-thoughts-note-text">Three zones: Now, Thoughts, Thread. Raw capture first, structure later.</p>
+                          </div>
                         </div>
-                      </div>
-                    </article>
+                      </article>
+
+                      <article className="landing-thoughts-card landing-thoughts-card-decision">
+                        <span className="landing-thoughts-decision-tag">✓ decided</span>
+                        <div className="landing-thoughts-decision-text">Position as thinking OS.</div>
+                      </article>
+
+                      <article className="landing-thoughts-card landing-thoughts-card-link">
+                        <span className="landing-thoughts-link-domain">Research</span>
+                        <span className="landing-thoughts-link-logo">⌘</span>
+                        <span className="landing-thoughts-link-title">Thinking OS references</span>
+                        <span className="landing-thoughts-link-url">flowd.run/research/context-systems</span>
+                      </article>
+
+                      <article className="landing-thoughts-card landing-thoughts-card-image">
+                        <img src="https://i.pinimg.com/736x/39/8f/82/398f82cb8ba795c10ca528e803323d69.jpg" alt="" />
+                      </article>
+                    </div>
                   </div>
-
-                  <div className="landing-thoughts-mobile-col">
-                    <article className="landing-thoughts-card landing-thoughts-card-note">
-                      <div className="landing-thoughts-note-deco" aria-hidden="true" />
-                      <div className="landing-thoughts-note-inner">
-                        <div className="landing-thoughts-note-top">
-                          <span className="landing-thoughts-note-date">2026/03/04</span>
-                          <span className="landing-thoughts-note-filetype">note.txt</span>
-                        </div>
-                        <div className="landing-thoughts-note-body">
-                          <p className="landing-thoughts-note-text">Three zones: Now, Thoughts, Thread. Raw capture first, structure later.</p>
-                        </div>
-                      </div>
-                    </article>
-
-                    <article className="landing-thoughts-card landing-thoughts-card-decision">
-                      <span className="landing-thoughts-decision-tag">✓ decided</span>
-                      <div className="landing-thoughts-decision-text">Position as thinking OS.</div>
-                    </article>
-
-                    <article className="landing-thoughts-card landing-thoughts-card-link">
-                      <span className="landing-thoughts-link-domain">Research</span>
-                      <span className="landing-thoughts-link-logo">⌘</span>
-                      <span className="landing-thoughts-link-title">Thinking OS references</span>
-                      <span className="landing-thoughts-link-url">flowd.run/research/context-systems</span>
-                    </article>
-
-                    <article className="landing-thoughts-card landing-thoughts-card-image">
-                      <img src="https://i.pinimg.com/736x/39/8f/82/398f82cb8ba795c10ca528e803323d69.jpg" alt="" />
-                    </article>
+                ) : (
+                  <div ref={settleBoundsRef} className="landing-thoughts-mobile-settle-bounds" aria-hidden="true" />
+                )}
+              </div>
+              {!hideThoughtCards && (
+                <div className="landing-thoughts-fab-bar" aria-hidden="true">
+                  <div className="landing-thoughts-fab-pill">
+                    <span className="landing-thoughts-fab-side landing-thoughts-fab-side--star" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 3L14.4 9.6L21 12L14.4 14.4L12 21L9.6 14.4L3 12L9.6 9.6L12 3Z" />
+                      </svg>
+                    </span>
+                    <span className="landing-thoughts-fab-main" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 5v14M5 12h14" />
+                      </svg>
+                    </span>
+                    <span className="landing-thoughts-fab-side landing-thoughts-fab-side--chat" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 5.25A3.25 3.25 0 0 1 7.25 2h9.5A3.25 3.25 0 0 1 20 5.25v6.5A3.25 3.25 0 0 1 16.75 15H11l-4.75 4v-4H7.25A3.25 3.25 0 0 1 4 11.75v-6.5Z" />
+                      </svg>
+                    </span>
                   </div>
                 </div>
-              </div>
-              <div className="landing-thoughts-fab-bar" aria-hidden="true">
-                <div className="landing-thoughts-fab-pill">
-                  <span className="landing-thoughts-fab-side landing-thoughts-fab-side--star" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M12 3L14.4 9.6L21 12L14.4 14.4L12 21L9.6 14.4L3 12L9.6 9.6L12 3Z" />
-                    </svg>
-                  </span>
-                  <span className="landing-thoughts-fab-main" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M12 5v14M5 12h14" />
-                    </svg>
-                  </span>
-                  <span className="landing-thoughts-fab-side landing-thoughts-fab-side--chat" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M4 5.25A3.25 3.25 0 0 1 7.25 2h9.5A3.25 3.25 0 0 1 20 5.25v6.5A3.25 3.25 0 0 1 16.75 15H11l-4.75 4v-4H7.25A3.25 3.25 0 0 1 4 11.75v-6.5Z" />
-                    </svg>
-                  </span>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
       );
     }
+
     function FlowdProjectNowMobileShowcase() {
       return (
         <div className="landing-project-mobile-wrap" role="img" aria-label="Flowd project now tab mobile view">
@@ -3149,7 +3303,7 @@
                 <span className="landing-process-meta-item">note.txt</span>
               </div>
               <div className="landing-process-note-body">
-                Three zones: Now, Thoughts, Thread. Raw capture first, structure later.
+                <span className="landing-process-note-text">Three zones: Now, Thoughts, Thread. Raw capture first, structure later.</span>
               </div>
             </div>
 
@@ -3207,6 +3361,256 @@
                   <span className="process-doc-updated">updated 2d</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function ProcessCompositeShowcase() {
+      const rootRef = React.useRef(null);
+      const cardsRef = React.useRef(null);
+      const settleBoundsRef = React.useRef(null);
+      const timersRef = React.useRef([]);
+      const hasPlayedRef = React.useRef(false);
+      const [phase, setPhase] = React.useState("idle");
+      const [targetVars, setTargetVars] = React.useState({});
+
+      const computeTargets = React.useCallback(() => {
+        const boundsNode = settleBoundsRef.current;
+        const cardsNode = cardsRef.current;
+        if (!boundsNode || !cardsNode) return;
+
+        const bounds = boundsNode.getBoundingClientRect();
+        const cardsRect = cardsNode.getBoundingClientRect();
+        if (!bounds.width || !cardsRect.width || !cardsRect.height) return;
+
+        const compact = window.matchMedia("(max-width: 980px)").matches;
+        const gap = 12;
+        const targetCell = (bounds.width - gap) / 2;
+
+        const sourceLayout = compact
+          ? {
+              note: { x: 0, y: 0, w: 185, h: 185 },
+              link: { x: 207, y: 0, w: 185, h: 185 },
+              image: { x: 414, y: 0, w: 185, h: 185 },
+              decision: { x: 0, y: 207, w: 185, h: 185 },
+              doc: { x: 207, y: 207, w: 358, h: 150 },
+            }
+          : {
+              note: { x: 0, y: 0, w: 200, h: 200 },
+              link: { x: 232, y: 0, w: 200, h: 200 },
+              image: { x: 464, y: 0, w: 200, h: 200 },
+              decision: { x: 0, y: 232, w: 200, h: 200 },
+              doc: { x: 232, y: 232, w: 358, h: 150 },
+            };
+
+        const targetLayout = {
+          note: { x: 0, y: 0, w: targetCell, h: targetCell },
+          link: { x: targetCell + gap, y: 0, w: targetCell, h: targetCell },
+          image: { x: 0, y: targetCell + gap, w: targetCell, h: targetCell },
+          decision: { x: targetCell + gap, y: targetCell + gap, w: targetCell, h: targetCell },
+          doc: { x: 0, y: (targetCell + gap) * 2, w: 358, h: 150 },
+        };
+
+        const targetOriginX = bounds.left;
+        const targetOriginY = bounds.top;
+
+        const next = {};
+        const keys = ["note", "link", "image", "decision", "doc"];
+        for (const key of keys) {
+          const src = sourceLayout[key];
+          const dst = targetLayout[key];
+          if (!src || !dst) return;
+
+          const sourceLeft = cardsRect.left + src.x;
+          const sourceTop = cardsRect.top + src.y;
+          const targetLeft = targetOriginX + dst.x;
+          const targetTop = targetOriginY + dst.y;
+
+          next[key] = {
+            "--target-x": (targetLeft - sourceLeft).toFixed(2) + "px",
+            "--target-y": (targetTop - sourceTop).toFixed(2) + "px",
+            "--target-sx": (dst.w / src.w).toFixed(4),
+            "--target-sy": (dst.h / src.h).toFixed(4),
+          };
+        }
+
+        setTargetVars(next);
+      }, []);
+
+      React.useLayoutEffect(() => {
+        let raf = requestAnimationFrame(() => {
+          computeTargets();
+        });
+
+        const onResize = () => {
+          cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => computeTargets());
+        };
+
+        window.addEventListener("resize", onResize);
+        window.addEventListener("orientationchange", onResize);
+
+        return () => {
+          cancelAnimationFrame(raf);
+          window.removeEventListener("resize", onResize);
+          window.removeEventListener("orientationchange", onResize);
+        };
+      }, [computeTargets]);
+
+      React.useEffect(() => {
+        const root = rootRef.current;
+        if (!root || hasPlayedRef.current) return undefined;
+
+        const clearTimers = () => {
+          timersRef.current.forEach((timer) => clearTimeout(timer));
+          timersRef.current = [];
+        };
+
+        const startSequence = () => {
+          if (hasPlayedRef.current) return;
+          hasPlayedRef.current = true;
+
+          const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          if (prefersReduced) {
+            computeTargets();
+            setPhase("done");
+            return;
+          }
+
+          computeTargets();
+
+          const cardCount = 5;
+          const scatterDuration = 700;
+          const scatterStagger = 120;
+          const scatterTotal = scatterDuration + scatterStagger * (cardCount - 1);
+          const holdDuration = 500;
+          const settleDuration = 1500;
+          const frameDelayIntoSettle = 120;
+          const frameRevealDuration = 650;
+
+          setPhase("scatter-in");
+
+          timersRef.current.push(setTimeout(() => {
+            setPhase("scatter-hold");
+          }, scatterTotal));
+
+          timersRef.current.push(setTimeout(() => {
+            computeTargets();
+            setPhase("settle-phone");
+          }, scatterTotal + holdDuration));
+
+          timersRef.current.push(setTimeout(() => {
+            setPhase("frame-reveal");
+          }, scatterTotal + holdDuration + frameDelayIntoSettle));
+
+          timersRef.current.push(setTimeout(() => {
+            setPhase("done");
+          }, scatterTotal + holdDuration + Math.max(settleDuration, frameDelayIntoSettle + frameRevealDuration) + 140));
+        };
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              startSequence();
+              observer.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.24, rootMargin: "0px 0px -8% 0px" },
+        );
+
+        observer.observe(root);
+
+        return () => {
+          observer.disconnect();
+          clearTimers();
+        };
+      }, [computeTargets]);
+
+      return (
+        <div className="landing-process-composite" ref={rootRef} role="img" aria-label="Flowd process cards morphing into a complete Space view">
+          <div className={"landing-process-composite-stage phase-" + phase}>
+            <div ref={cardsRef} className="landing-process-composite-cards" aria-hidden={phase === "done"}>
+              <div className="landing-process-composite-grid">
+                <div
+                  className="landing-process-card landing-process-card--square landing-process-composite-card landing-process-composite-card--1"
+                  style={{ "--card-index": 0, ...(targetVars.note || {}) }}
+                >
+                  <div className="landing-process-meta">
+                    <span className="landing-process-meta-item">2026/03/04</span>
+                    <span className="landing-process-meta-item">note.txt</span>
+                  </div>
+                  <div className="landing-process-note-body"><span className="landing-process-note-text">Three zones: Now, Thoughts, Thread. Raw capture first, structure later.</span></div>
+                </div>
+
+                <div
+                  className="landing-process-card landing-process-card--square landing-process-composite-card landing-process-composite-card--2"
+                  style={{ "--card-index": 1, ...(targetVars.link || {}) }}
+                >
+                  <div className="landing-process-meta">
+                    <span className="landing-process-meta-item">2026/03/03</span>
+                    <span className="landing-process-meta-item">link.url</span>
+                  </div>
+                  <div className="landing-process-link-main">
+                    <div className="landing-process-link-logo">⌘</div>
+                    <div className="landing-process-link-text">
+                      <span className="landing-process-link-title">Thinking OS references</span>
+                      <span className="landing-process-link-url">flowd.run/research/context-systems</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  className="landing-process-card landing-process-card--square landing-process-card--image landing-process-composite-card landing-process-composite-card--3"
+                  style={{ "--card-index": 2, ...(targetVars.image || {}) }}
+                >
+                  <img src="https://i.pinimg.com/avif/736x/c9/28/89/c92889fb0316cbd99c518fdfadeeed57.avf" alt="" className="landing-process-image" />
+                </div>
+
+                <div
+                  className="landing-process-card landing-process-card--square landing-process-card--decision landing-process-composite-card landing-process-composite-card--4"
+                  style={{ "--card-index": 3, ...(targetVars.decision || {}) }}
+                >
+                  <div className="landing-process-meta">
+                    <span className="landing-process-meta-item">2026/03/05</span>
+                  </div>
+                  <div className="landing-process-decision-body">
+                    <div className="landing-process-decision-line">
+                      <span className="landing-process-decision-check">✓</span>
+                      <span className="landing-process-decision-text">Start with mobile only</span>
+                    </div>
+                    <div className="landing-process-decision-line">
+                      <span className="landing-process-decision-check">✓</span>
+                      <span className="landing-process-decision-text">Position as Thinking OS</span>
+                    </div>
+                  </div>
+                  <span className="landing-process-decision-label">✓ decided</span>
+                </div>
+
+                <div
+                  className="landing-process-card landing-process-card--doc landing-process-composite-card landing-process-composite-card--5"
+                  style={{ "--card-index": 4, ...(targetVars.doc || {}) }}
+                >
+                  <div className="process-doc-card">
+                    <div className="process-doc-top">
+                      <span className="process-doc-type">PROJECT BRIEF</span>
+                      <span className="process-doc-icon" aria-hidden="true">📄</span>
+                    </div>
+                    <h3 className="process-doc-title">Flowd — Project Brief</h3>
+                    <p className="process-doc-preview">A thinking space where notes, links, media, and conversation are equal inputs.</p>
+                    <div className="process-doc-bottom">
+                      <button className="process-doc-open">OPEN →</button>
+                      <span className="process-doc-updated">updated 2d</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="landing-process-composite-frame" aria-hidden={phase === "idle"}>
+              <FlowdProjectMobileShowcase hideThoughtCards settleBoundsRef={settleBoundsRef} />
             </div>
           </div>
         </div>
@@ -3412,6 +3816,7 @@
                 <p className="landing-thread-chat-bubble">Keep capture raw in Thoughts, then let Now and Thread do the organizing so users always return to a clear state.</p>
               </div>
               <div className="landing-thread-chat-msg landing-thread-chat-msg--user">
+                <span className="landing-thread-topic-callout-text">new topic/intent detected</span>
                 <p className="landing-thread-chat-bubble">People keep reading this like another AI chat app, how should we frame it?</p>
               </div>
               <div className="landing-thread-chat-msg landing-thread-chat-msg--ai">
@@ -3421,10 +3826,6 @@
             <div className="landing-thread-chat-input-row" aria-hidden="true">
               <div className="landing-thread-chat-ta">Talk through your idea...</div>
               <div className="landing-thread-chat-send">↗</div>
-            </div>
-            <div className="landing-thread-topic-callout" aria-hidden="true">
-              <span className="landing-thread-topic-callout-text">new topic/intent detected</span>
-              <span className="landing-thread-topic-callout-arrow">↙</span>
             </div>
           </div>
         </div>
@@ -3747,14 +4148,6 @@
             align="center"
           />
 
-          <section id="product" className="relative w-full min-h-[90vh] bg-[#E8E8E4]">
-            <div className="mx-auto max-w-[1200px] px-6 pt-6 pb-16 sm:px-10">
-              <div className="motion-reveal" data-reveal data-reveal-delay="120">
-                <FlowdProjectMobileShowcase />
-              </div>
-            </div>
-          </section>
-
           <Section
             id="different"
             tone="light"
@@ -3814,7 +4207,7 @@
                 </p>
               </div>
             }
-            media={<ThoughtsCardsCollage />}
+            media={<ProcessCompositeShowcase />}
             align="stacked"
             sectionClassName="min-h-[64vh]"
             containerClassName="pt-16 pb-10"
