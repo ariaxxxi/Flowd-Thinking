@@ -222,6 +222,20 @@
       line-height: 1.38;
       text-shadow: none;
     }
+    .landing-section-headline-line1 {
+      display: inline-block;
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-style: normal;
+      font-weight: 500;
+      color: #2C2F34;
+    }
+    .landing-section-headline-line2 {
+      display: inline-block;
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      color: #2C2F34;
+    }
     .landing-hero-device {
       margin-top: clamp(400px, 52vw, 540px);
       width: 100%;
@@ -232,7 +246,7 @@
       z-index: 3;
     }
     .landing-hero-video-shell {
-      width: min(972px, calc(100vw - 46px));
+      width: min(1000px, calc(100vw - 46px));
       border-radius: 27px;
       box-shadow: 0 30px 84px rgba(8, 10, 9, 0.44);
       border: 1px solid rgba(255, 255, 255, 0.22);
@@ -2723,7 +2737,7 @@
         : "text-balance text-[36px] leading-[1.16] text-[#2C2F34]";
       const bodyClass = isDark
         ? `text-[16px] leading-[1.45] ${subtle}`
-        : "text-[16px] leading-[1.45] text-[#2C2F34]";
+        : "text-[16px] leading-[1.45] text-[#2C2F34]/60";
       const hasCopy = Boolean(eyebrow || headline || body);
       const sectionOverflow = allowOverflow ? "overflow-visible" : "overflow-hidden";
 
@@ -3736,6 +3750,16 @@
       );
     }
 
+    function SharedDesktopSectionShowcase() {
+      return (
+        <div className="w-full max-w-[1000px] py-2" role="img" aria-label="Flowd desktop view">
+          <div className="landing-desktop-video-frame">
+            <img src="./src/desktop-show.png" alt="Flowd desktop view" className="landing-desktop-video" />
+          </div>
+        </div>
+      );
+    }
+
     function ProcessCompositeShowcase() {
       const rootRef = React.useRef(null);
       const cardsRef = React.useRef(null);
@@ -4519,21 +4543,21 @@
             eyebrow="A THINKING SPACE"
             headline={
               <>
-                <span className="italic opacity-40">Thinking enters as</span>
+                <span className="landing-section-headline-line1">Thinking enters as</span>
                 <br />
-                <span className="whitespace-nowrap">language</span>
+                <span className="landing-section-headline-line2 whitespace-nowrap">language</span>
               </>
             }
             body={
               <div className="max-w-[620px] text-left">
-                <p className="m-0 text-[16px] leading-[1.45] text-[#2C2F34]">
+                <p className="m-0 text-[16px] leading-[1.45] text-[#2C2F34]/60">
                   Ideas, decisions, questions, references, progress.
                   <br />
                   Everything begins in the same flow.
                 </p>
               </div>
             }
-            media={<ProcessOrganizeVideoShowcase />}
+            media={<SharedDesktopSectionShowcase />}
             align="stacked"
             mediaNoWrap={true}
             sectionClassName="min-h-[64vh]"
@@ -4548,14 +4572,14 @@
             eyebrow="A THINKING SPACE"
             headline={
               <>
-                <span className="italic opacity-40">Language becomes</span>
+                <span className="landing-section-headline-line1">Language becomes</span>
                 <br />
-                <span className="whitespace-nowrap">structure</span>
+                <span className="landing-section-headline-line2 whitespace-nowrap">structure</span>
               </>
             }
             body={
               <div className="max-w-[620px] text-left">
-                <p className="m-0 text-[16px] leading-[1.45] text-[#2C2F34]">
+                <p className="m-0 text-[16px] leading-[1.45] text-[#2C2F34]/60">
                   Flowd turns what matters into the right form.
                   <br />
                   Notes. Decisions. Questions. Todos. Docs.
@@ -4564,7 +4588,7 @@
                 </p>
               </div>
             }
-            media={<ThreadFlowShowcase />}
+            media={<SharedDesktopSectionShowcase />}
             align="stacked"
             sectionClassName="min-h-[64vh]"
             containerClassName="pt-16 pb-10"
@@ -4578,14 +4602,14 @@
             eyebrow="A THINKING SPACE"
             headline={
               <>
-                <span className="italic opacity-40">Cards return to</span>
+                <span className="landing-section-headline-line1">Cards return to</span>
                 <br />
-                <span className="whitespace-nowrap">the conversation</span>
+                <span className="landing-section-headline-line2 whitespace-nowrap">the conversation</span>
               </>
             }
             body={
               <div className="max-w-[620px] text-left">
-                <p className="m-0 text-[16px] leading-[1.45] text-[#2C2F34]">
+                <p className="m-0 text-[16px] leading-[1.45] text-[#2C2F34]/60">
                   Drag any card from the board into chat to discuss it further.
                   <br />
                   A note can expand. A decision can be challenged. A question can reopen.
@@ -4594,7 +4618,7 @@
                 </p>
               </div>
             }
-            media={<FlowdProjectNowMobileShowcase />}
+            media={<SharedDesktopSectionShowcase />}
             align="stacked"
             sectionClassName="min-h-[64vh]"
             containerClassName="pt-16 pb-10"
@@ -4608,9 +4632,9 @@
             eyebrow="A THINKING SPACE"
             headline={
               <>
-                <span className="italic opacity-40">Closure</span>
+                <span className="landing-section-headline-line1">Closure</span>
                 <br />
-                <span className="whitespace-nowrap">without loss</span>
+                <span className="landing-section-headline-line2 whitespace-nowrap">without loss</span>
               </>
             }
             body={
@@ -4620,7 +4644,7 @@
                 A note to keep. A decision that landed. A question still open. A next step ready to move.
               </>
             }
-            media={<CollaborationFramesShowcase />}
+            media={<SharedDesktopSectionShowcase />}
             align="stacked"
             useMediaCard={false}
             allowOverflow={true}
