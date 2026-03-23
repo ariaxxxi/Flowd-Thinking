@@ -7,12 +7,28 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
+    @font-face {
+      font-family: "FlowdGeorgia";
+      src: local("Georgia"), local("Georgia Regular"), local("Georgia-Regular");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+
     html, body, #root { height: 100%; }
     html { scroll-behavior: smooth; }
     html, body { overflow-x: hidden; }
-    body { margin: 0; background: #E8E8E4; animation: pageFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    html, body {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      display: none;
+    }
+    body { margin: 0; background: #C2C8CC; animation: pageFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
     @keyframes pageFadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -36,6 +52,7 @@
     /* Directional variants — declared before .in-view so .in-view always wins */
     .motion-reveal[data-from-left]  { transform: translateX(-34px); }
     .motion-reveal[data-from-right] { transform: translateX(34px); }
+    .motion-reveal[data-from-top]   { transform: translateY(-26px); }
     .motion-reveal[data-scale-in]   { transform: translateY(16px) scale(0.97); }
     .motion-reveal.in-view { opacity: 1; transform: none; }
     /* Card-level stagger inside section media */
@@ -135,6 +152,243 @@
     .motion-reveal .landing-collab-row:nth-child(4) .landing-raw-item { transition-delay: 510ms; }
     .motion-reveal .landing-collab-row:nth-child(4) .landing-res-item { transition-delay: 570ms; }
 
+    /* ── Designed hero section ── */
+    .landing-hero-design {
+      position: relative;
+      min-height: 1540px;
+      width: 100%;
+      overflow: hidden;
+      color: #ffffff;
+      background: #121312;
+    }
+    .landing-hero-scene {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .landing-hero-scene-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .landing-hero-scene::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      background: linear-gradient(
+        to bottom,
+        rgba(17, 18, 17, 0) 72%,
+        rgba(17, 18, 17, 0.55) 86%,
+        #111211 100%
+      );
+    }
+    .landing-hero-design::after {
+      content: none;
+    }
+    .landing-hero-inner {
+      position: relative;
+      z-index: 3;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 146px 22px 56px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .landing-hero-copy {
+      text-align: center;
+      width: min(760px, 100%);
+      margin: clamp(150px, 20vh, 300px) auto 0;
+    }
+    .landing-hero-eyebrow {
+      color: rgba(255, 255, 255, 0.82);
+      margin-bottom: 18px;
+    }
+    .landing-hero-title {
+      margin: 0;
+      color: #ffffff;
+      text-shadow: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      line-height: 0.98;
+    }
+    .landing-hero-title-think {
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 96px;
+      font-style: normal;
+      font-weight: 500;
+      letter-spacing: -0.018em;
+      opacity: 1;
+    }
+    .landing-hero-title-growth {
+      font-family: Georgia, serif;
+      font-size: 96px;
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: -0.018em;
+    }
+    .landing-hero-sub {
+      margin: 24px auto 0;
+      max-width: 460px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 16px;
+      line-height: 1.38;
+      text-shadow: none;
+    }
+    .landing-section-headline-line1 {
+      display: inline-block;
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-style: normal;
+      font-weight: 500;
+      color: #2C2F34;
+    }
+    .landing-section-headline-line2 {
+      display: inline-block;
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      color: #2C2F34;
+    }
+    .landing-hero-device {
+      margin-top: clamp(400px, 52vw, 540px);
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      transform: none;
+      position: relative;
+      z-index: 3;
+    }
+    .landing-hero-video-shell {
+      width: 100vw;
+      border-radius: 28px;
+      box-shadow: none;
+      border: none;
+      background: none !important;
+      backdrop-filter: none;
+      overflow: visible;
+    }
+    .landing-hero-video-shell .landing-desktop-video-frame {
+      border: none;
+      border-radius: 27px;
+      padding: 0;
+      background: transparent;
+    }
+    .landing-hero-video-shell .landing-desktop-video {
+      border-radius: 27px;
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+    .landing-intro-section {
+      position: relative;
+      width: 100%;
+      background: #111211;
+      color: #ededed;
+      min-height: 100vh;
+      padding: 108px 0 112px;
+    }
+    .landing-intro-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+    .landing-intro-copy {
+      width: min(660px, 100%);
+      margin: 0 auto;
+      text-align: left;
+    }
+    .landing-intro-copy--offset {
+      margin-left: 20vw;
+      margin-right: 0;
+    }
+    .landing-intro-eyebrow {
+      color: rgba(237, 237, 237, 0.82);
+      margin-bottom: 30px;
+    }
+    .landing-intro-title {
+      margin: 0;
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 30px;
+      line-height: 1.34;
+      font-weight: 400;
+      letter-spacing: 0;
+      color: #ededed;
+      text-wrap: balance;
+    }
+    .landing-intro-body {
+      margin-top: 22px;
+      max-width: 520px;
+      color: #ededed;
+      font-size: 22px;
+      line-height: 1.36;
+    }
+    @media (max-width: 860px) {
+      .landing-intro-section { padding: 88px 0 90px; }
+      .landing-intro-copy { width: min(560px, 100%); }
+      .landing-intro-title { font-size: 36px; }
+      .landing-intro-body { max-width: 100%; }
+    }
+    .landing-hero-bottom-fade {
+      display: none;
+    }
+    @media (max-width: 1024px) {
+      .landing-hero-inner {
+        padding-top: 126px;
+      }
+      .landing-hero-copy {
+        margin-top: clamp(34px, 8vh, 90px);
+      }
+      .landing-hero-sub {
+        font-size: 16px;
+      }
+      .landing-hero-device {
+        margin-top: clamp(320px, 44vw, 420px);
+      }
+      .landing-hero-bottom-fade { display: none; }
+    }
+    @media (max-width: 720px) {
+      .landing-hero-design { min-height: 1300px; }
+      .landing-hero-inner {
+        padding-top: 106px;
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+      .landing-hero-copy {
+        margin-top: clamp(22px, 5vh, 68px);
+      }
+      .landing-hero-sub {
+        font-size: 16px;
+        max-width: 320px;
+      }
+      .landing-hero-device {
+        margin-top: clamp(270px, 42vw, 340px);
+      }
+      .landing-hero-video-shell {
+        width: calc(100vw - 24px);
+      }
+      .landing-hero-video-shell .landing-desktop-video-frame {
+        border-radius: 24px;
+      }
+      .landing-hero-video-shell .landing-desktop-video {
+        border-radius: 24px;
+      }
+      .landing-hero-bottom-fade { display: none; }
+    }
+
     /* ── Fixed nav ── */
     .nav-bar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 50;
@@ -142,8 +396,8 @@
       border-bottom: 1px solid transparent;
     }
     .nav-bar.nav-scrolled {
-      background: rgba(232, 232, 228, 0.86);
-      border-color: rgba(0, 0, 0, 0.06);
+      background: rgba(15, 17, 16, 0.86);
+      border-color: rgba(255, 255, 255, 0.08);
     }
     .nav-link {
       position: relative;
@@ -173,7 +427,7 @@
       display: none;
       width: 100%;
       min-height: 82vh;
-      background: #E8E8E4;
+      background: #0f1110;
     }
     .landing-desktop-video-shell {
       width: min(1700px, calc(100vw - 24px));
@@ -195,6 +449,736 @@
       display: block;
       border-radius: 14px;
       background: #0f0f0f;
+    }
+
+    /* ── Realistic desktop project showcase (webapp-faithful) ── */
+    .landing-real-desktop {
+      position: relative;
+      width: 100%;
+      border-radius: 30px;
+      border: none;
+      background: url("./src/desktop-view-bg.png") center center / cover no-repeat;
+      box-shadow: 0 12px 28px rgba(8, 12, 14, 0.15);
+      padding: 8px;
+      overflow: hidden;
+      max-height: 800px;
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    .landing-real-desktop::before {
+      content: none;
+    }
+    .landing-real-desktop-shell {
+      position: relative;
+      z-index: 1;
+      border-radius: 24px;
+      background: transparent !important;
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      min-height: 620px;
+      height: 800px;
+      max-height: 800px;
+      overflow: hidden;
+    }
+    .landing-real-desktop-left {
+      border-right: none;
+      background: transparent !important;
+      padding: 14px 0px 14px 12px;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 34px;
+    }
+    .landing-real-rail {
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 6px;
+      color: #2C2F34;
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .landing-real-rail .active {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.22);
+      display: grid;
+      place-items: center;
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0;
+      text-transform: none;
+      color: #2C2F34;
+    }
+    .landing-real-workspace {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      overflow-y: visible;
+      padding-right: 2px;
+      margin-top: 20px;
+      padding-top: 12px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .landing-real-workspace::-webkit-scrollbar {
+      display: none;
+    }
+    .landing-real-workspace-plus {
+      width: 32px;
+      height: 32px;
+      aspect-ratio: 1 / 1;
+      flex: 0 0 32px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(255, 255, 255, 0.257);
+      color: #484f54;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      font-weight: 100;
+      line-height: 1;
+      align-self: flex-start;
+      margin-bottom: 2px;
+      box-shadow: 0 2px 6px rgba(15, 20, 24, 0.16);
+    }
+    .landing-real-project-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      color: #2c2f34;
+    }
+    .landing-real-project-name {
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 74px;
+      font-weight: 500;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      margin: 0;
+      color: #9AA5AB;
+      text-shadow: none;
+    }
+    .landing-real-project-sub {
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 10px;
+      line-height: 1.35;
+      color: rgba(44, 47, 52, 0.64);
+      margin: 10px 0 0;
+    }
+    .landing-real-plus {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid rgba(44, 47, 52, 0.18);
+      background: rgba(255, 255, 255, 0.65);
+      color: #2c2f34;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .landing-real-stream {
+      border-radius: 22px;
+      background: rgba(228, 233, 236, 0.3);
+      border: 1px solid rgba(44, 47, 52, 0.12);
+      padding: 20px;
+      box-shadow: 0 10px 34px 0 rgba(0, 0, 0, 0.08);
+    }
+    .landing-real-stream-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .landing-real-stream-title {
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 20px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.25);
+      margin: 0;
+      line-height: 1.25;
+    }
+    .landing-real-stream-title.soft-white {
+      color: rgba(0, 0, 0, 0.25);
+      text-shadow: none;
+    }
+    .landing-real-stream-meta {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.3);
+      margin: 0;
+      white-space: nowrap;
+    }
+    .landing-real-stream-meta.active {
+      color: rgba(0, 0, 0, 0.3);
+    }
+    .landing-real-stream-meta.quiet {
+      color: rgba(0, 0, 0, 0.3);
+    }
+    .landing-real-cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      align-items: start;
+    }
+    .landing-real-cards--onboarding {
+      transition: grid-template-columns 340ms ease, gap 340ms ease;
+    }
+    .landing-real-cards--onboarding.is-minimal {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .landing-real-cards--onboarding.is-decision {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .landing-real-cards--onboarding.is-expanded {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .landing-real-card {
+      border-radius: 20px;
+      border: none;
+      padding: 12px;
+      min-width: 0;
+      background: #f0edeb;
+      color: #1c1a1a;
+      box-shadow: 0 12px 24px rgba(27, 33, 36, 0.16);
+      position: relative;
+    }
+    .landing-real-card.full {
+      grid-column: 1 / -1;
+    }
+    .landing-real-card-meta {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(44, 47, 52, 0.6);
+      margin-bottom: 8px;
+    }
+    .landing-real-card-body {
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 12px;
+      line-height: 1.42;
+      margin: 0;
+    }
+    .landing-real-card.note .landing-real-card-body {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      line-height: 1.42;
+      font-weight: 600;
+      display: inline-block;
+      transform: rotate(-1deg);
+      transform-origin: left center;
+    }
+    .landing-real-card.note {
+      align-self: start;
+      height: fit-content;
+    }
+    .landing-real-card.col-2 {
+      grid-column: 2;
+    }
+    .landing-real-card.col-1 {
+      grid-column: 1;
+    }
+    .landing-real-card.row-span-2 {
+      grid-row: span 2;
+    }
+    .landing-real-card.col-2.row-span-2 {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      align-self: start;
+    }
+    .landing-real-card.decision {
+      background: #2c2f34;
+      color: #f5f7f6;
+    }
+    .landing-real-card.decision .landing-real-card-body {
+      font-family: Georgia, serif;
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 400 !important;
+    }
+    .landing-real-card.decision .landing-real-card-meta {
+      color: rgba(245, 247, 246, 0.66);
+    }
+    .landing-real-card.question {
+      background: #e2ff95;
+      color: #2f3423;
+    }
+    .landing-real-chat-card.question {
+      border: 1px dashed rgba(73, 88, 49, 0.38);
+    }
+    .landing-real-card.todo {
+      background: #0c4650;
+      color: #f5fbfc;
+    }
+    .landing-real-card.todo .landing-real-card-meta {
+      color: rgba(245, 251, 252, 0.72);
+    }
+    .landing-real-card.todo .todo-title {
+      margin: 0 0 8px;
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .landing-real-card.todo ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 4px;
+    }
+    .landing-real-card.todo li {
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 11px;
+      line-height: 1.36;
+      letter-spacing: -0.003em;
+    }
+    .landing-real-card.is-just-added {
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.45), 0 8px 18px rgba(27, 33, 36, 0.18);
+    }
+    .landing-real-card.is-just-added::after {
+      content: "✦";
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-size: 11px;
+      line-height: 1;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .landing-real-desktop-right {
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      background: transparent !important;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 0;
+      overflow: hidden;
+    }
+    .landing-real-chat-container {
+      width: 100%;
+      min-height: 0;
+      height: calc(100% - 40px);
+      max-height: calc(100% - 40px);
+      box-sizing: border-box;
+      margin: 20px;
+      padding: 30px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.4);
+      border-left: none;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto auto;
+    }
+    .landing-real-chat-head {
+      height: 52px;
+      border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      color: #666;
+      font-family: "Space Mono", "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .landing-real-chat-scroll {
+      min-height: 0;
+      overflow: auto;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .landing-real-chat-scroll::-webkit-scrollbar {
+      display: none;
+    }
+    .landing-real-msg-meta {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 8px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(44, 47, 52, 0.64);
+      margin-bottom: 4px;
+    }
+    .landing-real-msg-bubble {
+      border-radius: 18px;
+      padding: 10px 14px;
+      max-width: 96%;
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 14px;
+      line-height: 1.4;
+      color: #2c3032;
+      background: rgba(247, 249, 250, 0.82);
+      border: 1px solid rgba(44, 47, 52, 0.08);
+    }
+    .landing-real-msg-bubble.user {
+      margin-left: auto;
+      max-width: 78%;
+      padding: 16px;
+      border-radius: 16px 16px 16px 4px;
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: rgba(255, 255, 255, 0.5);
+      color: #585c5e;
+    }
+    .landing-real-msg-bubble.flowd {
+      max-width: 90%;
+      border: none;
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+      font-family: "FlowdGeorgia", Georgia, Times, serif !important;
+      font-size: 15px;
+      line-height: 1.44;
+      color: #232629;
+      letter-spacing: 0;
+      margin-right: 8px;
+    }
+    .landing-real-chat-card .landing-real-card-body {
+      font-size: 12px;
+      line-height: 1.34;
+    }
+    .landing-real-chat-card.question .landing-real-card-body {
+      font-size: 12px;
+      line-height: 1.36;
+    }
+    .landing-real-chat-card.todo li {
+      font-size: 12px;
+      line-height: 1.34;
+    }
+    .landing-real-chat-card {
+      width: 220px;
+      max-width: 220px;
+      align-self: flex-start;
+      border-radius: 20px;
+      padding: 12px;
+    }
+    .landing-real-chat-card-row {
+      display: flex;
+      gap: 0;
+      align-items: flex-start;
+      max-height: 0;
+      opacity: 0;
+      overflow: visible;
+    }
+    .landing-real-chat-card-row.is-active {
+      max-height: 320px;
+      opacity: 1;
+    }
+    .landing-real-chat-card-row .landing-real-chat-card {
+      --card-tilt: 0deg;
+      --enter-y: 24px;
+      --enter-scale: 0.96;
+      opacity: 0;
+      transform: translateY(var(--enter-y)) rotate(var(--card-tilt)) scale(var(--enter-scale));
+      transition: opacity 1100ms cubic-bezier(0.22, 1, 0.36, 1), transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .landing-real-chat-card-row .landing-real-chat-card.is-visible {
+      opacity: 1;
+      --enter-y: 0px;
+      --enter-scale: 1;
+    }
+    .landing-real-chat-card-row .landing-real-chat-card.reveal-2 {
+      transition-delay: 300ms;
+    }
+    .landing-real-chat-card-row .landing-real-chat-card:not(.is-visible) {
+      pointer-events: none;
+    }
+    .landing-real-chat-card.todo {
+      --card-tilt: 1deg;
+    }
+    .landing-real-chat-card.question {
+      --card-tilt: -1deg;
+    }
+    .landing-real-chat-card-sub {
+      margin-top: 5px;
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 8px;
+      letter-spacing: 0.06em;
+      color: rgba(44, 47, 52, 0.64);
+    }
+    .landing-real-chat-card-action {
+      margin-top: 6px;
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 11px;
+      font-weight: 600;
+      color: #2c2f34;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(17, 17, 17, 0.14);
+      background: rgba(255, 255, 255, 0.55);
+      padding: 6px 10px;
+    }
+    .landing-real-chat-card.todo .landing-real-chat-card-action {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.14);
+    }
+    .landing-real-chat-card.decision .landing-real-chat-card-sub {
+      color: rgba(245, 247, 246, 0.66);
+    }
+    .landing-real-chat-card.decision .landing-real-chat-card-action {
+      color: #f5f7f6;
+      font-weight: 400;
+    }
+    .landing-real-chat-input-wrap {
+      border-top: none;
+      padding: 0;
+      margin: 0;
+      align-self: end;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .landing-real-chat-chip-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 0;
+      margin: 0 0 8px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .landing-real-chat-chip {
+      height: 34.5px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 0.2px solid rgba(0, 0, 0, 0.2);
+      color: #60686d;
+      font-family: "Space Mono", "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .landing-real-chat-input {
+      flex: 1;
+      margin: 0;
+      border-radius: 53px;
+      border: none;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 18px 23px;
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.3);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .landing-real-card.image {
+      padding: 0;
+      overflow: hidden;
+      background: #d7dde0;
+    }
+    .landing-real-card.image img {
+      width: 100%;
+      height: 100%;
+      min-height: 176px;
+      display: block;
+      object-fit: cover;
+    }
+    .landing-real-card.doc {
+      background: #ffffff;
+      border-radius: 30px;
+      min-height: 260px;
+      padding: 20px 24px 16px;
+      display: flex;
+      flex-direction: column;
+    }
+    .landing-real-card.doc.note {
+      padding: 12px;
+      border-radius: 20px;
+    }
+    .landing-real-doc-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      font-family: "Space Mono", "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #aaa;
+    }
+    .landing-real-doc-title {
+      margin: 0;
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.22;
+      letter-spacing: -0.02em;
+      color: rgba(17, 17, 17, 0.35);
+    }
+    .landing-real-doc-sub {
+      margin: 0;
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.24;
+      letter-spacing: -0.02em;
+      color: #111;
+    }
+    .landing-real-doc-body {
+      margin: 14px 0 0;
+      max-width: 211px;
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 12px;
+      line-height: 1.25;
+      color: #666;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .landing-real-image-label {
+      margin-top: 2px;
+      margin-bottom: 12px;
+      margin-left: 10px;
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: #000000;
+      text-transform: none;
+    }
+    .landing-real-image-note {
+      margin-top: 8px;
+      margin-left: 10px;
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.58);
+    }
+    .landing-real-doc-foot {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      font-family: "Space Mono", "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 9px;
+      letter-spacing: 0.05em;
+      color: #aaa;
+      text-transform: uppercase;
+    }
+    .landing-real-chat-send {
+      width: 49px;
+      height: 48px;
+      border-radius: 999px;
+      background: rgba(7, 9, 12, 0.9);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .landing-real-float-in {
+      opacity: 0;
+      transform: translateY(20px) scale(0.97);
+      animation: landingRealFloatIn 1100ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .landing-real-msg-float-in {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: landingRealMsgFloatIn 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes landingRealFloatIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    @keyframes landingRealMsgFloatIn {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .landing-real-card--onboarding-image {
+      transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1), opacity 320ms ease, grid-column 600ms cubic-bezier(0.22, 1, 0.36, 1), grid-row 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .landing-real-cards--onboarding.is-minimal .landing-real-card--onboarding-image {
+      grid-column: 1;
+      grid-row: auto;
+    }
+    .landing-real-cards--onboarding.is-decision .landing-real-card--onboarding-image {
+      grid-column: 2;
+      grid-row: auto;
+    }
+    .landing-real-cards--onboarding.is-expanded .landing-real-card--onboarding-image {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+    .landing-real-card--onboarding-image.is-shifting-right {
+      animation: landingRealImageShiftRight 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .landing-real-card--onboarding-image.is-shifting-right-decision {
+      animation: landingRealImageShiftRightDecision 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    @keyframes landingRealImageShiftRightDecision {
+      from {
+        transform: translateX(-30px);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+    @keyframes landingRealImageShiftRight {
+      from {
+        transform: translateX(-22px);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+    .landing-real-card--decision-shift {
+      animation: landingRealDecisionShift 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    @keyframes landingRealDecisionShift {
+      from {
+        transform: translateY(-26px);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+    @media (max-width: 1180px) {
+      .landing-real-desktop-shell {
+        grid-template-columns: 1fr;
+      }
+      .landing-real-desktop-left {
+        border-right: none;
+      }
+      .landing-real-chat-scroll {
+        max-height: 420px;
+        overflow-y: auto;
+      }
     }
 
     .landing-process-video-wrap {
@@ -284,7 +1268,7 @@
       margin:0;
     }
     .process-doc-preview{
-      font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family:"DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size:14px;
       color:#666666;
       line-height:1.45;
@@ -442,7 +1426,7 @@
       gap: 4px;
     }
     .landing-process-link-title {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 14px;
       font-weight: 600;
       color: #111111;
@@ -482,7 +1466,7 @@
       flex-shrink: 0;
     }
     .landing-process-decision-text {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 16px;
       line-height: 1.4;
       color: #111111;
@@ -728,7 +1712,7 @@
     }
     .landing-project-mobile-sub {
       margin: 8px 0 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 16px;
       line-height: 1.35;
       color: #7f7f7f;
@@ -751,7 +1735,7 @@
       border: none;
       background: transparent;
       padding: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 16px;
       font-weight: 600;
       color: #111111;
@@ -772,7 +1756,7 @@
     }
     .landing-project-mobile-tab-dot::before {
       content: "+";
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 12px;
       font-weight: 500;
       line-height: 1;
@@ -819,7 +1803,7 @@
     }
     .landing-project-mobile-card-body {
       margin: 16px 0 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 16px;
       line-height: 1.45;
       color: rgba(8, 8, 8, 0.5);
@@ -859,7 +1843,7 @@
       flex: 1;
     }
     .landing-project-mobile-card-row-text {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 14px;
       line-height: 1.35;
       font-weight: 500;
@@ -923,7 +1907,7 @@
     }
     .landing-project-mobile-now-description {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 16px;
       line-height: 1.4;
       color: rgba(8, 8, 8, 0.56);
@@ -1073,7 +2057,7 @@
       background: #fafafa;
     }
     .landing-project-mobile-now-url-title {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 14px;
       font-weight: 600;
       line-height: 1.35;
@@ -1081,7 +2065,7 @@
     }
     .landing-project-mobile-now-url-link {
       margin-top: auto;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 11px;
       line-height: 1.35;
       color: #8c8c8c;
@@ -1163,7 +2147,7 @@
     }
     .landing-project-mobile-now-doc-desc {
       margin: 12px 0 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 12px;
       line-height: 1.45;
       color: rgba(8, 8, 8, 0.5);
@@ -1201,7 +2185,7 @@
     }
     .landing-project-mobile-now-decision-text {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 16px;
       line-height: 1.35;
       color: #f2f2f2;
@@ -1241,7 +2225,7 @@
     }
     .landing-thread-mobile-ke-user {
       margin: 2px 0 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 13px;
       color: #888;
       line-height: 1.45;
@@ -1318,7 +2302,7 @@
       flex-shrink: 0;
     }
     .landing-thoughts-mobile-search-text {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 14px;
       color: #bbb;
     }
@@ -1519,7 +2503,7 @@
       text-transform: uppercase;
     }
     .landing-thoughts-link-title {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 14px;
       font-weight: 600;
       line-height: 1.4;
@@ -1579,7 +2563,7 @@
       display: block;
     }
     .landing-thoughts-decision-text {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 15px;
       line-height: 1.45;
       font-weight: 500;
@@ -1706,7 +2690,7 @@
     }
     .landing-now-summary {
       margin: 6px 0 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 16px;
       color: #08080899;
       line-height: 1.45;
@@ -1726,7 +2710,7 @@
     }
     .landing-now-main { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
     .landing-now-text {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 14px;
       font-weight: 500;
       color: #111111;
@@ -1800,7 +2784,7 @@
     .landing-thread-type-tag--deciding { background: #111; color: #fff; border: 1px solid #111; }
     .landing-thread-type-tag--reframing { background: #444; color: #fff; border: 1px solid #444; }
     .landing-thread-ke-user {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 13px;
       color: #888;
       line-height: 1.45;
@@ -1882,7 +2866,7 @@
     .landing-thread-chat-bubble {
       padding: 12px 14px;
       border-radius: 16px;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 16px;
       line-height: 1.5;
       margin: 0;
@@ -1917,7 +2901,7 @@
       border: 1px solid #ececec;
       border-radius: 20px;
       padding: 11px 14px;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 16px;
       color: #a8a8a8;
       line-height: 1.4;
@@ -2087,7 +3071,7 @@
       font-weight: 500;
     }
     .landing-res-sub {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 13px;
       line-height: 1.4;
       color: #707070;
@@ -2103,7 +3087,7 @@
     }
     .landing-res-tag--amber { color: #B85C10; }
     .landing-res-text {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 16px;
       font-weight: 500;
       color: #111110;
@@ -2293,7 +3277,7 @@
     /* ── Quote section ── */
     .landing-quote-section {
       padding: 24px 0 72px;
-      background: #E8E8E4;
+      background: #C2C8CC;
     }
     .landing-quote-wrap {
       width: min(100%, 980px);
@@ -2319,14 +3303,14 @@
       font-family: Georgia, serif;
       font-size: 46px;
       line-height: 1;
-      color: rgba(17,17,16,0.15);
+      color: rgba(255,255,255,0.18);
     }
     .landing-quote-text {
       margin: 0;
       font-family: Georgia, serif;
       font-size: 24px;
       line-height: 1.35;
-      color: #111110;
+      color: #f2f4ef;
       letter-spacing: -0.01em;
       max-width: 860px;
       font-style: italic;
@@ -2339,7 +3323,7 @@
       font-size: 10px;
       letter-spacing: .08em;
       text-transform: uppercase;
-      color: #8f8f8f;
+      color: #a9afa7;
     }
     @media (max-width: 860px) {
       .landing-quote-card { padding: 44px 36px; }
@@ -2420,7 +3404,7 @@
     .landing-diff-card--amber .landing-diff-rule { border-top-color: rgba(17,17,16,0.18); }
     .landing-diff-desc {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 16px;
       line-height: 1.55;
       color: #676767;
@@ -2477,7 +3461,7 @@
         className={className}
         style={{
           fontFamily:
-            'Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"',
+            '"DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"',
         }}
       >
         {children}
@@ -2502,9 +3486,15 @@
       mediaNoWrap = false,
     }) {
       const isDark = tone === "dark";
-      const baseBg = isDark ? "bg-[#111111] text-neutral-50" : "bg-[#E8E8E4] text-neutral-950";
-      const subtle = isDark ? "text-neutral-300/80" : "text-neutral-600";
-      const hairline = isDark ? "border-neutral-700/50" : "border-neutral-200";
+      const baseBg = isDark ? "bg-[#111111] text-neutral-50" : "bg-[#C2C8CC] text-[#2C2F34]";
+      const subtle = isDark ? "text-neutral-300/80" : "text-[#2C2F34]";
+      const hairline = isDark ? "border-neutral-700/50" : "border-[#5f6670]/35";
+      const headingClass = isDark
+        ? "text-balance text-[36px] leading-[1.16] text-neutral-50"
+        : "text-balance text-[36px] leading-[1.16] text-[#2C2F34]";
+      const bodyClass = isDark
+        ? `text-[16px] leading-[1.45] ${subtle}`
+        : "text-[16px] leading-[1.45] text-[#2C2F34]/60";
       const hasCopy = Boolean(eyebrow || headline || body);
       const sectionOverflow = allowOverflow ? "overflow-visible" : "overflow-hidden";
 
@@ -2528,8 +3518,8 @@
                 {hasCopy && (
                   <div className="w-full max-w-[900px] text-center motion-reveal" data-reveal data-reveal-delay="90" data-scale-in>
                     {eyebrow && <Mono className={`mb-5 text-[11px] tracking-[0.28em] ${subtle}`}>{eyebrow}</Mono>}
-                    <Serif className="text-balance text-[clamp(40px,5vw,64px)] leading-[1.05]">{headline}</Serif>
-                    {body && <Sans className={`mx-auto mt-6 max-w-[720px] text-pretty text-base leading-relaxed ${subtle}`}>{body}</Sans>}
+                    <Serif className={headingClass}>{headline}</Serif>
+                    {body && <Sans className={`mx-auto mt-6 max-w-[720px] text-pretty ${bodyClass}`}>{body}</Sans>}
                   </div>
                 )}
 
@@ -2551,8 +3541,8 @@
               <div className="grid flex-1 grid-cols-1 items-center gap-y-10 pt-10 lg:grid-cols-2 lg:gap-x-[60px]">
                 <div className="motion-reveal" data-reveal data-reveal-delay="80" data-from-left>
                   {eyebrow && <Mono className={`mb-5 text-[11px] tracking-[0.28em] ${subtle}`}>{eyebrow}</Mono>}
-                  <Serif className="text-balance text-[clamp(40px,5vw,60px)] leading-[1.05]">{headline}</Serif>
-                  {body && <Sans className={`mt-6 max-w-[560px] text-pretty text-base leading-relaxed ${subtle}`}>{body}</Sans>}
+                  <Serif className={headingClass}>{headline}</Serif>
+                  {body && <Sans className={`mt-6 max-w-[560px] text-pretty ${bodyClass}`}>{body}</Sans>}
                   {cta && <div className="mt-10">{cta}</div>}
                 </div>
                 {media && (
@@ -2567,8 +3557,8 @@
               <div className="grid flex-1 grid-cols-1 items-center gap-y-10 pt-10 lg:grid-cols-12 lg:gap-x-[60px]">
                 <div className="lg:col-span-5 motion-reveal" data-reveal data-reveal-delay="80" data-from-left>
                   {eyebrow && <Mono className={`mb-5 text-[11px] tracking-[0.28em] ${subtle}`}>{eyebrow}</Mono>}
-                  <Serif className="text-balance text-[clamp(40px,5vw,56px)] leading-[1.05]">{headline}</Serif>
-                  {body && <Sans className={`mt-6 max-w-[520px] text-pretty text-base leading-relaxed ${subtle}`}>{body}</Sans>}
+                  <Serif className={headingClass}>{headline}</Serif>
+                  {body && <Sans className={`mt-6 max-w-[520px] text-pretty ${bodyClass}`}>{body}</Sans>}
                   {cta && <div className="mt-10">{cta}</div>}
                 </div>
                 <div className="lg:col-span-7 motion-reveal" data-reveal data-reveal-delay="200" data-from-right>
@@ -2581,8 +3571,8 @@
               <div className="flex flex-1 flex-col justify-start pt-10">
                 <div className="w-full motion-reveal" data-reveal data-reveal-delay="80" data-from-left>
                   {eyebrow && <Mono className={`mb-5 text-[11px] tracking-[0.28em] ${subtle}`}>{eyebrow}</Mono>}
-                  <Serif className="text-balance text-[clamp(40px,5vw,60px)] leading-[1.05]">{headline}</Serif>
-                  {body && <Sans className={`mt-6 max-w-[620px] text-pretty text-base leading-relaxed ${subtle}`}>{body}</Sans>}
+                  <Serif className={headingClass}>{headline}</Serif>
+                  {body && <Sans className={`mt-6 max-w-[620px] text-pretty ${bodyClass}`}>{body}</Sans>}
                   {cta && <div className="mt-10">{cta}</div>}
                 </div>
                 {media && (
@@ -2667,6 +3657,8 @@
     /* ── Fixed scroll-aware nav ── */
     function Nav() {
       const scrolled = useScrolled(40);
+      const brandTone = scrolled ? "text-white/85" : "text-white/85";
+      const linkTone = scrolled ? "text-white/70" : "text-white/80";
       const scrollTo = (id) => (e) => {
         e.preventDefault();
         const target = document.getElementById(id);
@@ -2677,8 +3669,8 @@
       };
       return (
         <nav className={`nav-bar flex items-center justify-between px-6 sm:px-10 py-5 ${scrolled ? "nav-scrolled" : ""}`}>
-          <Mono className="text-xs tracking-[0.22em] text-black/70">FLOWD</Mono>
-          <div className="flex items-center gap-6 text-neutral-600">
+          <Mono className={`text-xs tracking-[0.22em] ${brandTone}`}>FLOWD</Mono>
+          <div className={`flex items-center gap-6 ${linkTone}`}>
             <a href="#hero" onClick={scrollTo("hero")} style={{ textDecoration: "none", color: "inherit" }}>
               <Mono className="text-[11px] tracking-[0.22em] nav-link opacity-70">OVERVIEW</Mono>
             </a>
@@ -2838,7 +3830,7 @@
           >
             <div
               style={{
-                fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+                fontFamily: '"DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
                 fontSize: 18,
                 fontWeight: 700,
                 color: "#111111",
@@ -2945,7 +3937,7 @@
                 borderRadius: 51,
                 background: "#ffffff",
                 color: "#111111",
-                fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+                fontFamily: '"DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
                 fontSize: 14,
                 fontWeight: 600,
                 display: "flex",
@@ -2959,7 +3951,7 @@
             </span>
             <span
               style={{
-                fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+                fontFamily: '"DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
                 fontSize: 16,
                 fontWeight: 600,
                 color: "#ffffff",
@@ -3370,6 +4362,391 @@
       );
     }
 
+    function HeroDesktopProjectShowcase() {
+      const script = React.useMemo(() => ({
+        m0: "Last time, workspace model is settled. Onboarding is still open — empty state and first-time experience need a decision. Where do you want to start?",
+        m1: "I'm going to make the board only appear after the first card is created. no blank state ever. thoughts?",
+        m2: "That's the right call. It means the first thing someone sees is always a result — something happened, the space responded. That's a much better first impression than an empty grid asking them to start.",
+        m3: "\"oh I like that framing. 'the space responded' — maybe that becomes the tagline after I ship this\"",
+        m4: "Worth keeping. For now — if the board only appears after the first card, the onboarding question becomes: what's the right first question Flowd asks to generate that card? That's the real design problem to solve next.",
+      }), []);
+
+      const [typedChars, setTypedChars] = React.useState({ m2: 0, m4: 0 });
+      const [showUser1, setShowUser1] = React.useState(false);
+      const [showUser3, setShowUser3] = React.useState(false);
+      const [showDecisionCard, setShowDecisionCard] = React.useState(false);
+      const [showNoteCard, setShowNoteCard] = React.useState(false);
+      const [showTodoCard, setShowTodoCard] = React.useState(false);
+      const [showQuestionCard, setShowQuestionCard] = React.useState(false);
+      const hasPlayedRef = React.useRef(false);
+      const rootRef = React.useRef(null);
+
+      React.useEffect(() => {
+        if (hasPlayedRef.current || !rootRef.current) return undefined;
+
+        let cancelled = false;
+        const timers = [];
+        const intervals = [];
+        const fullTypedState = {
+          m2: script.m2.length,
+          m4: script.m4.length,
+        };
+
+        const wait = (ms) => new Promise((resolve) => {
+          const timer = setTimeout(resolve, ms);
+          timers.push(timer);
+        });
+
+        const typeMessage = (key, text, stepMs) => new Promise((resolve) => {
+          let count = 0;
+          const interval = setInterval(() => {
+            if (cancelled) {
+              clearInterval(interval);
+              resolve();
+              return;
+            }
+            count = Math.min(count + 1, text.length);
+            setTypedChars((prev) => ({ ...prev, [key]: count }));
+            if (count >= text.length) {
+              clearInterval(interval);
+              resolve();
+            }
+          }, stepMs);
+          intervals.push(interval);
+        });
+
+        const run = async () => {
+          hasPlayedRef.current = true;
+          const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          if (prefersReduced) {
+            setTypedChars(fullTypedState);
+            setShowUser1(true);
+            setShowUser3(true);
+            setShowDecisionCard(true);
+            setShowNoteCard(true);
+            setShowTodoCard(true);
+            setShowQuestionCard(true);
+            return;
+          }
+
+          await wait(220);
+          if (cancelled) return;
+          setShowUser1(true);
+
+          if (cancelled) return;
+          await wait(600);
+          if (cancelled) return;
+          setShowDecisionCard(true);
+
+          await wait(500);
+          if (cancelled) return;
+          await typeMessage("m2", script.m2, 12);
+
+          if (cancelled) return;
+          await wait(600);
+          if (cancelled) return;
+          setShowUser3(true);
+
+          if (cancelled) return;
+          await wait(600);
+          if (cancelled) return;
+          setShowNoteCard(true);
+
+          await wait(500);
+          if (cancelled) return;
+          await typeMessage("m4", script.m4, 12);
+
+          if (cancelled) return;
+          await wait(500);
+          if (cancelled) return;
+          setShowTodoCard(true);
+
+          await wait(140);
+          if (cancelled) return;
+          setShowQuestionCard(true);
+        };
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting || hasPlayedRef.current) return;
+              const delayedStart = setTimeout(() => {
+                if (cancelled || hasPlayedRef.current) return;
+                run();
+              }, 500);
+              timers.push(delayedStart);
+              observer.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.42, rootMargin: "0px 0px -12% 0px" },
+        );
+
+        observer.observe(rootRef.current);
+
+        return () => {
+          cancelled = true;
+          observer.disconnect();
+          timers.forEach((timer) => clearTimeout(timer));
+          intervals.forEach((interval) => clearInterval(interval));
+        };
+      }, [script]);
+
+      const onboardingLayoutClass = showNoteCard ? "is-expanded" : (showDecisionCard ? "is-decision" : "is-minimal");
+
+      return (
+        <div className="landing-real-desktop" ref={rootRef} role="img" aria-label="Flowd desktop project workspace and chat view">
+          <div className="landing-real-desktop-shell">
+            <div className="landing-real-desktop-left">
+              <div className="landing-real-rail">
+                <span>→</span>
+                <span>Flowd</span>
+                <span className="active">F</span>
+                <span>N</span>
+                <span>G</span>
+                <span>M</span>
+              </div>
+              <div className="landing-real-workspace">
+                <div className="landing-real-project-head">
+                  <div>
+                    <h3 className="landing-real-project-name">Flowd</h3>
+                  </div>
+                </div>
+                <span className="landing-real-workspace-plus">+</span>
+
+                <section className="landing-real-stream">
+                  <header className="landing-real-stream-head">
+                    <h4 className="landing-real-stream-title">Onboarding State</h4>
+                  </header>
+                  <div className={`landing-real-cards landing-real-cards--onboarding ${onboardingLayoutClass}`}>
+                    {showNoteCard && (
+                      <article className="landing-real-card note col-1 landing-real-float-in">
+                        <div className="landing-real-card-meta">NOTE</div>
+                        <p className="landing-real-card-body">&quot;The space responded&quot; — possible tagline direction. Revisit after build is done.</p>
+                      </article>
+                    )}
+                    {showDecisionCard && (
+                      <article className={`landing-real-card decision ${showNoteCard ? "col-1 landing-real-card--decision-shift" : "col-1 landing-real-float-in"}`}>
+                        <div className="landing-real-card-meta">DECIDED</div>
+                        <p className="landing-real-card-body">Board only appears after the first card is created. No blank state.</p>
+                      </article>
+                    )}
+                    <article className={`landing-real-card image landing-real-card--onboarding-image ${showDecisionCard ? "is-shifting-right-decision" : ""} ${showNoteCard ? "col-2 row-span-2 is-shifting-right" : ""}`}>
+                      <img src="./src/hero-img.png" alt="Visual reference" />
+                    </article>
+                  </div>
+                </section>
+
+                <section className="landing-real-stream">
+                  <header className="landing-real-stream-head">
+                    <h4 className="landing-real-stream-title soft-white">Workspace Model</h4>
+                  </header>
+                  <div className="landing-real-cards">
+                    <article className="landing-real-card doc note">
+                      <div className="landing-real-doc-head">
+                        <span>doc</span>
+                        <span>📄</span>
+                      </div>
+                      <p className="landing-real-doc-title">Workspace Model</p>
+                      <p className="landing-real-doc-sub">Decided on vertical board layout.</p>
+                      <p className="landing-real-doc-body">Workstreams recognized by AI, not manually created. Board sits beside chat, both always visible.</p>
+                      <div className="landing-real-doc-foot">
+                        <span>OPEN →</span>
+                        <span>updated 23m ago</span>
+                      </div>
+                    </article>
+                    <article className="landing-real-card image">
+                      <img src="./src/hero-img.png" alt="Moss terrain render" />
+                      <p className="landing-real-image-note">note</p>
+                      <p className="landing-real-image-label">Visual direction ref</p>
+                    </article>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            <div className="landing-real-desktop-right">
+              <div className="landing-real-chat-container">
+                <div className="landing-real-chat-scroll">
+                  <div className="landing-real-msg-bubble flowd">{script.m0}</div>
+                  {showUser1 && <div className="landing-real-msg-bubble user landing-real-msg-float-in">{script.m1}</div>}
+                  {typedChars.m2 > 0 && <div className="landing-real-msg-bubble flowd">{script.m2.slice(0, typedChars.m2)}</div>}
+                  {showUser3 && <div className="landing-real-msg-bubble user landing-real-msg-float-in">{script.m3}</div>}
+                  {typedChars.m4 > 0 && <div className="landing-real-msg-bubble flowd">{script.m4.slice(0, typedChars.m4)}</div>}
+
+                  <div className={`landing-real-chat-card-row ${(showTodoCard || showQuestionCard) ? "is-active" : ""}`}>
+                    <article className={`landing-real-card todo landing-real-chat-card reveal-1 ${showTodoCard ? "is-visible" : ""}`}>
+                      <div className="landing-real-card-meta">TODO</div>
+                      <p className="todo-title">First question design</p>
+                      <ul>
+                        <li>☐ Draft 3 versions of opening question</li>
+                        <li>☐ Test which generates the most useful first card</li>
+                      </ul>
+                      <div className="landing-real-chat-card-action">+ Add to board →</div>
+                    </article>
+
+                    <article className={`landing-real-card question landing-real-chat-card is-just-added reveal-2 ${showQuestionCard ? "is-visible" : ""}`}>
+                      <div className="landing-real-card-meta">OPEN QUESTION</div>
+                      <p className="landing-real-card-body">What is the right question to ask on the first card?</p>
+                      <div className="landing-real-chat-card-action">+ Add to board →</div>
+                    </article>
+                  </div>
+                </div>
+                <div className="landing-real-chat-chip-row">
+                  <span className="landing-real-chat-chip">REFRESH SUMMARY</span>
+                  <span className="landing-real-chat-chip">THOUGHTS?</span>
+                  <span className="landing-real-chat-chip">PRIORITIZE?</span>
+                  <span className="landing-real-chat-chip">SUMMARIZE</span>
+                  <span className="landing-real-chat-chip">WHAT AM I MISSING?</span>
+                </div>
+                <div className="landing-real-chat-input-wrap">
+                  <div className="landing-real-chat-input">Talk through your idea...</div>
+                  <div className="landing-real-chat-send">↑</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function HeroDesignedSection() {
+      const heroVideoRef = React.useRef(null);
+
+      React.useEffect(() => {
+        const video = heroVideoRef.current;
+        if (!video) return undefined;
+
+        let rafId = 0;
+        let mode = "forward"; // "forward" | "reverse"
+        let lastTs = 0;
+        const epsilon = 0.02;
+
+        const safePlay = () => {
+          const p = video.play();
+          if (p && typeof p.catch === "function") p.catch(() => {});
+        };
+
+        const reverseTick = (ts) => {
+          if (mode !== "reverse") return;
+          if (!video.duration || Number.isNaN(video.duration)) {
+            rafId = requestAnimationFrame(reverseTick);
+            return;
+          }
+          if (!lastTs) lastTs = ts;
+          const dt = (ts - lastTs) / 1000;
+          lastTs = ts;
+          video.currentTime = Math.max(0, video.currentTime - dt);
+          if (video.currentTime <= epsilon) {
+            mode = "forward";
+            lastTs = 0;
+            video.currentTime = 0;
+            safePlay();
+            return;
+          }
+          rafId = requestAnimationFrame(reverseTick);
+        };
+
+        const startReverse = () => {
+          if (!video.duration || Number.isNaN(video.duration)) return;
+          mode = "reverse";
+          video.pause();
+          video.currentTime = Math.max(0, video.duration - epsilon);
+          lastTs = 0;
+          cancelAnimationFrame(rafId);
+          rafId = requestAnimationFrame(reverseTick);
+        };
+
+        const onLoaded = () => {
+          video.currentTime = 0;
+          safePlay();
+        };
+        const onEnded = () => {
+          if (mode !== "forward") return;
+          startReverse();
+        };
+
+        video.addEventListener("loadedmetadata", onLoaded);
+        video.addEventListener("ended", onEnded);
+        if (video.readyState >= 1) onLoaded();
+
+        return () => {
+          video.removeEventListener("loadedmetadata", onLoaded);
+          video.removeEventListener("ended", onEnded);
+          cancelAnimationFrame(rafId);
+        };
+      }, []);
+
+      return (
+        <section id="hero" className="landing-hero-design" aria-label="Flowd hero section">
+          <div className="landing-hero-scene">
+            <video
+              ref={heroVideoRef}
+              className="landing-hero-scene-video"
+              src="./src/hero-video.mp4"
+              muted
+              playsInline
+              preload="auto"
+            />
+          </div>
+          <div className="landing-hero-inner">
+            <div className="landing-hero-copy">
+              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="70">
+                <Mono className="landing-hero-eyebrow text-[11px] tracking-[0.28em]">thinking OS</Mono>
+              </div>
+              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="170">
+                <Serif className="landing-hero-title">
+                  <span className="landing-hero-title-think">Form follows</span>
+                  <span className="landing-hero-title-growth">thoughts.</span>
+                </Serif>
+              </div>
+              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="270">
+                <Sans className="landing-hero-sub">Flowd shapes the form as the thinking unfolds.</Sans>
+              </div>
+            </div>
+
+            <div className="landing-hero-bottom-fade" aria-hidden="true" />
+            <div className="landing-hero-device motion-reveal" data-reveal data-reveal-delay="170">
+              <div className="landing-hero-video-shell">
+                <HeroDesktopProjectShowcase />
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function IntroDarkSection() {
+      return (
+        <section className="landing-intro-section" aria-label="Flowd intro statement">
+          <div className="landing-intro-inner">
+            <div className="landing-intro-copy landing-intro-copy--offset">
+              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="70">
+                <Mono className="landing-intro-eyebrow text-[12px] tracking-[0.25em]">A THINKING SPACE</Mono>
+              </div>
+              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="170">
+                <p className="landing-intro-title">
+                  Projects rarely begin as structure.
+                  <br />
+                  They begin in fragments.
+                  <br />
+                  An idea, a decision, a question, a reference, a next step.
+                </p>
+              </div>
+              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="270">
+                <Sans className="landing-intro-body">
+                  Flowd turns that movement into workstreams, modules, and usable context — as it happens.
+                  <br />
+                  Not after the work.
+                  <br />
+                  With it.
+                </Sans>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
     function ThoughtsCardsCollage() {
       return (
         <div className="landing-process-grid-wrap py-2" role="img" aria-label="Flowd thoughts card collage">
@@ -3458,6 +4835,14 @@
               <source src="./src/organize-space.mp4" type="video/mp4" />
             </video>
           </div>
+        </div>
+      );
+    }
+
+    function SharedDesktopSectionShowcase() {
+      return (
+        <div className="w-full max-w-[80vw] py-2" role="img" aria-label="Flowd desktop view">
+          <HeroDesktopProjectShowcase />
         </div>
       );
     }
@@ -4116,14 +5501,30 @@
 
     function QuoteShowcase() {
       return (
-        <section className="landing-quote-section" aria-label="Tester quote">
+        <section className="landing-quote-section" aria-label="Differentiation">
           <div className="landing-quote-wrap">
             <div className="landing-quote-card">
-              <span className="landing-quote-mark">"</span>
-              <p className="landing-quote-text">
-                I used to have 40 voice memos and 12 half-finished Notion pages. Flowd is the first thing that&apos;s actually kept up with my brain.
-              </p>
-              <span className="landing-quote-attribution">Early tester — product designer, London</span>
+              <Mono className="text-[10px] tracking-[0.28em] uppercase text-[#2C2F34]/70">DIFFERENTIATION</Mono>
+              <Serif className="mt-6 text-center text-[36px] leading-[1.08] text-[#2C2F34]">
+                <span className="italic">Not chat history.</span>
+                <br />
+                <span className="italic">Not board maintenance.</span>
+              </Serif>
+              <Sans className="mt-8 text-center text-[16px] leading-[1.45] text-[#2C2F34]">
+                Flowd is built for projects that unfold over time.
+                <br />
+                <br />
+                Not prompt by prompt.
+                <br />
+                Not board by board.
+                <br />
+                Not through separate passes of thinking, sorting, and cleanup.
+                <br />
+                <br />
+                The work keeps moving.
+                <br />
+                The structure keeps pace.
+              </Sans>
             </div>
           </div>
         </section>
@@ -4136,34 +5537,34 @@
           <div className="landing-diff-grid">
             <div className="landing-diff-card">
               <span className="landing-diff-icon">⚡</span>
-              <span className="landing-diff-label">Initiation</span>
-              <h3 className="landing-diff-title">Low initiation<br />cost</h3>
+              <span className="landing-diff-label">Continuity</span>
+              <h3 className="landing-diff-title">One continuous<br />conversation</h3>
               <hr className="landing-diff-rule" />
-              <p className="landing-diff-desc">Flowd minimizes the amount of structure required to begin. Capture can start before naming, organizing, or deciding what something is.</p>
+              <p className="landing-diff-desc">No chat sessions to manage. Each project keeps one evolving thread so context compounds instead of resetting.</p>
             </div>
 
             <div className="landing-diff-card landing-diff-card--dark">
               <span className="landing-diff-icon">↻</span>
-              <span className="landing-diff-label">Re-entry</span>
-              <h3 className="landing-diff-title">Stateful<br />re-entry</h3>
+              <span className="landing-diff-label">Workstreams</span>
+              <h3 className="landing-diff-title">Live workstreams<br />from dialogue</h3>
               <hr className="landing-diff-rule" />
-              <p className="landing-diff-desc">Work rarely continues in one uninterrupted line. Flowd helps users return to a project by restoring context, current state, and likely next points of action.</p>
+              <p className="landing-diff-desc">Exploring, deciding, reframing, and building segments are detected automatically while you think.</p>
             </div>
 
             <div className="landing-diff-card">
               <span className="landing-diff-icon">💬</span>
-              <span className="landing-diff-label">Dialogue</span>
-              <h3 className="landing-diff-title">Dialogic<br />thinking</h3>
+              <span className="landing-diff-label">Structure</span>
+              <h3 className="landing-diff-title">Cards created<br />from what you say</h3>
               <hr className="landing-diff-rule" />
-              <p className="landing-diff-desc">Thinking is often clarified through exchange. Flowd preserves AI conversation as part of the project record, rather than treating it as disposable chat.</p>
+              <p className="landing-diff-desc">Notes, decisions, questions, links, images, docs, and todos are generated from conversation and kept linked to source context.</p>
             </div>
 
             <div className="landing-diff-card landing-diff-card--amber">
               <span className="landing-diff-icon">≡</span>
-              <span className="landing-diff-label">Memory</span>
-              <h3 className="landing-diff-title">Persistent project<br />memory</h3>
+              <span className="landing-diff-label">Wrap-up</span>
+              <h3 className="landing-diff-title">Resolved streams<br />become docs</h3>
               <hr className="landing-diff-rule" />
-              <p className="landing-diff-desc">Project context should not be scattered across notes, chats, and fragments. Flowd keeps evolving materials within one continuous thread.</p>
+              <p className="landing-diff-desc">Closing a workstream generates a shareable summary document with decisions, open questions, and next moves.</p>
             </div>
           </div>
         </div>
@@ -4218,146 +5619,45 @@
       }, []);
 
       return (
-        <div className="min-h-screen w-full bg-[#E8E8E4]">
+        <div className="min-h-screen w-full bg-[#C2C8CC]">
           <Nav />
-          <Section
-            id="hero"
-            vAlign="center"
-            tone="light"
-            sectionClassName="min-h-screen"
-            containerClassName="min-h-screen"
-            eyebrow={<span className="opacity-60">PERSONAL THINKING OS</span>}
-            headline={
-              <span style={{ fontSize: "72px", lineHeight: "1.04" }}>
-                A creative space for
-                <br />
-                <em className="opacity-40">non-linear thinking.</em>
-              </span>
-            }
-            body={
-              <span className="mx-auto block max-w-[560px]">
-                Flowd is a thinking space built for how ADHD brains actually work — raw and fast in, organized over time, always where you left off.
-              </span>
-            }
-            cta={<SubtleLink href="#early-access">EARLY ACCESS</SubtleLink>}
-            align="center"
-          />
-
-          <DesktopHeroVideoShowcase />
-
-          <Section
-            id="different"
-            tone="light"
-            eyebrow="WHAT MAKES IT DIFFERENT"
-            headline={
-              <>
-                Built for the way
-                <br />
-                <span className="italic opacity-40">creative brains work.</span>
-              </>
-            }
-            sectionClassName="min-h-[64vh]"
-            containerClassName="pt-10 pb-10"
-            media={<DifferentFeaturesShowcase />}
-            align="center"
-            useMediaCard={false}
-            allowOverflow={true}
-          />
-
-          <Section
-            id="thesis"
-            tone="light"
-            headline={
-              <>
-                <span className="italic opacity-40">Not a whiteboard.</span>
-                <br />
-                <span className="italic opacity-40">Not a chatbot.</span>
-                <br />
-                A thinking space.
-              </>
-            }
-            body={
-              <>
-                Drop a note. Share a link. Have a conversation.
-                <br />
-                Everything becomes context. Nothing gets lost.
-              </>
-            }
-            align="center"
-          />
-
-          <Section
-            id="process"
-            tone="light"
-            eyebrow="THE PROCESS"
-            headline={
-              <>
-                <span className="whitespace-nowrap">Capture everything.</span>
-                <br />
-                <span className="italic opacity-40">Organize nothing.</span>
-              </>
-            }
-            body={
-              <div className="max-w-[760px] text-center">
-                <p className="m-0 text-[16px] leading-[1.45] text-neutral-400">
-                  Raw materials live here. Images, notes, links, decisions, conversations — all artifact types treated equally. Nothing is filed or categorized.
-                </p>
-              </div>
-            }
-            media={<ProcessOrganizeVideoShowcase />}
-            align="center"
-            mediaNoWrap={true}
-            sectionClassName="min-h-[64vh]"
-            containerClassName="pt-16 pb-10"
-            useMediaCard={false}
-            allowOverflow={true}
-          />
-
-          <Section
-            id="thread"
-            tone="light"
-            eyebrow="THE THREAD"
-            headline={
-              <>
-                Not what was said.
-                <br />
-                <span className="italic opacity-40">What it meant.</span>
-              </>
-            }
-            body={
-              <div className="max-w-[620px] text-left">
-                <p className="m-0 text-[16px] leading-[1.45] text-neutral-400">
-                  Each session is segmented by topic and intent — exploring, deciding, reframing. Named, typed, and tappable. The raw chat stays in the background.
-                </p>
-              </div>
-            }
-            media={<ThreadFlowShowcase />}
-            align="stacked"
-            sectionClassName="min-h-[64vh]"
-            containerClassName="pt-16 pb-10"
-            useMediaCard={false}
-            allowOverflow={true}
-          />
+          <HeroDesignedSection />
+          <IntroDarkSection />
 
           <Section
             id="now"
             tone="light"
-            eyebrow="THE NOW TAB"
+            eyebrow="A THINKING SPACE"
             headline={
               <>
-                A clear state
+                <span className="landing-section-headline-line1">Cards return to</span>
                 <br />
-                <span className="italic opacity-40">on every return.</span>
+                <span className="landing-section-headline-line2 whitespace-nowrap">the conversation</span>
               </>
             }
             body={
               <div className="max-w-[620px] text-left">
-                <p className="m-0 text-[16px] leading-[1.45] text-neutral-400">
-                  On each project open, Flowd synthesizes the captured material into a navigable index — current framing, decisions made, open questions, and suggested next moves.
+                <p className="m-0 text-[16px] leading-[1.45] text-[#2C2F34]/60">
+                  Drag any card from the board into chat to discuss it further.
+                  <br />
+                  A note can expand. A decision can be challenged. A question can reopen.
+                  <br />
+                  The project stays fluid in both directions.
                 </p>
               </div>
             }
-            media={<FlowdProjectNowMobileShowcase />}
+            media={
+              <div className="w-full overflow-hidden rounded-[24px]">
+                <iframe
+                  src="https://player.vimeo.com/video/1176102584?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0&background=1"
+                  className="block aspect-video w-full"
+                  frameBorder="0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  title="Flowd feature section video 1"
+                />
+              </div>
+            }
             align="stacked"
             sectionClassName="min-h-[64vh]"
             containerClassName="pt-16 pb-10"
@@ -4368,59 +5668,64 @@
           <Section
             id="collaboration"
             tone="light"
-            eyebrow="HUMAN × AI"
+            eyebrow="A THINKING SPACE"
             headline={
               <>
-                AI doesn't organize <span className="italic opacity-40">for you.</span>
+                <span className="landing-section-headline-line1">Closure</span>
                 <br />
-                It organizes <span className="italic opacity-40">with you.</span>
+                <span className="landing-section-headline-line2 whitespace-nowrap">without loss</span>
               </>
             }
             body={
               <>
-                Flowd makes a first pass. You refine what's wrong. The framing is always yours.
-                The structure is always current.
+                Each addition carries a role in the work.
+                <br />
+                A note to keep. A decision that landed. A question still open. A next step ready to move.
               </>
             }
-            media={<CollaborationFramesShowcase />}
-            align="center"
+            media={
+              <div className="w-full overflow-hidden rounded-[24px]">
+                <iframe
+                  src="https://player.vimeo.com/video/1176102610?autoplay=1&muted=1&loop=1&title=0&byline=0&portrait=0&background=1"
+                  className="block aspect-video w-full"
+                  frameBorder="0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  title="Flowd feature section video 2"
+                />
+              </div>
+            }
+            align="stacked"
             useMediaCard={false}
             allowOverflow={true}
           />
 
           <QuoteShowcase />
 
-          <section id="early-access" className="relative min-h-[64vh] w-full overflow-hidden bg-[#111111] text-neutral-50">
-            <div
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background: "radial-gradient(900px 520px at 50% 0%, rgba(255,255,255,0.10), transparent 60%)",
-                animation: "breathe 7s ease-in-out infinite",
-              }}
-            />
+          <section id="early-access" className="relative min-h-[64vh] w-full overflow-hidden bg-[#111211] text-[#EDEDED]">
             <div className="relative mx-auto flex min-h-[64vh] max-w-[1200px] flex-col items-center justify-center px-6 py-16 sm:px-10">
               <div className="mt-12 text-center motion-reveal" data-reveal data-reveal-delay="150">
-                <Mono className="text-[11px] tracking-[0.28em] text-white/70">REQUEST ACCESS · 2026</Mono>
+                <Mono className="text-[11px] tracking-[0.28em] text-[#EDEDED]/70">REQUEST ACCESS · 2026</Mono>
               </div>
 
               <Serif
                 className="mt-8 text-center text-balance text-[clamp(44px,5vw,72px)] leading-[1.03]"
               >
-                Flowd is in
+                Join Flowd in
                 <br />
                 <span className="italic opacity-40">early development.</span>
               </Serif>
 
               <p
-                className="mt-8 text-center text-white/45 motion-reveal"
+                className="mt-8 text-center text-[#EDEDED]/72 motion-reveal"
                 data-reveal
                 data-reveal-delay="170"
                 style={{
-                  fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"',
+                  fontFamily: '"DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"',
                   fontSize: "14px",
                 }}
               >
-                Feedback and questions are welcome.
+                Get preview access and help shape the product direction.
               </p>
 
               <form
@@ -4432,37 +5737,37 @@
                   alert("Thanks — request sent.");
                 }}
               >
-                <div className="cta-input-wrap flex w-full items-center gap-3 rounded-2xl border border-white/15 bg-white/5 p-2">
+                <div className="cta-input-wrap flex w-full items-center gap-3 rounded-2xl border border-[#EDEDED]/24 bg-white/8 p-2">
                   <input
                     type="email"
                     required
                     placeholder="Email"
-                    className="w-full bg-transparent px-4 py-3 text-base text-white placeholder:text-white/40 focus:outline-none"
-                    style={{ fontFamily: 'Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"' }}
+                    className="w-full bg-transparent px-4 py-3 text-base text-[#EDEDED] placeholder:text-[#EDEDED]/45 focus:outline-none"
+                    style={{ fontFamily: '"DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"' }}
                   />
                   <button
                     type="submit"
-                    className="cta-submit-btn whitespace-nowrap rounded-xl bg-white px-4 py-3 text-sm font-semibold text-neutral-950 opacity-90"
+                    className="cta-submit-btn whitespace-nowrap rounded-xl bg-[#EDEDED] px-4 py-3 text-sm font-semibold text-[#111211] opacity-95"
                     style={{ fontFamily: '"Space Mono", "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace', fontSize: "12px", letterSpacing: "0.12em" }}
                   >
                     REQUEST ACCESS →
                   </button>
                 </div>
-                <Mono className="mt-4 text-center text-[11px] tracking-[0.28em] text-white/55">
-                  No spam. Request access invites only.
+                <Mono className="mt-4 text-center text-[11px] tracking-[0.28em] text-[#EDEDED]/65">
+                  No spam. Product updates only.
                 </Mono>
               </form>
 
-              <div className="mt-16 flex w-full max-w-[1200px] flex-col items-center justify-between gap-4 border-t border-white/10 pt-10 sm:flex-row motion-reveal" data-reveal data-reveal-delay="270">
-                <Mono className="text-[11px] tracking-[0.28em] text-white/45">© {new Date().getFullYear()} FLOWD</Mono>
+              <div className="mt-16 flex w-full max-w-[1200px] flex-col items-center justify-between gap-4 border-t border-[#EDEDED]/20 pt-10 sm:flex-row motion-reveal" data-reveal data-reveal-delay="270">
+                <Mono className="text-[11px] tracking-[0.28em] text-[#EDEDED]/60">© {new Date().getFullYear()} FLOWD</Mono>
                 <div className="flex items-center gap-6">
-                  <a className="text-white/55 hover:text-white" href="#hero">
+                  <a className="text-[#EDEDED]/70 hover:text-[#EDEDED]" href="#hero">
                     <Mono className="text-[11px] tracking-[0.28em]">Back to top</Mono>
                   </a>
-                  <a className="text-white/55 hover:text-white" href="#now">
+                  <a className="text-[#EDEDED]/70 hover:text-[#EDEDED]" href="#now">
                     <Mono className="text-[11px] tracking-[0.28em]">Now Tab</Mono>
                   </a>
-                  <a className="text-white/55 hover:text-white" href="#process">
+                  <a className="text-[#EDEDED]/70 hover:text-[#EDEDED]" href="#process">
                     <Mono className="text-[11px] tracking-[0.28em]">Process</Mono>
                   </a>
                 </div>
