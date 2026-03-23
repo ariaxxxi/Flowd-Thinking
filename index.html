@@ -52,6 +52,7 @@
     /* Directional variants — declared before .in-view so .in-view always wins */
     .motion-reveal[data-from-left]  { transform: translateX(-34px); }
     .motion-reveal[data-from-right] { transform: translateX(34px); }
+    .motion-reveal[data-from-top]   { transform: translateY(-26px); }
     .motion-reveal[data-scale-in]   { transform: translateY(16px) scale(0.97); }
     .motion-reveal.in-view { opacity: 1; transform: none; }
     /* Card-level stagger inside section media */
@@ -166,14 +167,28 @@
       left: 0;
       width: 100%;
       aspect-ratio: 1 / 1;
-      background: url("./src/hero-img.png") center center / cover no-repeat;
       z-index: 1;
+      overflow: hidden;
+    }
+    .landing-hero-scene-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
     }
     .landing-hero-scene::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: transparent;
+      pointer-events: none;
+      z-index: 2;
+      background: linear-gradient(
+        to bottom,
+        rgba(17, 18, 17, 0) 72%,
+        rgba(17, 18, 17, 0.55) 86%,
+        #111211 100%
+      );
     }
     .landing-hero-design::after {
       content: none;
@@ -181,7 +196,7 @@
     .landing-hero-inner {
       position: relative;
       z-index: 3;
-      max-width: 1280px;
+      max-width: 1440px;
       margin: 0 auto;
       padding: 146px 22px 56px;
       display: flex;
@@ -191,7 +206,7 @@
     .landing-hero-copy {
       text-align: center;
       width: min(760px, 100%);
-      margin: clamp(150px, 24vh, 300px) auto 0;
+      margin: clamp(150px, 20vh, 300px) auto 0;
     }
     .landing-hero-eyebrow {
       color: rgba(255, 255, 255, 0.82);
@@ -254,7 +269,7 @@
       z-index: 3;
     }
     .landing-hero-video-shell {
-      width: 80vw;
+      width: 100vw;
       border-radius: 28px;
       box-shadow: none;
       border: none;
@@ -295,6 +310,10 @@
       width: min(660px, 100%);
       margin: 0 auto;
       text-align: left;
+    }
+    .landing-intro-copy--offset {
+      margin-left: 20vw;
+      margin-right: 0;
     }
     .landing-intro-eyebrow {
       color: rgba(237, 237, 237, 0.82);
@@ -453,9 +472,8 @@
       z-index: 1;
       border-radius: 24px;
       background: transparent !important;
-      border: 1px solid rgba(44, 47, 52, 0.14);
       display: grid;
-      grid-template-columns: 1.04fr 1fr;
+      grid-template-columns: 0.72fr 1.28fr;
       min-height: 620px;
       height: 800px;
       max-height: 800px;
@@ -464,7 +482,7 @@
     .landing-real-desktop-left {
       border-right: none;
       background: transparent !important;
-      padding: 14px 14px 14px 12px;
+      padding: 14px 0px 14px 12px;
       min-height: 0;
       display: grid;
       grid-template-columns: 44px minmax(0, 1fr);
@@ -507,7 +525,7 @@
       overflow-y: visible;
       padding-right: 2px;
       margin-top: 20px;
-      padding-top: 20px;
+      padding-top: 12px;
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
@@ -515,18 +533,18 @@
       display: none;
     }
     .landing-real-workspace-plus {
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
       aspect-ratio: 1 / 1;
-      flex: 0 0 40px;
+      flex: 0 0 32px;
       border-radius: 999px;
       border: none;
-      background: rgba(255, 255, 255, 0.6);
-      color: #2f3336;
+      background: rgba(255, 255, 255, 0.257);
+      color: #484f54;
       display: grid;
       place-items: center;
-      font-size: 24px;
-      font-weight: 400;
+      font-size: 18px;
+      font-weight: 100;
       line-height: 1;
       align-self: flex-start;
       margin-bottom: 2px;
@@ -546,7 +564,7 @@
       line-height: 0.9;
       letter-spacing: -0.03em;
       margin: 0;
-      color: #ECF0F2;
+      color: #9AA5AB;
       text-shadow: none;
     }
     .landing-real-project-sub {
@@ -587,12 +605,12 @@
       font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 20px;
       font-weight: 500;
-      color: rgba(255, 255, 255, 0.9);
+      color: rgba(0, 0, 0, 0.25);
       margin: 0;
       line-height: 1.25;
     }
     .landing-real-stream-title.soft-white {
-      color: rgba(255, 255, 255, 0.9);
+      color: rgba(0, 0, 0, 0.25);
       text-shadow: none;
     }
     .landing-real-stream-meta {
@@ -600,27 +618,30 @@
       font-size: 9px;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(0, 0, 0, 0.3);
       margin: 0;
       white-space: nowrap;
     }
     .landing-real-stream-meta.active {
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(0, 0, 0, 0.3);
     }
     .landing-real-stream-meta.quiet {
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(0, 0, 0, 0.3);
     }
     .landing-real-cards {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
+      gap: 12px;
       align-items: start;
     }
     .landing-real-cards--onboarding {
       transition: grid-template-columns 340ms ease, gap 340ms ease;
     }
     .landing-real-cards--onboarding.is-minimal {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .landing-real-cards--onboarding.is-decision {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .landing-real-cards--onboarding.is-expanded {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -654,11 +675,11 @@
     }
     .landing-real-card.note .landing-real-card-body {
       font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 11px;
+      font-size: 12px;
       line-height: 1.42;
       font-weight: 600;
       display: inline-block;
-      transform: rotate(1deg);
+      transform: rotate(-1deg);
       transform-origin: left center;
     }
     .landing-real-card.note {
@@ -685,7 +706,7 @@
     }
     .landing-real-card.decision .landing-real-card-body {
       font-family: Georgia, serif;
-      font-size: 13px;
+      font-size: 12px;
       line-height: 1.35;
       font-weight: 400 !important;
     }
@@ -755,7 +776,7 @@
       max-height: calc(100% - 40px);
       box-sizing: border-box;
       margin: 20px;
-      padding: 20px;
+      padding: 30px;
       border-radius: 30px;
       background: rgba(255, 255, 255, 0.4);
       border-left: none;
@@ -804,7 +825,7 @@
       font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 14px;
       line-height: 1.4;
-      color: #1d2022;
+      color: #2c3032;
       background: rgba(247, 249, 250, 0.82);
       border: 1px solid rgba(44, 47, 52, 0.08);
     }
@@ -815,15 +836,16 @@
       border-radius: 16px 16px 16px 4px;
       font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       background: rgba(255, 255, 255, 0.5);
+      color: #585c5e;
     }
     .landing-real-msg-bubble.flowd {
-      max-width: 100%;
+      max-width: 90%;
       border: none;
       background: transparent;
       border-radius: 0;
       padding: 0;
-      font-family: "FlowdGeorgia", Georgia, "Times New Roman", Times, serif !important;
-      font-size: 14px;
+      font-family: "FlowdGeorgia", Georgia, Times, serif !important;
+      font-size: 15px;
       line-height: 1.44;
       color: #232629;
       letter-spacing: 0;
@@ -832,6 +854,10 @@
     .landing-real-chat-card .landing-real-card-body {
       font-size: 12px;
       line-height: 1.34;
+    }
+    .landing-real-chat-card.question .landing-real-card-body {
+      font-size: 12px;
+      line-height: 1.36;
     }
     .landing-real-chat-card.todo li {
       font-size: 12px;
@@ -848,24 +874,38 @@
       display: flex;
       gap: 0;
       align-items: flex-start;
+      max-height: 0;
+      opacity: 0;
+      overflow: visible;
+    }
+    .landing-real-chat-card-row.is-active {
+      max-height: 320px;
+      opacity: 1;
     }
     .landing-real-chat-card-row .landing-real-chat-card {
+      --card-tilt: 0deg;
+      --enter-y: 24px;
+      --enter-scale: 0.96;
       opacity: 0;
-      transform: translateY(24px) scale(0.96);
-      transition: opacity 440ms cubic-bezier(0.22, 1, 0.36, 1), transform 440ms cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translateY(var(--enter-y)) rotate(var(--card-tilt)) scale(var(--enter-scale));
+      transition: opacity 1100ms cubic-bezier(0.22, 1, 0.36, 1), transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
     }
     .landing-real-chat-card-row .landing-real-chat-card.is-visible {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      --enter-y: 0px;
+      --enter-scale: 1;
     }
     .landing-real-chat-card-row .landing-real-chat-card.reveal-2 {
-      transition-delay: 140ms;
+      transition-delay: 300ms;
+    }
+    .landing-real-chat-card-row .landing-real-chat-card:not(.is-visible) {
+      pointer-events: none;
     }
     .landing-real-chat-card.todo {
-      transform: rotate(1deg);
+      --card-tilt: 1deg;
     }
     .landing-real-chat-card.question {
-      transform: rotate(-1deg);
+      --card-tilt: -1deg;
     }
     .landing-real-chat-card-sub {
       margin-top: 5px;
@@ -880,6 +920,17 @@
       font-size: 11px;
       font-weight: 600;
       color: #2c2f34;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(17, 17, 17, 0.14);
+      background: rgba(255, 255, 255, 0.55);
+      padding: 6px 10px;
+    }
+    .landing-real-chat-card.todo .landing-real-chat-card-action {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.14);
     }
     .landing-real-chat-card.decision .landing-real-chat-card-sub {
       color: rgba(245, 247, 246, 0.66);
@@ -929,7 +980,7 @@
       padding: 18px 23px;
       font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 14px;
-      color: #98A0A6;
+      color: rgba(0, 0, 0, 0.3);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -953,6 +1004,10 @@
       padding: 20px 24px 16px;
       display: flex;
       flex-direction: column;
+    }
+    .landing-real-card.doc.note {
+      padding: 12px;
+      border-radius: 20px;
     }
     .landing-real-doc-head {
       display: flex;
@@ -1038,7 +1093,12 @@
     .landing-real-float-in {
       opacity: 0;
       transform: translateY(20px) scale(0.97);
-      animation: landingRealFloatIn 520ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation: landingRealFloatIn 1100ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .landing-real-msg-float-in {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: landingRealMsgFloatIn 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
     @keyframes landingRealFloatIn {
       from {
@@ -1050,16 +1110,63 @@
         transform: translateY(0) scale(1);
       }
     }
+    @keyframes landingRealMsgFloatIn {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
     .landing-real-card--onboarding-image {
-      transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 320ms ease, grid-column 320ms ease, grid-row 320ms ease;
+      transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1), opacity 320ms ease, grid-column 600ms cubic-bezier(0.22, 1, 0.36, 1), grid-row 600ms cubic-bezier(0.22, 1, 0.36, 1);
     }
     .landing-real-cards--onboarding.is-minimal .landing-real-card--onboarding-image {
       grid-column: 1;
       grid-row: auto;
     }
+    .landing-real-cards--onboarding.is-decision .landing-real-card--onboarding-image {
+      grid-column: 2;
+      grid-row: auto;
+    }
     .landing-real-cards--onboarding.is-expanded .landing-real-card--onboarding-image {
       grid-column: 2;
       grid-row: 1 / span 2;
+    }
+    .landing-real-card--onboarding-image.is-shifting-right {
+      animation: landingRealImageShiftRight 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .landing-real-card--onboarding-image.is-shifting-right-decision {
+      animation: landingRealImageShiftRightDecision 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    @keyframes landingRealImageShiftRightDecision {
+      from {
+        transform: translateX(-30px);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+    @keyframes landingRealImageShiftRight {
+      from {
+        transform: translateX(-22px);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+    .landing-real-card--decision-shift {
+      animation: landingRealDecisionShift 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    @keyframes landingRealDecisionShift {
+      from {
+        transform: translateY(-26px);
+      }
+      to {
+        transform: translateY(0);
+      }
     }
     @media (max-width: 1180px) {
       .landing-real-desktop-shell {
@@ -1067,7 +1174,6 @@
       }
       .landing-real-desktop-left {
         border-right: none;
-        border-bottom: 1px solid rgba(44, 47, 52, 0.14);
       }
       .landing-real-chat-scroll {
         max-height: 420px;
@@ -4265,24 +4371,24 @@
         m4: "Worth keeping. For now — if the board only appears after the first card, the onboarding question becomes: what's the right first question Flowd asks to generate that card? That's the real design problem to solve next.",
       }), []);
 
-      const [typedChars, setTypedChars] = React.useState({ m1: 0, m2: 0, m3: 0, m4: 0 });
+      const [typedChars, setTypedChars] = React.useState({ m2: 0, m4: 0 });
+      const [showUser1, setShowUser1] = React.useState(false);
+      const [showUser3, setShowUser3] = React.useState(false);
       const [showDecisionCard, setShowDecisionCard] = React.useState(false);
       const [showNoteCard, setShowNoteCard] = React.useState(false);
       const [showTodoCard, setShowTodoCard] = React.useState(false);
       const [showQuestionCard, setShowQuestionCard] = React.useState(false);
       const hasPlayedRef = React.useRef(false);
+      const rootRef = React.useRef(null);
 
       React.useEffect(() => {
-        if (hasPlayedRef.current) return undefined;
-        hasPlayedRef.current = true;
+        if (hasPlayedRef.current || !rootRef.current) return undefined;
 
         let cancelled = false;
         const timers = [];
         const intervals = [];
         const fullTypedState = {
-          m1: script.m1.length,
           m2: script.m2.length,
-          m3: script.m3.length,
           m4: script.m4.length,
         };
 
@@ -4310,9 +4416,12 @@
         });
 
         const run = async () => {
+          hasPlayedRef.current = true;
           const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
           if (prefersReduced) {
             setTypedChars(fullTypedState);
+            setShowUser1(true);
+            setShowUser3(true);
             setShowDecisionCard(true);
             setShowNoteCard(true);
             setShowTodoCard(true);
@@ -4322,33 +4431,33 @@
 
           await wait(220);
           if (cancelled) return;
-          await typeMessage("m1", script.m1, 14);
+          setShowUser1(true);
 
           if (cancelled) return;
-          await wait(180);
+          await wait(600);
           if (cancelled) return;
           setShowDecisionCard(true);
 
-          await wait(280);
+          await wait(500);
           if (cancelled) return;
           await typeMessage("m2", script.m2, 12);
 
           if (cancelled) return;
-          await wait(220);
+          await wait(600);
           if (cancelled) return;
-          await typeMessage("m3", script.m3, 14);
+          setShowUser3(true);
 
           if (cancelled) return;
-          await wait(180);
+          await wait(600);
           if (cancelled) return;
           setShowNoteCard(true);
 
-          await wait(280);
+          await wait(500);
           if (cancelled) return;
           await typeMessage("m4", script.m4, 12);
 
           if (cancelled) return;
-          await wait(180);
+          await wait(500);
           if (cancelled) return;
           setShowTodoCard(true);
 
@@ -4357,19 +4466,35 @@
           setShowQuestionCard(true);
         };
 
-        run();
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting || hasPlayedRef.current) return;
+              const delayedStart = setTimeout(() => {
+                if (cancelled || hasPlayedRef.current) return;
+                run();
+              }, 500);
+              timers.push(delayedStart);
+              observer.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.42, rootMargin: "0px 0px -12% 0px" },
+        );
+
+        observer.observe(rootRef.current);
 
         return () => {
           cancelled = true;
+          observer.disconnect();
           timers.forEach((timer) => clearTimeout(timer));
           intervals.forEach((interval) => clearInterval(interval));
         };
       }, [script]);
 
-      const onboardingLayoutClass = showNoteCard ? "is-expanded" : "is-minimal";
+      const onboardingLayoutClass = showNoteCard ? "is-expanded" : (showDecisionCard ? "is-decision" : "is-minimal");
 
       return (
-        <div className="landing-real-desktop" role="img" aria-label="Flowd desktop project workspace and chat view">
+        <div className="landing-real-desktop" ref={rootRef} role="img" aria-label="Flowd desktop project workspace and chat view">
           <div className="landing-real-desktop-shell">
             <div className="landing-real-desktop-left">
               <div className="landing-real-rail">
@@ -4390,8 +4515,7 @@
 
                 <section className="landing-real-stream">
                   <header className="landing-real-stream-head">
-                    <h4 className="landing-real-stream-title">Onboarding &amp; Empty State</h4>
-                    <p className="landing-real-stream-meta active">Active · updated just now</p>
+                    <h4 className="landing-real-stream-title">Onboarding State</h4>
                   </header>
                   <div className={`landing-real-cards landing-real-cards--onboarding ${onboardingLayoutClass}`}>
                     {showNoteCard && (
@@ -4401,12 +4525,12 @@
                       </article>
                     )}
                     {showDecisionCard && (
-                      <article className="landing-real-card decision col-1 landing-real-float-in">
+                      <article className={`landing-real-card decision ${showNoteCard ? "col-1 landing-real-card--decision-shift" : "col-1 landing-real-float-in"}`}>
                         <div className="landing-real-card-meta">DECIDED</div>
                         <p className="landing-real-card-body">Board only appears after the first card is created. No blank state.</p>
                       </article>
                     )}
-                    <article className={`landing-real-card image landing-real-card--onboarding-image ${showNoteCard ? "col-2 row-span-2" : ""}`}>
+                    <article className={`landing-real-card image landing-real-card--onboarding-image ${showDecisionCard ? "is-shifting-right-decision" : ""} ${showNoteCard ? "col-2 row-span-2 is-shifting-right" : ""}`}>
                       <img src="./src/hero-img.png" alt="Visual reference" />
                     </article>
                   </div>
@@ -4415,7 +4539,6 @@
                 <section className="landing-real-stream">
                   <header className="landing-real-stream-head">
                     <h4 className="landing-real-stream-title soft-white">Workspace Model</h4>
-                    <p className="landing-real-stream-meta quiet">Quiet · 3 days ago</p>
                   </header>
                   <div className="landing-real-cards">
                     <article className="landing-real-card doc note">
@@ -4423,7 +4546,7 @@
                         <span>doc</span>
                         <span>📄</span>
                       </div>
-                      <p className="landing-real-doc-title">Workspace Model — Wrap</p>
+                      <p className="landing-real-doc-title">Workspace Model</p>
                       <p className="landing-real-doc-sub">Decided on vertical board layout.</p>
                       <p className="landing-real-doc-body">Workstreams recognized by AI, not manually created. Board sits beside chat, both always visible.</p>
                       <div className="landing-real-doc-foot">
@@ -4445,30 +4568,28 @@
               <div className="landing-real-chat-container">
                 <div className="landing-real-chat-scroll">
                   <div className="landing-real-msg-bubble flowd">{script.m0}</div>
-                  {typedChars.m1 > 0 && <div className="landing-real-msg-bubble user">{script.m1.slice(0, typedChars.m1)}</div>}
+                  {showUser1 && <div className="landing-real-msg-bubble user landing-real-msg-float-in">{script.m1}</div>}
                   {typedChars.m2 > 0 && <div className="landing-real-msg-bubble flowd">{script.m2.slice(0, typedChars.m2)}</div>}
-                  {typedChars.m3 > 0 && <div className="landing-real-msg-bubble user">{script.m3.slice(0, typedChars.m3)}</div>}
+                  {showUser3 && <div className="landing-real-msg-bubble user landing-real-msg-float-in">{script.m3}</div>}
                   {typedChars.m4 > 0 && <div className="landing-real-msg-bubble flowd">{script.m4.slice(0, typedChars.m4)}</div>}
 
-                  {(showTodoCard || showQuestionCard) && (
-                    <div className="landing-real-chat-card-row">
-                      <article className={`landing-real-card todo landing-real-chat-card reveal-1 ${showTodoCard ? "is-visible" : ""}`}>
-                        <div className="landing-real-card-meta">TODO</div>
-                        <p className="todo-title">First question design</p>
-                        <ul>
-                          <li>☐ Draft 3 versions of opening question</li>
-                          <li>☐ Test which generates the most useful first card</li>
-                        </ul>
-                        <div className="landing-real-chat-card-action">+ Add to board →</div>
-                      </article>
+                  <div className={`landing-real-chat-card-row ${(showTodoCard || showQuestionCard) ? "is-active" : ""}`}>
+                    <article className={`landing-real-card todo landing-real-chat-card reveal-1 ${showTodoCard ? "is-visible" : ""}`}>
+                      <div className="landing-real-card-meta">TODO</div>
+                      <p className="todo-title">First question design</p>
+                      <ul>
+                        <li>☐ Draft 3 versions of opening question</li>
+                        <li>☐ Test which generates the most useful first card</li>
+                      </ul>
+                      <div className="landing-real-chat-card-action">+ Add to board →</div>
+                    </article>
 
-                      <article className={`landing-real-card question landing-real-chat-card is-just-added reveal-2 ${showQuestionCard ? "is-visible" : ""}`}>
-                        <div className="landing-real-card-meta">OPEN QUESTION</div>
-                        <p className="landing-real-card-body">What is the right question to asks on the first card?</p>
-                        <div className="landing-real-chat-card-action">+ Add to board →</div>
-                      </article>
-                    </div>
-                  )}
+                    <article className={`landing-real-card question landing-real-chat-card is-just-added reveal-2 ${showQuestionCard ? "is-visible" : ""}`}>
+                      <div className="landing-real-card-meta">OPEN QUESTION</div>
+                      <p className="landing-real-card-body">What is the right question to ask on the first card?</p>
+                      <div className="landing-real-chat-card-action">+ Add to board →</div>
+                    </article>
+                  </div>
                 </div>
                 <div className="landing-real-chat-chip-row">
                   <span className="landing-real-chat-chip">REFRESH SUMMARY</span>
@@ -4489,17 +4610,98 @@
     }
 
     function HeroDesignedSection() {
+      const heroVideoRef = React.useRef(null);
+
+      React.useEffect(() => {
+        const video = heroVideoRef.current;
+        if (!video) return undefined;
+
+        let rafId = 0;
+        let mode = "forward"; // "forward" | "reverse"
+        let lastTs = 0;
+        const epsilon = 0.02;
+
+        const safePlay = () => {
+          const p = video.play();
+          if (p && typeof p.catch === "function") p.catch(() => {});
+        };
+
+        const reverseTick = (ts) => {
+          if (mode !== "reverse") return;
+          if (!video.duration || Number.isNaN(video.duration)) {
+            rafId = requestAnimationFrame(reverseTick);
+            return;
+          }
+          if (!lastTs) lastTs = ts;
+          const dt = (ts - lastTs) / 1000;
+          lastTs = ts;
+          video.currentTime = Math.max(0, video.currentTime - dt);
+          if (video.currentTime <= epsilon) {
+            mode = "forward";
+            lastTs = 0;
+            video.currentTime = 0;
+            safePlay();
+            return;
+          }
+          rafId = requestAnimationFrame(reverseTick);
+        };
+
+        const startReverse = () => {
+          if (!video.duration || Number.isNaN(video.duration)) return;
+          mode = "reverse";
+          video.pause();
+          video.currentTime = Math.max(0, video.duration - epsilon);
+          lastTs = 0;
+          cancelAnimationFrame(rafId);
+          rafId = requestAnimationFrame(reverseTick);
+        };
+
+        const onLoaded = () => {
+          video.currentTime = 0;
+          safePlay();
+        };
+        const onEnded = () => {
+          if (mode !== "forward") return;
+          startReverse();
+        };
+
+        video.addEventListener("loadedmetadata", onLoaded);
+        video.addEventListener("ended", onEnded);
+        if (video.readyState >= 1) onLoaded();
+
+        return () => {
+          video.removeEventListener("loadedmetadata", onLoaded);
+          video.removeEventListener("ended", onEnded);
+          cancelAnimationFrame(rafId);
+        };
+      }, []);
+
       return (
         <section id="hero" className="landing-hero-design" aria-label="Flowd hero section">
-          <div className="landing-hero-scene" />
+          <div className="landing-hero-scene">
+            <video
+              ref={heroVideoRef}
+              className="landing-hero-scene-video"
+              src="./src/hero-video.mp4"
+              muted
+              playsInline
+              preload="auto"
+            />
+          </div>
           <div className="landing-hero-inner">
-            <div className="landing-hero-copy motion-reveal" data-reveal data-reveal-delay="70">
-              <Mono className="landing-hero-eyebrow text-[11px] tracking-[0.28em]">thinking OS</Mono>
-              <Serif className="landing-hero-title">
-                <span className="landing-hero-title-think">Form follows</span>
-                <span className="landing-hero-title-growth">thoughts.</span>
-              </Serif>
-              <Sans className="landing-hero-sub">Flowd shapes the form as the thinking unfolds.</Sans>
+            <div className="landing-hero-copy">
+              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="70">
+                <Mono className="landing-hero-eyebrow text-[11px] tracking-[0.28em]">thinking OS</Mono>
+              </div>
+              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="170">
+                <Serif className="landing-hero-title">
+                  <span className="landing-hero-title-think">Form follows</span>
+                  <span className="landing-hero-title-growth">thoughts.</span>
+                </Serif>
+              </div>
+              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="270">
+                <Sans className="landing-hero-sub">Flowd shapes the form as the thinking unfolds.</Sans>
+              </div>
             </div>
 
             <div className="landing-hero-bottom-fade" aria-hidden="true" />
@@ -4517,22 +4719,28 @@
       return (
         <section className="landing-intro-section" aria-label="Flowd intro statement">
           <div className="landing-intro-inner">
-            <div className="landing-intro-copy motion-reveal" data-reveal data-reveal-delay="70">
-              <Mono className="landing-intro-eyebrow text-[12px] tracking-[0.25em]">A THINKING SPACE</Mono>
-              <p className="landing-intro-title">
-                Projects rarely begin as structure.
-                <br />
-                They begin in fragments.
-                <br />
-                An idea, a decision, a question, a reference, a next step.
-              </p>
-              <Sans className="landing-intro-body">
-                Flowd turns that movement into workstreams, modules, and usable context — as it happens.
-                <br />
-                Not after the work.
-                <br />
-                With it.
-              </Sans>
+            <div className="landing-intro-copy landing-intro-copy--offset">
+              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="70">
+                <Mono className="landing-intro-eyebrow text-[12px] tracking-[0.25em]">A THINKING SPACE</Mono>
+              </div>
+              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="170">
+                <p className="landing-intro-title">
+                  Projects rarely begin as structure.
+                  <br />
+                  They begin in fragments.
+                  <br />
+                  An idea, a decision, a question, a reference, a next step.
+                </p>
+              </div>
+              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="270">
+                <Sans className="landing-intro-body">
+                  Flowd turns that movement into workstreams, modules, and usable context — as it happens.
+                  <br />
+                  Not after the work.
+                  <br />
+                  With it.
+                </Sans>
+              </div>
             </div>
           </div>
         </section>
