@@ -312,17 +312,19 @@
       text-align: left;
     }
     .landing-intro-copy--offset {
-      margin-left: 20vw;
-      margin-right: 0;
+      margin-left: 20vw !important;
+      margin-right: 0 !important;
+      transform: translateX(15vw);
     }
     .landing-intro-eyebrow {
-      color: rgba(237, 237, 237, 0.82);
+      color: rgba(237, 237, 237, 0.5);
       margin-bottom: 30px;
     }
     .landing-intro-title {
       margin: 0;
       font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       font-size: 30px;
+      max-width: 500px;
       line-height: 1.34;
       font-weight: 400;
       letter-spacing: 0;
@@ -331,15 +333,15 @@
     }
     .landing-intro-body {
       margin-top: 22px;
-      max-width: 520px;
+      max-width: 400px;
       color: #ededed;
-      font-size: 22px;
+      font-size: 16px;
       line-height: 1.36;
     }
     @media (max-width: 860px) {
       .landing-intro-section { padding: 88px 0 90px; }
       .landing-intro-copy { width: min(560px, 100%); }
-      .landing-intro-title { font-size: 36px; }
+      .landing-intro-title { font-size: 30px; }
       .landing-intro-body { max-width: 100%; }
     }
     .landing-hero-bottom-fade {
@@ -4690,16 +4692,16 @@
           </div>
           <div className="landing-hero-inner">
             <div className="landing-hero-copy">
-              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="70">
-                <Mono className="landing-hero-eyebrow text-[11px] tracking-[0.28em]">thinking OS</Mono>
+              <div className="motion-reveal" data-reveal data-reveal-delay="70">
+                <Mono className="landing-hero-eyebrow text-[11px] tracking-[0.28em]">THINKING OS</Mono>
               </div>
-              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="170">
+              <div className="motion-reveal" data-reveal data-reveal-delay="170">
                 <Serif className="landing-hero-title">
                   <span className="landing-hero-title-think">Form follows</span>
                   <span className="landing-hero-title-growth">thoughts.</span>
                 </Serif>
               </div>
-              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="270">
+              <div className="motion-reveal" data-reveal data-reveal-delay="270">
                 <Sans className="landing-hero-sub">Flowd shapes the form as the thinking unfolds.</Sans>
               </div>
             </div>
@@ -4720,10 +4722,10 @@
         <section className="landing-intro-section" aria-label="Flowd intro statement">
           <div className="landing-intro-inner">
             <div className="landing-intro-copy landing-intro-copy--offset">
-              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="70">
+              <div className="motion-reveal" data-reveal data-reveal-delay="70">
                 <Mono className="landing-intro-eyebrow text-[12px] tracking-[0.25em]">A THINKING SPACE</Mono>
               </div>
-              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="170">
+              <div className="motion-reveal" data-reveal data-reveal-delay="170">
                 <p className="landing-intro-title">
                   Projects rarely begin as structure.
                   <br />
@@ -4732,7 +4734,7 @@
                   An idea, a decision, a question, a reference, a next step.
                 </p>
               </div>
-              <div className="motion-reveal" data-reveal motion-reveal data-reveal-delay="270">
+              <div className="motion-reveal" data-reveal data-reveal-delay="270">
                 <Sans className="landing-intro-body">
                   Flowd turns that movement into workstreams, modules, and usable context — as it happens.
                   <br />
@@ -5627,12 +5629,12 @@
           <Section
             id="now"
             tone="light"
-            eyebrow="A THINKING SPACE"
+            eyebrow="TWO-WAY FLOW"
             headline={
               <>
-                <span className="landing-section-headline-line1">Cards return to</span>
+                <span className="landing-section-headline-line1">Structure flows back</span>
                 <br />
-                <span className="landing-section-headline-line2 whitespace-nowrap">the conversation</span>
+                <span className="landing-section-headline-line2 whitespace-nowrap">into dialogue</span>
               </>
             }
             body={
@@ -5668,12 +5670,12 @@
           <Section
             id="collaboration"
             tone="light"
-            eyebrow="A THINKING SPACE"
+            eyebrow="WRAP & REUSE"
             headline={
               <>
-                <span className="landing-section-headline-line1">Closure</span>
+                <span className="landing-section-headline-line1">Wraps up cleanly</span>
                 <br />
-                <span className="landing-section-headline-line2 whitespace-nowrap">without loss</span>
+                <span className="landing-section-headline-line2 whitespace-nowrap">without flattening</span>
               </>
             }
             body={
