@@ -587,54 +587,79 @@
   .compare-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 36px 0;
+    gap: 18px;
+    width: min(1120px, calc(100vw - 80px));
+    max-width: none;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 44px 0 52px;
   }
   .compare-col {
-    background: var(--bg);
-    padding: 24px 20px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(243, 241, 236, 0.96) 100%);
+    padding: 18px;
+    border-radius: 24px;
+    border: 1px solid rgba(26, 25, 23, 0.08);
+    box-shadow: 0 18px 42px rgba(24, 22, 18, 0.06);
+    display: grid;
+    gap: 14px;
   }
-  .compare-col.flowd { background: #F0EFE9; }
+  .compare-col.flowd {
+    background: linear-gradient(180deg, rgba(242, 246, 220, 0.96) 0%, rgba(248, 249, 239, 0.98) 100%);
+    border-color: rgba(173, 187, 86, 0.32);
+    box-shadow: 0 20px 46px rgba(120, 126, 70, 0.08);
+  }
+  .compare-col-head {
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
   .compare-col-label {
-    font-size: 11px;
-    letter-spacing: 0.1em;
+    font-size: 10px;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--text-faint);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-weight: 400;
   }
   .compare-col-name {
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 24px;
+    font-weight: 400;
     color: var(--text);
-    margin-bottom: 16px;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.04em;
   }
-  .compare-col ul {
+  .compare-list {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
   }
-  .compare-col ul li {
-    font-size: 13px;
-    font-family: var(--serif);
-    color: var(--text-muted);
-    line-height: 1.5;
-    padding-left: 12px;
-    position: relative;
+  .compare-item {
+    padding: 14px 14px 15px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(26, 25, 23, 0.06);
+    display: grid;
+    gap: 6px;
   }
-  .compare-col ul li::before {
-    content: '—';
-    position: absolute;
-    left: 0;
+  .compare-col.flowd .compare-item {
+    background: rgba(255, 255, 255, 0.46);
+  }
+  .compare-item-key {
+    font-size: 10px;
+    font-family: var(--sans);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
     color: var(--text-faint);
   }
-  .compare-col.flowd ul li { color: var(--text); }
-  .compare-col.flowd ul li::before { color: var(--text-muted); }
+  .compare-item-value {
+    font-size: 13px;
+    font-family: var(--sans);
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .compare-col.flowd .compare-item-value {
+    color: var(--text);
+  }
 
   /* ── VIEW REDUCTION ── */
   .view-reduction {
@@ -849,7 +874,14 @@
       left: 50%;
       transform: translateX(-50%);
     }
-    .compare-grid { grid-template-columns: 1fr; }
+    .compare-grid {
+      grid-template-columns: 1fr;
+      width: 100%;
+      left: 0;
+      transform: none;
+      gap: 14px;
+      margin: 32px 0 40px;
+    }
     .view-reduction { grid-template-columns: 1fr; gap: 10px; }
     .artifact-item { flex-direction: column; gap: 6px; }
     .artifact-name { min-width: auto; }
@@ -1329,34 +1361,76 @@ I respond to the person, not to the request.</textarea>
 
     <div class="compare-grid">
       <div class="compare-col">
-        <p class="compare-col-label">Model</p>
-        <p class="compare-col-name">Miro</p>
-        <ul>
-          <li>Freeform, granular, arbitrary</li>
-          <li>Cards stand alone — no thread</li>
-          <li>Everything at once, overwhelming</li>
-          <li>User curates spatial position</li>
-        </ul>
+        <div class="compare-col-head">
+          <p class="compare-col-label">Model</p>
+          <p class="compare-col-name">Miro</p>
+        </div>
+        <div class="compare-list">
+          <div class="compare-item">
+            <div class="compare-item-key">Structure</div>
+            <div class="compare-item-value">Freeform, granular, arbitrary</div>
+          </div>
+          <div class="compare-item">
+            <div class="compare-item-key">Thread logic</div>
+            <div class="compare-item-value">Cards stand alone — no thread</div>
+          </div>
+          <div class="compare-item">
+            <div class="compare-item-key">Cognitive cost</div>
+            <div class="compare-item-value">Everything at once, overwhelming</div>
+          </div>
+          <div class="compare-item">
+            <div class="compare-item-key">User burden</div>
+            <div class="compare-item-value">User curates spatial position</div>
+          </div>
+        </div>
       </div>
       <div class="compare-col">
-        <p class="compare-col-label">Model</p>
-        <p class="compare-col-name">Notion</p>
-        <ul>
-          <li>Rigid, hierarchical</li>
-          <li>Pages inside pages — things hide</li>
-          <li>You know it exists, never open it</li>
-          <li>User curates structure and depth</li>
-        </ul>
+        <div class="compare-col-head">
+          <p class="compare-col-label">Model</p>
+          <p class="compare-col-name">Notion</p>
+        </div>
+        <div class="compare-list">
+          <div class="compare-item">
+            <div class="compare-item-key">Structure</div>
+            <div class="compare-item-value">Rigid, hierarchical</div>
+          </div>
+          <div class="compare-item">
+            <div class="compare-item-key">Thread logic</div>
+            <div class="compare-item-value">Pages inside pages — things hide</div>
+          </div>
+          <div class="compare-item">
+            <div class="compare-item-key">Cognitive cost</div>
+            <div class="compare-item-value">You know it exists, never open it</div>
+          </div>
+          <div class="compare-item">
+            <div class="compare-item-key">User burden</div>
+            <div class="compare-item-value">User curates structure and depth</div>
+          </div>
+        </div>
       </div>
       <div class="compare-col flowd">
-        <p class="compare-col-label">This product</p>
-        <p class="compare-col-name">Flowd</p>
-        <ul>
-          <li>Workstream-grouped, auto-built</li>
-          <li>Cards have a thread — they belong</li>
-          <li>Peripheral, never demanding</li>
-          <li>User curates nothing</li>
-        </ul>
+        <div class="compare-col-head">
+          <p class="compare-col-label">This product</p>
+          <p class="compare-col-name">Flowd</p>
+        </div>
+        <div class="compare-list">
+          <div class="compare-item">
+            <div class="compare-item-key">Structure</div>
+            <div class="compare-item-value">Workstream-grouped, auto-built</div>
+          </div>
+          <div class="compare-item">
+            <div class="compare-item-key">Thread logic</div>
+            <div class="compare-item-value">Cards have a thread — they belong</div>
+          </div>
+          <div class="compare-item">
+            <div class="compare-item-key">Cognitive cost</div>
+            <div class="compare-item-value">Peripheral, never demanding</div>
+          </div>
+          <div class="compare-item">
+            <div class="compare-item-key">User burden</div>
+            <div class="compare-item-value">User curates nothing</div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1434,14 +1508,8 @@ I respond to the person, not to the request.</textarea>
       <p>This forced a discipline that static tools don't require: every state has to be reachable. You cannot draw an edge case and skip its behavior. If I wanted to design the moment where the AI is uncertain — where recognition might misfire — I had to build the condition that triggers it, and then design into that condition. The edge case is where trust is either built or broken. It is not optional.</p>
     </div>
 
-    <div class="visual-placeholder vp-16-9">
-      <div class="visual-placeholder-inner">
-        <div class="visual-placeholder-icon">
-          <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        </div>
-        <div class="visual-placeholder-label">Visual 12</div>
-        <div class="visual-placeholder-sub">Code + rendered UI — React component alongside the interface it produces</div>
-      </div>
+    <div class="visual-placeholder visual-image vp-16-9">
+      <img src="assets/vibecode.png" alt="Code editor and rendered UI shown side by side during Flowd's build process">
     </div>
   </div>
 </section>
