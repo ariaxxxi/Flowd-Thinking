@@ -60,6 +60,9 @@
     color: var(--text);
   }
   .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
     font-size: 12px;
     color: var(--text-muted);
     letter-spacing: 0.04em;
@@ -96,6 +99,20 @@
     max-width: 820px;
     color: var(--text);
     margin-bottom: 40px;
+  }
+  .hero-intro {
+    max-width: 760px;
+    margin-bottom: 40px;
+  }
+  .hero-intro p {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.72;
+    color: var(--text);
+    margin-bottom: 1em;
+  }
+  .hero-intro p:last-child {
+    margin-bottom: 0;
   }
   .hero-meta {
     display: flex;
@@ -177,6 +194,24 @@
     font-weight: 500;
     font-style: normal;
     color: var(--text);
+  }
+  .body-text pre {
+    margin: 36px 0;
+    padding: 20px 24px;
+    border-radius: 8px;
+    border: 0.5px solid var(--border);
+    background: rgba(232, 230, 223, 0.5);
+    color: var(--text-muted);
+    font-family: 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+  .editor-note {
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 0.5px solid var(--border);
   }
 
   /* ── PULL QUOTE ── */
@@ -277,6 +312,12 @@
     left: 50%;
     transform: translateX(-50%);
   }
+  .visual-narrative-video.text-column {
+    width: 100%;
+    max-width: 100%;
+    left: 0;
+    transform: none;
+  }
   .visual-page-embed {
     background: #111211;
   }
@@ -284,12 +325,12 @@
     display: none;
   }
   .visual-hero-embed {
-    width: 100vw;
-    max-width: none;
+    width: min(1200px, calc(100vw - 80px));
+    max-width: 100%;
     position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 800px;
+    left: 0;
+    transform: none;
+    height: min(800px, calc((min(1200px, calc(100vw - 80px))) * 0.5));
     border-radius: 30px;
   }
   .visual-page-embed iframe {
@@ -664,52 +705,97 @@
   /* ── VIEW REDUCTION ── */
   .view-reduction {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin: 36px 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 26px;
+    margin: 40px 0 36px;
+    align-items: start;
   }
   .view-box {
-    background: var(--placeholder-bg);
-    border-radius: 8px;
-    padding: 20px;
     position: relative;
+    min-height: 100%;
+    padding: 22px 22px 20px;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(244,242,236,0.92) 100%);
+    border: 1px solid rgba(26,25,23,0.06);
+    box-shadow: 0 10px 20px 5px rgba(33,33,50,0.05);
+    overflow: hidden;
+  }
+  .view-box::before {
+    content: "";
+    position: relative;
+    display: block;
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    background: #E8E6DC;
+    color: var(--text);
+    margin-bottom: 18px;
+    box-shadow: inset 0 0 0 1px rgba(23,22,19,0.03);
+  }
+  .view-box::after {
+    content: "";
+    position: absolute;
+    top: 40px;
+    right: -17px;
+    width: 34px;
+    border-top: 1px dotted #171613;
+    opacity: 0.42;
+  }
+  .view-box:last-child::after {
+    display: none;
   }
   .view-box-num {
-    font-size: 32px;
-    font-weight: 300;
+    position: absolute;
+    top: 33px;
+    left: 35px;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    font-family: var(--sans);
+    font-weight: 400;
     color: var(--text);
-    letter-spacing: -0.03em;
+    letter-spacing: 0;
     line-height: 1;
-    margin-bottom: 4px;
   }
   .view-box-label {
-    font-size: 12px;
-    letter-spacing: 0.08em;
+    font-size: 11px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--text-faint);
-    margin-bottom: 20px;
+    color: #979186;
+    margin-bottom: 18px;
     font-weight: 400;
   }
   .view-box-surfaces {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 10px;
   }
   .surface-tag {
-    font-size: 12px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    border-radius: 999px;
+    font-size: 14px;
     font-family: var(--sans);
-    padding: 5px 10px;
-    border-radius: 4px;
+    letter-spacing: -0.01em;
     font-weight: 400;
+    box-shadow: 0 10px 20px 5px rgba(33,33,50,0.05);
   }
-  .surface-tag.active { background: var(--text); color: var(--bg); }
+  .surface-tag.active {
+    background: #FFFFFF;
+    color: #171613;
+  }
   .surface-tag.removed {
-    background: transparent;
-    border: 0.5px solid var(--border-medium);
-    color: var(--text-faint);
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(23,22,19,0.08);
+    color: #979186;
     text-decoration: line-through;
+    box-shadow: none;
   }
-  .surface-tag.merged { background: var(--text); color: var(--bg); }
+  .surface-tag.merged {
+    background: #DFFF37;
+    color: #171613;
+  }
 
   /* ── ARTIFACT TRAIL ── */
   .artifact-list {
@@ -894,18 +980,22 @@
 <!-- NAV -->
 <nav>
   <div class="nav-left">Flowd</div>
-  <div class="nav-right"><a href="https://ariax.work" target="_blank" rel="noopener noreferrer">ariax.work</a></div>
+  <div class="nav-right">
+    <a href="./index.html">Home</a>
+    <a href="https://ariax.work" target="_blank" rel="noopener noreferrer">ariax.work</a>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <p class="hero-eyebrow">Product Design &nbsp;/&nbsp; AI Systems &nbsp;/&nbsp; Solo Project</p>
-  <h1 class="hero-quote">"An idea doesn't arrive finished. It arrives as a fragment — and it needs somewhere to grow."</h1>
+  <p class="hero-eyebrow">Flowd — Case Study</p>
+  <h1 class="hero-quote">The most natural input already exists in human behavior. The system&apos;s job is to start there — not teach you where it needs you to be.</h1>
+  <div class="hero-intro">
+    <p>That isn't a feature decision. It's a position on what AI is for — and it's what Flowd is built on.</p>
+    <p>Flowd is a thinking tool for non-linear minds: a chat-first workspace where you talk through your work and an AI agent builds structure as a byproduct of the conversation. You never curate the board. You never switch modes. The system keeps up while you think.</p>
+    <p>This is the story of how I got there — and what I had to be wrong about first.</p>
+  </div>
   <div class="hero-meta">
-    <div class="hero-meta-item">
-      <label>Project</label>
-      <span>Flowd</span>
-    </div>
     <div class="hero-meta-item">
       <label>Role</label>
       <span>Designer, Builder, Researcher</span>
@@ -926,16 +1016,12 @@
 <!-- SECTION 1: ORIGIN -->
 <section class="section">
   <div class="section-inner">
-    <p class="section-label">Origin &nbsp;·&nbsp; 01</p>
+    <p class="section-label">01 · Origin</p>
     <h2 class="section-headline">Every tool I've used assumed I already knew how to organize myself.</h2>
     <div class="body-text">
-      <p>There is a particular kind of frustration that doesn't come from lack of ideas. It comes from the gap between having an idea and being able to do anything with it.</p>
-      <p>I've felt it. A half-formed thought at midnight that connects something I read three weeks ago to a problem I'm stuck on today. The moment I reach for a tool to hold it, the connection slips. The friction of organizing — of deciding where it goes, what it belongs to, how it relates to everything else — is enough to dissolve what was already fragile.</p>
-      <p>Most productivity tools are built on an assumption so obvious it goes unexamined: that the person using the tool already knows how to organize themselves. That structure is something the user provides, and the tool holds.</p>
-      <p>But thinking doesn't work that way. Not for everyone.</p>
-      <p>For people with limited executive function — with ADHD, with the kind of cognitive wiring that generates ideas in bursts and loses threads mid-sentence — the overhead of managing a tool is not a minor inconvenience. It is the thing that makes thinking feel impossible. Research shows that for people sensitive to interstitial friction, the cost of a single context switch can take up to 15 minutes to recover from. The average neurotypical person recovers in under 10 seconds.</p>
-      <p>I am one of those people.</p>
-      <p>Which means I had a personal stake in the question: what would a tool look like if structure emerged from the thinking — instead of the thinking being bent around the structure?</p>
+      <p>There is a particular kind of frustration that doesn't come from lack of ideas. It comes from the gap between having an idea and being able to do anything with it. A half-formed thought at midnight that connects something I read three weeks ago to a problem I'm stuck on today. The moment I reach for a tool to hold it, the connection slips. The friction of organizing — deciding where it goes, what it belongs to, how it relates to everything else — is enough to dissolve what was already fragile.</p>
+      <p>Most productivity tools are built on an assumption so obvious it goes unexamined: that structure is something the user provides, and the tool holds. But thinking doesn't work that way. Not for everyone. For people with ADHD, the cognitive overhead of managing a tool is not a minor inconvenience — it's the thing that makes thinking feel impossible. Research shows that for people sensitive to interstitial friction, a single context switch can take up to 15 minutes to recover from. The average neurotypical person recovers in under 10 seconds.</p>
+      <p>I am one of those people. Which gave me a personal stake in the question: <em>what would a tool look like if structure emerged from the thinking — instead of the thinking being bent around the structure?</em></p>
     </div>
 
     <div class="visual-placeholder visual-image visual-diagram vp-180-73">
@@ -944,58 +1030,38 @@
   </div>
 </section>
 
-<!-- SECTION 2: PROBLEM DEFINITION -->
+<!-- SECTION 2: THE PROBLEM -->
 <section class="section">
   <div class="section-inner">
-    <p class="section-label">Problem Definition &nbsp;·&nbsp; 02</p>
-    <h2 class="section-headline">The real failure is not capture. It's connection and momentum.</h2>
+    <p class="section-label">02 · The Problem</p>
+    <h2 class="section-headline">It's not a capture problem. It's a connection problem — and no tool was watching for it.</h2>
     <div class="body-text">
-      <p>I spent two weeks doing what I've come to call <em>behavior archaeology</em> — not surveying users with questionnaires, but watching myself and other non-linear thinkers in their actual environments. Screenshotting my own desktop at random intervals. Journaling where ideas actually lived versus where I intended them to live. Talking to designers, writers, and researchers about the systems they'd tried and why each one had eventually failed them.</p>
+      <p>I spent two weeks doing what I call <em>behavior archaeology</em> — not surveying users with questionnaires, but watching myself and other non-linear thinkers in their actual environments. Screenshotting my own desktop at random intervals. Journaling where ideas actually lived versus where I intended them to live. Talking to designers, writers, and researchers about the systems they'd tried and why each one had eventually failed them.</p>
       <p>Three patterns emerged.</p>
+      <p><strong>The Capture Problem.</strong> Ideas get captured in whatever surface is nearest — a DM to yourself, a voice memo, a note that will outlast its context. The choice is always: slow down and file it correctly, or catch it now and deal with filing later. Later never comes. Speed of capture beats quality of storage, every time.</p>
+      <p><strong>The Connection Problem.</strong> This was the deeper one. Ideas that belong together live in different places — a note from six weeks ago directly relevant to today, a decision from a previous session that reframes something you're about to commit to. Non-linear thinkers don't think in silos, but every tool stores things in silos. The connections that would help you move forward never surface, because nothing is watching for them.</p>
+      <p><strong>The Forward Motion Problem.</strong> Most tools are good at holding things. Almost none are good at helping you move. "What should I do next?" is rarely answerable from inside a Notion database. The structure is there, but it's inert. It doesn't think with you. It waits.</p>
+      <blockquote>
+        <p>The problem isn't storage. It's momentum. People don't need a better place to put things — they need something that helps them keep going.</p>
+      </blockquote>
     </div>
-
-    <div class="problem-list">
-      <div class="problem-item">
-        <p class="problem-item-label">Pattern 01</p>
-        <h3>The Capture Problem</h3>
-        <p>Ideas get captured in whatever surface is nearest — a DM to yourself, a voice memo, a sticky note that will outlast its context. The choice is always: slow down and file it correctly, or catch it now and deal with filing later. Later never comes. Speed of capture beats quality of storage, every time.</p>
-      </div>
-      <div class="problem-item">
-        <p class="problem-item-label">Pattern 02</p>
-        <h3>The Connection Problem</h3>
-        <p>This was the deeper one. Ideas that belong together live in different places — a note from six weeks ago directly relevant to today, a decision from a previous session that reframes something you're about to commit to. Non-linear thinkers don't think in silos, but every tool stores things in silos. The connections that would help you move forward never surface, because nothing is watching for them.</p>
-      </div>
-      <div class="problem-item">
-        <p class="problem-item-label">Pattern 03</p>
-        <h3>The Forward Motion Problem</h3>
-        <p>Most tools are good at holding things. Almost none are good at helping you move. The question "what should I do next?" is rarely answerable from inside a Notion database. The structure is there, but it's inert. It doesn't think with you. It waits.</p>
-      </div>
-    </div>
-
-    <blockquote>
-      <p>The problem isn't storage. It's momentum. People don't need a better place to put things — they need something that helps them keep going.</p>
-    </blockquote>
 
     <div class="visual-placeholder visual-image visual-diagram vp-16-9">
       <img src="assets/problem.png" alt="Three failure points map showing capture, connection, and forward motion breakdowns across the project lifecycle">
     </div>
-    <p class="visual-caption">How my project related materials scattered in Notes, Notion, Pinterest, and Figma.</p>
   </div>
 </section>
 
-<!-- SECTION 3: FLOWD V1 -->
+<!-- SECTION 3: FIRST BUILD -->
 <section class="section">
   <div class="section-inner">
-    <p class="section-label">First Thesis &nbsp;·&nbsp; 03</p>
-    <h2 class="section-headline">Version one followed a familiar model.</h2>
+    <p class="section-label">03 · First Build — and What It Revealed</p>
+    <h2 class="section-headline">The first version worked. That's how I found out it was wrong.</h2>
     <div class="body-text">
-      <p>The first version — Flowd v1 — was built around a freeform spatial board. Cards of different types — notes, decisions, documents, chat summaries — scattered across an open canvas, draggable, repositionable, owned entirely by the user. Spatial, tactile, yours to arrange.</p>
-      <p>The AI lived at the edges. A chat drawer collapsed against the side, opened on demand. A separate NOW tab that generated an AI-organized reading of the board — Framing, Open questions, Journey — each section synthesized from what existed on the canvas.</p>
-      <p>The logic held up on paper. The board as the primary thinking surface. The AI as interpreter and summarizer, reading what the user had built and reflecting it back in structured form. Chat as an on-ramp: talk to Flowd, get a card, place it where it belongs.</p>
-      <p>I built it in React with a live Claude API integration. Real drag behaviors, real card types, real AI responses. I used it every day for three weeks.</p>
+      <p>The first version of Flowd was built around a freeform spatial board. Cards of different types — notes, decisions, documents — scattered across an open canvas, draggable, repositionable, owned entirely by the user. The AI lived at the edges: a chat drawer collapsed against the side, and a NOW tab that generated an AI-organized synthesis of what existed on the canvas.</p>
     </div>
 
-    <div class="visual-placeholder visual-embed visual-narrative-video vp-358-240">
+    <div class="visual-placeholder visual-embed visual-narrative-video text-column vp-358-240">
       <iframe
         src="https://player.vimeo.com/video/1178088154?background=1&autoplay=1&loop=1&muted=1"
         title="Flowd v1 demo video"
@@ -1003,29 +1069,28 @@
         allowfullscreen
       ></iframe>
     </div>
-    <p class="visual-caption">Flowd v1 — THE SPACE (freeform board) and NOW tab (AI-organized synthesis)</p>
-  </div>
-</section>
 
-<!-- SECTION 4: THE CRACK -->
-<section class="section">
-  <div class="section-inner">
-    <p class="section-label">The Crack &nbsp;·&nbsp; 04</p>
-    <h2 class="section-headline">It revealed a deeper problem.</h2>
     <div class="body-text">
+      <p>The logic held on paper. The board as the primary thinking surface. The AI as interpreter, reading what the user had built and reflecting it back. I built it in React with a live Claude API integration — real drag behaviors, real card types, real AI responses — and used it every day for three weeks.</p>
       <p>The NOW view was the tell.</p>
-      <p>In theory, NOW was the answer to the forward motion problem — an AI-generated synthesis of everything on the board, organized into readable sections: where you are, what's open, how you got here. It was genuinely useful. When I came back to a project after a break, NOW gave me context faster than anything else in the product.</p>
-      <p>But it was a read surface, not a working surface. You landed on NOW to get oriented, then switched to THE SPACE to do anything with that orientation. Two modes. Two mental contexts. A seam running through every session.</p>
-      <p>And THE SPACE — even in the container-based version — was still a thing I had to tend. Cards accumulated. Decisions needed placing. Notes needed categorizing. The overhead was lower than a Miro board, but the fundamental job was the same: be the curator of your own thinking in order to think.</p>
+      <p>NOW was genuinely useful when returning to a project after a break. But it was a read surface, not a working surface. You landed there to orient, then switched to the board to do anything. Two modes. Two mental contexts. A seam running through every session.</p>
+      <p>Before the full pivot, I tried a middle version: removed freeform drag, snapped cards into a horizontal scroll container by workstream. More legible, less spatially demanding. But the interaction model was unchanged. The board was still the primary surface. The user was still the one deciding what went where. Tidier does not mean automatic.</p>
     </div>
 
-    <blockquote>
-      <p>The board was asking me to organize in order to create. But organizing and creating are competing states of mind.</p>
-    </blockquote>
+    <div class="visual-placeholder visual-embed visual-narrative-video text-column vp-213-119">
+      <iframe
+        src="https://player.vimeo.com/video/1178091509?background=1&autoplay=1&loop=1&muted=1"
+        title="Flowd v2 demo video"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
 
     <div class="body-text">
-      <p>For a non-linear thinker, that competition is fatal. The moment the tool demands curation, it becomes the reason you leave. Not because you're lazy. Because the cognitive cost of switching into organizational mode while in creative mode is genuinely prohibitive — and then you don't come back.</p>
-      <p>I had built a tool that was most useful when you used it consistently — and most likely to be abandoned the moment you stopped.</p>
+      <blockquote>
+        <p>The board was asking me to organize in order to create. But organizing and creating are competing states of mind.</p>
+      </blockquote>
+      <p>I had been treating the symptom, not the cause. The problem wasn't that the board was spatially chaotic. The problem was that the board required the user to be its curator — and curating is not thinking. For a non-linear thinker, the moment the tool demands curation, it becomes the reason you leave. Not because you're lazy. Because the cognitive cost of switching into organizational mode while in creative mode is genuinely prohibitive.</p>
     </div>
 
     <div class="visual-placeholder visual-image visual-diagram vp-340-111">
@@ -1034,100 +1099,64 @@
   </div>
 </section>
 
-<!-- SECTION 3B: INTERMEDIATE -->
+<!-- SECTION 4: THE PIVOT -->
 <section class="section">
   <div class="section-inner">
-    <p class="section-label">Iteration &nbsp;·&nbsp; 03b</p>
-    <h2 class="section-headline">Tighter structure. Same problem.</h2>
-    <div class="body-text">
-      <p>Before the full pivot, there was a middle version. I removed the freeform drag — cards no longer floated freely but snapped into a horizontal scroll container, organized by workstream. More legible, less spatially demanding.</p>
-      <p>But the interaction model was unchanged. The board was still the primary surface. Chat was still a drawer. The user was still the one deciding what went where.</p>
-      <p>The container structure made the board easier to read. It did not make it easier to maintain. Tidier ≠ automatic. The organizing burden had just been given better furniture.</p>
-    </div>
-
-    <div class="iteration-note">
-      "This iteration taught me something important: I had been treating the symptom, not the cause. The problem wasn't that the board was spatially chaotic. The problem was that the board required the user to be its curator — and curating a board is not thinking."
-      <cite>Design journal, mid-project</cite>
-    </div>
-
-    <div class="visual-placeholder visual-embed visual-narrative-video vp-213-119">
-      <iframe
-        src="https://player.vimeo.com/video/1178091509?background=1&autoplay=1&loop=1&muted=1"
-        title="Flowd v2 demo video"
-        allow="autoplay; fullscreen; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 5: THE PIVOT -->
-<section class="section">
-  <div class="section-inner">
-    <p class="section-label">The Pivot &nbsp;·&nbsp; 05</p>
-    <h2 class="section-headline">What if the board built itself?</h2>
+    <p class="section-label">04 · The Pivot</p>
+    <h2 class="section-headline">The board was the answer. Then I realized it was the problem.</h2>
     <div class="body-text">
       <p>My breakthrough came when I stopped asking how to improve the board and started asking whether the board should be the primary surface at all.</p>
       <p>Every version of Flowd had inherited the same assumption from the tools I was trying to replace: that structure is the product, and thinking is what you do to fill it. The board is the destination. The conversation is the road to get there.</p>
       <p>What if that was exactly backwards?</p>
-      <p>The most alive moments in Flowd were never on the board. They were in the chat drawer — when a thought was forming in real time, when a question led somewhere unexpected, when the AI pushed back on something and a better idea emerged from that friction. The board was where thinking went to be preserved. The conversation was where thinking was actually happening.</p>
-      <p>So: invert it.</p>
-      <p>What if the user just talked — ideas, decisions, questions, progress, things found, things completed — and an AI agent listened, thought alongside them, and built the board from the conversation in real time? The board becomes the output, not the workspace. It builds itself while you think. The user never curates it.</p>
     </div>
-
-    <blockquote>
-      <p>Conversation is the input. The board is the output. They happen simultaneously, side by side.</p>
-    </blockquote>
-
-    <div class="body-text">
-      <p>The closest feeling: iMessage with a very smart collaborator who has read everything, remembers everything, and keeps the project organized while you talk. No mode switching. No curation. You think out loud. The system keeps up.</p>
-    </div>
-
   </div>
 
   <div style="display:flex; justify-content:center; margin: 44px 0;">
     <img src="assets/system_behavior_diagram.svg" alt="System behavior diagram" style="width:1400px;">
   </div>
 
+  <div class="section-inner">
+    <div class="body-text">
+      <p>The most alive moments in Flowd were never on the board. They were in the chat drawer — when a thought was forming in real time, when a question led somewhere unexpected, when the AI pushed back and a better idea emerged from that friction. The board was where thinking went to be preserved. The conversation was where thinking was actually happening.</p>
+      <p>So: invert it. What if the user just talked — ideas, decisions, questions, things found, things completed — and an AI agent listened, thought alongside them, and built the board from the conversation in real time? The board becomes output, not workspace. It builds itself while you think. The user never curates it.</p>
+      <blockquote>
+        <p>Conversation is the input. The board is the output. They happen simultaneously, side by side.</p>
+      </blockquote>
+      <p>The closest feeling: a very smart collaborator who has read everything, remembers everything, and keeps the project organized while you talk. No mode switching. No curation. You think out loud. The system keeps up.</p>
+      <p><strong>One view.</strong></p>
+      <p>Flowd v1 had three surfaces — THE SPACE, NOW, and a collapsed chat drawer. Three mental models. A mode switch before a single thought was captured.</p>
+    </div>
+  </div>
+
+  <div style="display:flex; justify-content:center; margin: 36px 0;">
+    <div class="visual-placeholder visual-image" style="width:1440px; max-width:calc(100vw - 80px); margin:0;">
+      <div style="width:100%; padding-top:24.31%;"></div>
+      <img src="assets/flowd_view_reduction.svg" alt="Flowd view reduction diagram showing Flowd V1, Flowd V2, and Flowd Now">
+    </div>
+  </div>
+
+  <div class="section-inner">
+    <div class="body-text">
+      <p>Every additional surface is a tax on attention. For non-linear thinkers, that tax compounds fast. The goal is a system that responds fluidly to the intentions of its user, rather than asking people to modify their thinking around arbitrary containers. Each view I cut was a step toward that. One view is the answer: the fewer modes a product has, the more cognitive space is left for actual thinking.</p>
+    </div>
+  </div>
 </section>
 
-<!-- SECTION 6: THE NEW SYSTEM -->
+<!-- SECTION 5: THE SYSTEM -->
 <section class="section">
   <div class="section-inner">
-    <p class="section-label">The System &nbsp;·&nbsp; 06</p>
-    <h2 class="section-headline">Designing for a system that understands where you are.</h2>
+    <p class="section-label">05 · The System</p>
+    <h2 class="section-headline">The board builds itself. That's not a feature — it's the thesis.</h2>
     <div class="body-text">
-      <p>Flowd's interface is deliberately quiet: a chat view and a workspace board, side by side. You mainly talk. Sometimes you glance at the board. The board is never the job — it is the byproduct of the job.</p>
-      <p>What is complex is what the AI is doing while you work. I designed the system around three behaviors:</p>
-    </div>
-
-    <div class="problem-list">
-      <div class="problem-item">
-        <p class="problem-item-label">Behavior 01</p>
-        <h3>Recognition</h3>
-        <p>The AI reads the conversation not just to respond, but to understand. When a topic shifts, when a new idea connects to something said sessions ago, when a decision is being made — the AI recognizes these patterns and acts on them. This is the connection engine. It's what every previous version lacked.</p>
-      </div>
-      <div class="problem-item">
-        <p class="problem-item-label">Behavior 02</p>
-        <h3>Materialization</h3>
-        <p>When recognition fires, content appears on the board — softly. Cards materialize without interrupting the conversation. The board grows at the periphery of attention, not in the center of it. The experience: the system is quietly keeping up.</p>
-      </div>
-      <div class="problem-item">
-        <p class="problem-item-label">Behavior 03</p>
-        <h3>Contextual Continuity</h3>
-        <p>Because the AI has read everything — every message, every card — it can always hold the implicit question underneath any conversation: <em>where are we, and what matters right now?</em> Not search. Not a summary. Active awareness. It knows what's unresolved and surfaces those things without being asked.</p>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="section-inner">
-    <div class="body-text feature-showcase-intro">
-      <p>Three interaction patterns mattered most in practice. First, the board itself stayed alive as the project moved: open work remained visible, resolved work kept its shape, and finished work closed into clear summaries. Second, the boundary between board and conversation became permeable: structure could flow back into dialogue instead of freezing there. Third, each captured fragment resolved into a role in the work, rather than becoming one more inert artifact.</p>
+      <p><strong>The interface is deliberately quiet.</strong> Chat and workspace, side by side. Chat is wider — not a visual accident but a signal: this is the primary entry point. The board lives in the right column. Always visible, always current, never demanding. You don't navigate to it. You glance at it.</p>
+      <p>What is complex is what the AI is doing while you work.</p>
+      <p><strong>Recognition.</strong> The AI reads the conversation not just to respond, but to understand. When a topic shifts, when a new idea connects to something from three sessions ago, when a decision is being made — the AI recognizes these patterns and acts on them. This is the connection engine that every previous version lacked.</p>
+      <p><strong>Materialization.</strong> When recognition fires, content appears on the board — softly. Cards materialize without interrupting the conversation. The board grows at the periphery of attention, not in the center of it. The experience: the system is quietly keeping up.</p>
+      <p><strong>Contextual Continuity.</strong> Because the AI has read everything, it can always hold the implicit question underneath any conversation: <em>where are we, and what matters right now?</em> Not search. Not a summary. Active awareness of what's unresolved, surfaced without being asked.</p>
     </div>
   </div>
 
-  <div style="display:flex; justify-content:center; margin: 44px 0 0;">
+  <div style="display:flex; justify-content:center; margin: 44px 0;">
     <div class="visual-placeholder visual-page-embed visual-hero-embed">
       <iframe
         src="index.html#desktop-showcase"
@@ -1137,8 +1166,6 @@
       ></iframe>
     </div>
   </div>
-  <p class="visual-caption" style="text-align:center;">Chat is the primary entry point — intentionally wider. Board auto-builds to the right.</p>
-
   <div class="feature-showcase-wrap">
     <div class="feature-showcase feature-showcase--media-left">
       <div class="feature-showcase-copy-block">
@@ -1198,19 +1225,18 @@
       </div>
     </div>
   </div>
-
 </section>
 
-<!-- SECTION 7: ARCHITECTURE -->
+<!-- SECTION 6: SOUL.MD -->
 <section class="section">
   <div class="section-inner">
-    <p class="section-label">Architecture &nbsp;·&nbsp; 07</p>
-    <h2 class="section-headline">SOUL.md</h2>
+    <p class="section-label">06 · SOUL.md</p>
+    <h2 class="section-headline">Before I designed the interface, I designed the collaborator.</h2>
     <div class="body-text">
-      <p>SOUL.md is a character specification for Flowd's AI — not what it can do, but how it should be. How it should behave as a thinking partner across different kinds of projects. A messy early-stage exploration needs a different posture than a focused execution sprint. A solo creative project has different rhythms than a technical planning session. The AI needs to know the difference — and calibrate accordingly.</p>
-      <p>Writing SOUL.md required articulating something that had been implicit throughout the entire design process: <strong>the AI in this product is not a feature. It is a collaborator. And collaborators need a defined perspective — not just capabilities.</strong></p>
-      <p>A collaborator without perspective is autocomplete. A collaborator with the right perspective is the reason you trust the product.</p>
-      <p>When should the AI speak up versus stay quiet? When has it earned the right to reorganize something? How does it hold uncertainty without breaking the user's confidence in it? These are not engineering questions. They are design questions. And they have to be answered before a single line of logic is written.</p>
+      <p>SOUL.md is a character specification for Flowd's AI — not what it can do, but how it should be.</p>
+      <p>Writing it forced me to articulate something that had been implicit throughout the entire design process: <strong>the AI in this product is not a feature. It is a collaborator. And collaborators need a defined perspective — not just capabilities.</strong></p>
+      <p>A collaborator without perspective is autocomplete. A collaborator with the right perspective is why you trust the product.</p>
+      <p>When should the AI speak versus stay quiet? When has it earned the right to reorganize something? How does it hold uncertainty without breaking the user's confidence in it? These are not engineering questions. They are design questions. They have to be answered before a single line of logic is written.</p>
     </div>
 
     <div class="visual-placeholder visual-soul-editor vp-4-3">
@@ -1363,270 +1389,47 @@ I respond to the person, not to the request.</textarea>
         </div>
       </div>
     </div>
-    <p class="visual-caption">SOUL.md — when the AI should act vs. wait, how it holds uncertainty, how it adapts across project types</p>
-
   </div>
 </section>
 
-<!-- SECTION 8A: DECISION — BOARD -->
+<!-- SECTION 7: BUILDING IN CODE -->
 <section class="section">
   <div class="section-inner">
-    <p class="section-label">Key Decision &nbsp;·&nbsp; 08a</p>
-    <h2 class="section-headline">The board is not the job.</h2>
+    <p class="section-label">07 · Building in Code</p>
+    <h2 class="section-headline">Flowd cannot be Figma-prototyped.</h2>
     <div class="body-text">
-      <p>The most important design decision in Flowd is one the user never sees made: they don't manage the board.</p>
-      <p>This sounds simple. It isn't. It means refusing the entire interaction model that Miro, Notion, and almost every spatial thinking tool is built on — the model where the board is the primary surface, and the user's job is to tend it.</p>
-      <p>I spent time in Flowd v1 watching what actually happened when people used a freeform spatial board. Cards accumulated fast. Within a few sessions, the canvas was dense — notes, decisions, summaries, images, all floating at roughly equal visual weight, each one isolated from the others. There was no relation between them, no sense of a project moving. It felt less like a thinking space and more like a parking lot.</p>
-    </div>
-
-    <div class="compare-grid">
-      <div class="compare-col">
-        <div class="compare-col-head">
-          <p class="compare-col-label">Model</p>
-          <p class="compare-col-name">Miro</p>
-        </div>
-        <div class="compare-list">
-          <div class="compare-item">
-            <div class="compare-item-key">Structure</div>
-            <div class="compare-item-value">Freeform, granular, arbitrary</div>
-          </div>
-          <div class="compare-item">
-            <div class="compare-item-key">Thread logic</div>
-            <div class="compare-item-value">Cards stand alone — no thread</div>
-          </div>
-          <div class="compare-item">
-            <div class="compare-item-key">Cognitive cost</div>
-            <div class="compare-item-value">Everything at once, overwhelming</div>
-          </div>
-          <div class="compare-item">
-            <div class="compare-item-key">User burden</div>
-            <div class="compare-item-value">User curates spatial position</div>
-          </div>
-        </div>
-      </div>
-      <div class="compare-col">
-        <div class="compare-col-head">
-          <p class="compare-col-label">Model</p>
-          <p class="compare-col-name">Notion</p>
-        </div>
-        <div class="compare-list">
-          <div class="compare-item">
-            <div class="compare-item-key">Structure</div>
-            <div class="compare-item-value">Rigid, hierarchical</div>
-          </div>
-          <div class="compare-item">
-            <div class="compare-item-key">Thread logic</div>
-            <div class="compare-item-value">Pages inside pages — things hide</div>
-          </div>
-          <div class="compare-item">
-            <div class="compare-item-key">Cognitive cost</div>
-            <div class="compare-item-value">You know it exists, never open it</div>
-          </div>
-          <div class="compare-item">
-            <div class="compare-item-key">User burden</div>
-            <div class="compare-item-value">User curates structure and depth</div>
-          </div>
-        </div>
-      </div>
-      <div class="compare-col flowd">
-        <div class="compare-col-head">
-          <p class="compare-col-label">This product</p>
-          <p class="compare-col-name">Flowd</p>
-        </div>
-        <div class="compare-list">
-          <div class="compare-item">
-            <div class="compare-item-key">Structure</div>
-            <div class="compare-item-value">Workstream-grouped, auto-built</div>
-          </div>
-          <div class="compare-item">
-            <div class="compare-item-key">Thread logic</div>
-            <div class="compare-item-value">Cards have a thread — they belong</div>
-          </div>
-          <div class="compare-item">
-            <div class="compare-item-key">Cognitive cost</div>
-            <div class="compare-item-value">Peripheral, never demanding</div>
-          </div>
-          <div class="compare-item">
-            <div class="compare-item-key">User burden</div>
-            <div class="compare-item-value">User curates nothing</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="body-text">
-      <p><em>Miro fails because it's too granular and too arbitrary.</em> Every card stands alone. To understand the state of the work, you have to read each card individually and reconstruct the project in your head. For a non-linear thinker already managing too much cognitive load, that reconstruction cost is prohibitive.</p>
-      <p><em>Notion fails for the opposite reason.</em> Rigid and hierarchical — pages inside pages. Creating a clean space for a new idea feels good in the moment, but three days later that page is buried. You'd have to remember it exists, navigate to it, open it. The flexibility is real, but the discoverability is not.</p>
-      <p>In Flowd, the board builds itself from the conversation. Cards are grouped by workstream automatically — not because the user filed them, but because the AI recognized the thread they belong to. The user never drags a card, never decides a column, never categorizes anything. They just talk.</p>
-    </div>
-
-    <blockquote>
-      <p>The board is not the job. It's proof that the job is happening.</p>
-    </blockquote>
-  </div>
-</section>
-
-<!-- SECTION 8B: DECISION — ONE VIEW -->
-<section class="section">
-  <div class="section-inner">
-    <p class="section-label">Key Decision &nbsp;·&nbsp; 08b</p>
-    <h2 class="section-headline">One view.</h2>
-    <div class="body-text">
-      <p>The other decision that shaped everything was surface reduction.</p>
-      <p>Flowd v1 had three distinct views: THE SPACE (the freeform board), NOW (an AI-generated synthesis), and the chat drawer (collapsed by default). Three mental models. Three modes to navigate between.</p>
-      <p>NOW was genuinely useful — when you returned to a project after a break, it gave you orientation fast. But it was a read surface. You couldn't work in it. So the workflow was: land on NOW to orient, switch to THE SPACE to do anything. Every session started with a mode switch before a single thought was captured.</p>
-      <p>The chat drawer had the opposite problem. It was the most alive part of the product — where real thinking happened, where the AI pushed back, where ideas formed in real time. But it was hidden. Collapsed by default. A tool you had to remember to open.</p>
-      <p>I cut from three views to two: removed NOW entirely, made chat always visible. Better — but still a seam. So I cut again.</p>
-    </div>
-
-    <div class="view-reduction">
-      <div class="view-box">
-        <div class="view-box-num">3</div>
-        <div class="view-box-label">Flowd v1 — surfaces</div>
-        <div class="view-box-surfaces">
-          <span class="surface-tag active">THE SPACE</span>
-          <span class="surface-tag active">NOW view</span>
-          <span class="surface-tag active">Chat (drawer)</span>
-        </div>
-      </div>
-      <div class="view-box">
-        <div class="view-box-num">2</div>
-        <div class="view-box-label">Flowd v2 — surfaces</div>
-        <div class="view-box-surfaces">
-          <span class="surface-tag active">THE SPACE</span>
-          <span class="surface-tag removed">NOW view</span>
-          <span class="surface-tag active">Chat (visible)</span>
-        </div>
-      </div>
-      <div class="view-box">
-        <div class="view-box-num">1</div>
-        <div class="view-box-label">Flowd now — surfaces</div>
-        <div class="view-box-surfaces">
-          <span class="surface-tag merged">Chat + Board</span>
-          <span class="surface-tag removed">THE SPACE</span>
-          <span class="surface-tag removed">NOW view</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="body-text">
-      <p>One view. Chat and workspace side by side, always. Chat is wider — not a visual accident but a deliberate signal: this is the primary entry point. The board is the right column. Always visible, always current, never demanding. You don't navigate to it. You glance at it.</p>
-      <p>The logic behind every cut: <em>every additional view is a tax on attention.</em> For non-linear thinkers, that tax compounds fast. The fewer modes a product has, the less working memory it consumes — and the more cognitive space is left for actual thinking.</p>
-      <p>Mercury OS described it better than I could: rather than asking people to modify their thinking around arbitrary containers, the system should respond fluidly to the intentions of its user. Each view cut was a step toward that. One view is the answer.</p>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 9: BUILD PROCESS -->
-<section class="section">
-  <div class="section-inner">
-    <p class="section-label">Build Process &nbsp;·&nbsp; 09</p>
-    <h2 class="section-headline">Code prototyping was the only medium that could hold the design.</h2>
-    <div class="body-text">
-      <p>Flowd cannot be Figma-prototyped. The core experience — a conversation that builds structure in real time, connections surfacing that the user didn't request — only reveals itself when the AI is actually running. Static screens cannot show what it feels like when a workstream appears at the edge of your attention without you placing it there.</p>
-      <p>Every significant design decision in this project was made inside a live prototype. React throughout — <code>useState</code> for conversation state, component-level props for board card generation, live Claude API calls for the recognition engine. The code was a design instrument, not a deliverable.</p>
-      <p>This forced a discipline that static tools don't require: every state has to be reachable. You cannot draw an edge case and skip its behavior. If I wanted to design the moment where the AI is uncertain — where recognition might misfire — I had to build the condition that triggers it, and then design into that condition. The edge case is where trust is either built or broken. It is not optional.</p>
+      <p>The core experience — a conversation that builds structure in real time, connections surfacing that the user didn't request — only reveals itself when the AI is actually running. Static screens cannot show what it feels like when a workstream appears at the edge of your attention without you placing it there.</p>
+      <p>Every significant design decision was made inside a live prototype. React throughout — <code>useState</code> for conversation state, component-level props for board card generation, live Claude API calls for the recognition engine. The code was a design instrument, not a deliverable.</p>
+      <p>This forced a discipline that static tools don't require: every state has to be reachable. You cannot draw an edge case and skip its behavior. If I wanted to design the moment where the AI is uncertain — where recognition might misfire — I had to build the condition that triggers it, then design into that condition.</p>
+      <p>The edge case is where trust is either built or broken. It is not optional.</p>
     </div>
 
     <div class="visual-placeholder visual-image vp-16-9">
       <img src="assets/vibecode.png" alt="Code editor and rendered UI shown side by side during Flowd's build process">
     </div>
-  </div>
-</section>
-
-<!-- SECTION 10: REFLECTION — dark -->
-<section class="section section-dark">
-  <div class="section-inner">
-    <p class="section-label">Reflection &nbsp;·&nbsp; 10</p>
-    <h2 class="section-headline">The interface is not the product.</h2>
-    <div class="body-text">
-      <p>Building Flowd without a team collapsed every part of the product design process into a single continuous loop. I was the user, the researcher, the designer, the builder, the person who decided when the thesis was wrong and what the next one should be.</p>
-      <p>That compression is clarifying.</p>
-      <p>The most important thing it taught me: when AI is in the loop, the design problem is never only the interface. It is the relationship between the model's behavior and the user's trust in that behavior.</p>
-      <p>Every time Flowd's AI connected two ideas correctly — surfaced a thread the user would have missed — trust accumulated. Every time it was wrong, some of that trust eroded. Designing the recognition behavior — when to fire, when to hold back, how to make reasoning legible at the moments it mattered — was as much a design problem as any layout decision. More so.</p>
-      <p>This is why SOUL.md exists. Not because the AI needed a personality. Because the product needed a stable perspective about when to act and when to wait. That perspective creates predictability. Predictability creates trust. And trust is the product.</p>
-      <p>When should AI act versus wait? That question is a design decision. I think it is the design decision that will define the next decade of AI products.</p>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 11: THESIS — dark continuation -->
-<section class="section section-dark" style="padding-top: 0; border-top: 0.5px solid rgba(255,255,255,0.08);">
-  <div class="section-inner">
-    <p class="section-label">Thesis &nbsp;·&nbsp; 11</p>
-    <h2 class="section-headline">Every tool I've used was designed for someone who already knows how they think.</h2>
-    <div class="body-text">
-      <p>Notion assumes you can decide where things go. Linear assumes you can define the task. Even most AI tools assume you can write the right prompt.</p>
-      <p>Flowd's bet is different.</p>
-    </div>
-
-    <blockquote>
-      <p><strong>The user's job is to think. The system's job is everything else.</strong></p>
-    </blockquote>
-
-    <div class="body-text">
-      <p>That's not a feature decision. It is a position on what AI is for.</p>
-      <p>The reason Flowd feels different — the reason I keep building it — is the same reason working with a great collaborator feels different from working alone. Not because they do more tasks. But because in their presence, you think better. You move faster. You make connections you wouldn't have made alone.</p>
-      <p>That is what I am building toward. Not a smarter interface. A product that is the relationship between human intent and AI understanding — and a UI that is simply the surface where those two things touch.</p>
-      <p>Flowd is the first thing I've made that feels true to that. It is not finished. But it knows what it is.</p>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 12: ARTIFACT TRAIL -->
-<section class="section">
-  <div class="section-inner">
-    <p class="section-label">Artifact Trail &nbsp;·&nbsp; 12</p>
-    <h2 class="section-headline">End-to-end ownership. One project. One designer. Full chain.</h2>
-    <div class="body-text">
-      <p>Flowd did not move through a neat handoff chain. I was the chain: research, product strategy, interaction design, AI behavior design, implementation, invalidation, and rewrite.</p>
-      <p>What looks linear in a portfolio was, in practice, three self-run loops. Build a thesis. Use it hard enough to expose the flaw. Change direction on purpose. Then rebuild both the product and the argument until the thing feels true.</p>
-    </div>
 
     <div class="visual-placeholder visual-image visual-diagram visual-timeline">
       <img src="assets/project_timeline_flowd.svg?v=5" alt="Project timeline diagram showing Flowd's solo research, first build, self-pivot, and rebuild loops">
     </div>
-    <p class="visual-caption">A solo build loop: define the problem, prototype in code, challenge the thesis, pivot, then rebuild the system and the story.</p>
+  </div>
+</section>
 
-    <div class="artifact-list">
-      <div class="artifact-item">
-        <span class="artifact-name">Behavioral archaeology notes</span>
-        <span class="artifact-desc">Self-directed research — desktop screenshots, journaling, conversations with non-linear thinkers. Lived domain expertise.</span>
-      </div>
-      <div class="artifact-item">
-        <span class="artifact-name">Flowd v1 prototype</span>
-        <span class="artifact-desc">React, live Claude API, real drag behaviors. Code prototyping from day one — not a Figma simulation.</span>
-      </div>
-      <div class="artifact-item">
-        <span class="artifact-name">Pivot decision doc</span>
-        <span class="artifact-desc">The written record of invalidating the freeform board model. Ambiguity navigation made visible.</span>
-      </div>
-      <div class="artifact-item">
-        <span class="artifact-name">PRD + AI system architecture</span>
-        <span class="artifact-desc">Recognition engine, materialization rules, workstream graph, memory architecture. Systems thinking at full depth.</span>
-      </div>
-      <div class="artifact-item">
-        <span class="artifact-name">SOUL.md</span>
-        <span class="artifact-desc">AI character specification — when to act, when to wait, how to adapt across project types. A novel artifact type that sits at the intersection of product, design, and model thinking.</span>
-      </div>
-      <div class="artifact-item">
-        <span class="artifact-name">React codebase</span>
-        <span class="artifact-desc">Production-quality components — conversation state, board generation, live API integration.</span>
-      </div>
-      <div class="artifact-item">
-        <span class="artifact-name">Landing page</span>
-        <span class="artifact-desc">Designed and built. Moss/sage palette, Inter + Georgia. Every copy decision a deliberate argument about what the product is.</span>
-      </div>
+<!-- SECTION 8: REFLECTION -->
+<section class="section section-dark">
+  <div class="section-inner">
+    <p class="section-label">08 · Reflection</p>
+    <h2 class="section-headline">The interface was the easy part.</h2>
+    <div class="body-text">
+      <p>Building Flowd without a team collapsed every part of the product design process into a single continuous loop. I was the user, the researcher, the designer, the builder, the person who decided when the thesis was wrong and what the next one should be. That compression is clarifying.</p>
+      <p>The most important thing it taught me: when AI is in the loop, the design problem is never only the interface. It is the relationship between the model's behavior and the user's trust in that behavior.</p>
+      <p>Every time Flowd's AI connected two ideas correctly — surfaced a thread the user would have missed — trust accumulated. Every time it was wrong, some of that trust eroded. Designing the recognition behavior — when to fire, when to hold back, how to make reasoning legible at the moments it mattered — was as much a design problem as any layout decision. More so.</p>
+      <p>This is why SOUL.md exists. Not because the AI needed a personality. Because the product needed a stable perspective about when to act and when to wait. That perspective creates predictability. Predictability creates trust. And trust is the product.</p>
+      <p>When should AI act versus wait? That is a design decision. I think it is the design decision that will define the next decade of AI products.</p>
     </div>
   </div>
 </section>
 
 </main>
-
-<footer>
-  <span>Flowd — Case Study</span>
-  <span>Aria &nbsp;·&nbsp; 2026</span>
-</footer>
 
 <script>
   const sections = document.querySelectorAll('.section');
